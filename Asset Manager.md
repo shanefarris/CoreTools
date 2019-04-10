@@ -1,3 +1,6 @@
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=mkD46E1485E
+" target="_blank"><img src="http://img.youtube.com/vi/mkD46E1485E/0.jpg" 
+width="240" height="180" border="10" /></a>
 
 ## Asset Manager:
 
