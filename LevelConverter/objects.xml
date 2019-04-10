@@ -1,0 +1,268 @@
+<Node name="Entity365823" orientation="0.986305 0 0.164931 0" parent="" position="4494.01 828.894 2139.84" scale="0.996 0.996 0.996" attachto="Entity365823"></Node>
+<Node name="Entity703749" orientation="-0.992542 0 0.1219 0" parent="" position="4377.15 790.922 2233.67" scale="0.432 0.432 0.432" attachto="Entity703749"></Node>
+<Node name="Entity535807" orientation="-0.983276 0 0.182123 0" parent="" position="4405.21 810.188 2252.27" scale="0.432 0.432 0.432" attachto="Entity535807"></Node>
+<Node name="CastleTower" orientation="-0.464068 0 0.8858 0" parent="" position="4516.16 807.388 2018.33" scale="1.392 1.392 1.392" attachto="CastleTower"></Node>
+<Node name="Entity569459" orientation="0.68415 0 0.729341 0" parent="" position="1252.02 719.621 2326.3" scale="0.789999 0.789999 0.789999" attachto="Entity569459"></Node>
+<Node name="Entity549051" orientation="0.68415 0 0.729341 0" parent="" position="1034.49 723 1966.15" scale="0.752 0.752 0.752" attachto="Entity549051"></Node>
+<Node name="Entity919796" orientation="0.9377 0 0.347445 0" parent="" position="749.568 723 2383.75" scale="0.997 0.997 0.997" attachto="Entity919796"></Node>
+<Node name="Entity785869" orientation="-0.977532 0 0.210788 0" parent="" position="779.162 722.5 2486.04" scale="0.996001 0.996001 0.996001" attachto="Entity785869"></Node>
+<Node name="Entity366948" orientation="-0.892342 0 0.451361 0" parent="" position="835.502 719 1988.93" scale="1 1 1" attachto="Entity366948"></Node>
+<Node name="Entity753156" orientation="-0.23755 0 0.971375 0" parent="" position="1347.88 728.953 2319.36" scale="0.756 0.756 0.756" attachto="Entity753156"></Node>
+<Node name="Entity781831" orientation="0.418787 0 0.908085 0" parent="" position="1349.21 728.331 2334.74" scale="0.764 0.764 0.764" attachto="Entity781831"></Node>
+<Node name="Entity170232" orientation="0.418787 0 0.908085 0" parent="" position="1348.63 727.935 2314.76" scale="0.748 0.748 0.748" attachto="Entity170232"></Node>
+<Node name="Entity312207" orientation="0.0913625 0 0.995818 0" parent="" position="1348.52 728.976 2322.07" scale="0.596 0.596 0.596" attachto="Entity312207"></Node>
+<Node name="Entity872801" orientation="-0.100327 0 0.994955 0" parent="" position="1262.89 721.154 2333.66" scale="0.784 0.784 0.784" attachto="Entity872801"></Node>
+<Node name="Entity104229" orientation="-0.100327 0 0.994955 0" parent="" position="1258.81 720.926 2333.87" scale="1 1 1" attachto="Entity104229"></Node>
+<Node name="Entity427869" orientation="-0.999103 0 0.0423378 0" parent="" position="2056.57 799.994 2560.19" scale="1.052 1.052 1.052" attachto="Entity427869"></Node>
+<Node name="Entity814709" orientation="0.947919 0 0.318512 0" parent="" position="2117.23 737.39 1825.57" scale="1.704 1.704 1.704" attachto="Entity814709"></Node>
+<Node name="Entity489724" orientation="0.0161786 0 0.999869 0" parent="" position="2037.89 752 2200.97" scale="0.996 0.996 0.996" attachto="Entity489724"></Node>
+<Node name="Entity550068" orientation="0.755545 0 0.655096 0" parent="" position="2224.24 739.537 1691.39" scale="1.824 1.824 1.824" attachto="Entity550068"></Node>
+<Node name="Entity831573" orientation="0.948294 0 0.317393 0" parent="" position="2318.94 768.25 2588.31" scale="1.828 1.828 1.828" attachto="Entity831573"></Node>
+<Node name="Entity274800" orientation="-0.573612 0 0.819127 0" parent="" position="1833.47 715.39 1903.5" scale="1.72 1.72 1.72" attachto="Entity274800"></Node>
+<Node name="Entity921389" orientation="-0.160605 0 0.987019 0" parent="" position="1260.72 722.054 2330.28" scale="0.692 0.692 0.692" attachto="Entity921389"></Node>
+<Node name="Entity753074" orientation="-0.160605 0 0.987019 0" parent="" position="1349.45 728.168 2293.79" scale="0.812 0.812 0.812" attachto="Entity753074"></Node>
+<Node name="Entity826684" orientation="-0.160605 0 0.987019 0" parent="" position="1360.1 728.603 2334.17" scale="0.548 0.548 0.548" attachto="Entity826684"></Node>
+<Node name="Entity820147" orientation="-0.160605 0 0.987019 0" parent="" position="1347.97 728.285 2326.05" scale="0.496 0.496 0.496" attachto="Entity820147"></Node>
+<Node name="Entity286004" orientation="-0.160605 0 0.987019 0" parent="" position="1350.6 729.072 2332.16" scale="0.696 0.696 0.696" attachto="Entity286004"></Node>
+<Node name="Entity132026" orientation="-0.160605 0 0.987019 0" parent="" position="1352.01 729.004 2338.68" scale="0.388 0.388 0.388" attachto="Entity132026"></Node>
+<Node name="Entity190502" orientation="0.691613 0 0.722268 0" parent="" position="1349.74 727.486 2280.39" scale="0.712 0.712 0.712" attachto="Entity190502"></Node>
+<Node name="Entity970747" orientation="-0.591422 0 0.806362 0" parent="" position="1348.84 728.272 2309.59" scale="0.748 0.748 0.748" attachto="Entity970747"></Node>
+<Node name="Entity311438" orientation="-0.896815 0 0.442406 0" parent="" position="1346.68 729.14 2331.84" scale="0.508 0.508 0.508" attachto="Entity311438"></Node>
+<Node name="Entity245490" orientation="0.518893 0 0.854839 0" parent="" position="1349.68 727.473 2298.69" scale="0.584 0.584 0.584" attachto="Entity245490"></Node>
+<Node name="house-01" orientation="0.0268667 0 0.999639 0" parent="" position="1369.16 728.535 2296.46" scale="0.498001 0.498001 0.498001" attachto="house-01"></Node>
+<Node name="fishing-dock-01" orientation="-0.93824 0 0.345986 0" parent="" position="1226.11 684.658 2252.28" scale="1.504 1.504 1.504" attachto="fishing-dock-01"></Node>
+<Node name="small-fat-tree" orientation="0.0952724 0 0.995451 0" parent="" position="1427.23 725.953 2456.7" scale="1.002 1.002 1.002" attachto="small-fat-tree"></Node>
+<Node name="apple-tree" orientation="-0.966091 0 0.258204 0" parent="" position="1371.39 721.5 2250.68" scale="1.088 1.088 1.088" attachto="apple-tree"></Node>
+<Node name="fat-tree-01" orientation="-0.99889 0 0.0471059 0" parent="" position="1563 724.768 2248" scale="5.888 5.788 5.738" attachto="fat-tree-01"></Node>
+<Node name="Entity544436" orientation="-0.990218 0 0.139532 0" parent="" position="3504.22 714.25 3363.47" scale="2.164 2.164 2.164" attachto="Entity544436"></Node>
+<Node name="Entity846271" orientation="0.356513 0 0.93429 0" parent="" position="3575.64 733.692 3608.36" scale="2.588 2.588 2.588" attachto="Entity846271"></Node>
+<Node name="Entity700330" orientation="-0.983351 0 0.181718 0" parent="" position="3377.33 738.122 3866.71" scale="1.5 1.5 1.5" attachto="Entity700330"></Node>
+<Node name="Entity636996" orientation="-0.872599 0 0.488438 0" parent="" position="3668.36 722.5 3404.96" scale="1.472 1.472 1.472" attachto="Entity636996"></Node>
+<Node name="Entity726664" orientation="-0.863736 0 0.503945 0" parent="" position="3193.14 724.75 3660" scale="2.04 2.04 2.04" attachto="Entity726664"></Node>
+<Node name="Entity611070" orientation="0.626085 0 0.779755 0" parent="" position="3431.37 732.75 3663.18" scale="1.612 1.612 1.612" attachto="Entity611070"></Node>
+<Node name="Entity654005" orientation="0.984081 0 0.177722 0" parent="" position="3274.9 724.5 3913.68" scale="1.992 1.992 1.992" attachto="Entity654005"></Node>
+<Node name="Entity922636" orientation="0.984081 0 0.177722 0" parent="" position="3750.04 717.107 3286.69" scale="1.864 1.864 1.864" attachto="Entity922636"></Node>
+<Node name="Entity698874" orientation="-0.402935 0 0.915229 0" parent="" position="3986.3 722.5 3458.4" scale="2.122 2.122 2.122" attachto="Entity698874"></Node>
+<Node name="Entity175561" orientation="-0.826478 0 0.56297 0" parent="" position="3806.15 733.75 3480.89" scale="1.44 1.44 1.44" attachto="Entity175561"></Node>
+<Node name="Entity770567" orientation="-0.754005 0 0.656869 0" parent="" position="3612.15 716.291 3521.72" scale="1.84 1.84 1.84" attachto="Entity770567"></Node>
+<Node name="Entity190332" orientation="0.434631 0 0.900609 0" parent="" position="3368.53 704.75 3472.35" scale="3.776 3.776 3.776" attachto="Entity190332"></Node>
+<Node name="Entity586154" orientation="-0.836401 0 0.548117 0" parent="" position="3244.91 711.986 3770.91" scale="2.684 2.684 2.684" attachto="Entity586154"></Node>
+<Node name="Entity526119" orientation="-0.836401 0 0.548117 0" parent="" position="3325.12 718 4127.33" scale="3.42 3.42 3.42" attachto="Entity526119"></Node>
+<Node name="Entity467475" orientation="-0.697646 0 0.716443 0" parent="" position="3484.5 765 4093.75" scale="0.439999 0.439999 0.439999" attachto="Entity467475"></Node>
+<Node name="Entity453990" orientation="0.663822 0 0.747891 0" parent="" position="3595.93 725.5 4310.24" scale="2.667 2.667 2.667" attachto="Entity453990"></Node>
+<Node name="Entity778428" orientation="-0.977902 0 0.209065 0" parent="" position="3975.12 754 3699.92" scale="0.488 0.488 0.488" attachto="Entity778428"></Node>
+<Node name="Entity781861" orientation="0.913104 0 0.407727 0" parent="" position="3976.5 791 3849.84" scale="1.128 1.128 1.128" attachto="Entity781861"></Node>
+<Node name="Entity406340" orientation="0.814747 0 0.579817 0" parent="" position="3982.83 735.5 3567.25" scale="2.269 2.269 2.269" attachto="Entity406340"></Node>
+<Node name="Entity644365" orientation="-0.609285 0 0.792952 0" parent="" position="4115.52 735.75 3357.34" scale="2.116 2.116 2.116" attachto="Entity644365"></Node>
+<Node name="Entity423860" orientation="-0.276681 0 0.960962 0" parent="" position="4143.72 729.25 3566.87" scale="1.408 1.408 1.408" attachto="Entity423860"></Node>
+<Node name="Entity528201" orientation="0.738011 0 0.674789 0" parent="" position="4143.25 747.75 3745.74" scale="1.556 1.556 1.556" attachto="Entity528201"></Node>
+<Node name="Entity459866" orientation="-0.845439 0 0.534072 0" parent="" position="4092.41 770.75 3920.52" scale="1.204 1.204 1.204" attachto="Entity459866"></Node>
+<Node name="Entity365153" orientation="-0.892736 0 0.450581 0" parent="" position="4247.13 737 3675.78" scale="0.944 0.944 0.944" attachto="Entity365153"></Node>
+<Node name="Entity811451" orientation="-0.892736 0 0.450581 0" parent="" position="4266.36 771.25 3429.63" scale="1.268 1.268 1.268" attachto="Entity811451"></Node>
+<Node name="Entity732085" orientation="-0.999994 0 0.00352159 0" parent="" position="4366.1 785 3531.8" scale="0.84 0.84 0.84" attachto="Entity732085"></Node>
+<Node name="Entity477007" orientation="-0.999775 0 0.0212211 0" parent="" position="4207.78 749.364 3924.78" scale="1.508 1.508 1.508" attachto="Entity477007"></Node>
+<Node name="Entity419254" orientation="0.31265 0 0.949869 0" parent="" position="4177.67 756 3827.37" scale="1.072 1.072 1.072" attachto="Entity419254"></Node>
+<Node name="Entity164082" orientation="0.999775 0 0.0212208 0" parent="" position="4293.83 753 3864.68" scale="1.816 1.816 1.816" attachto="Entity164082"></Node>
+<Node name="Entity416373" orientation="-0.665478 0 0.746417 0" parent="" position="4375.15 796 3892.9" scale="0.864 0.864 0.864" attachto="Entity416373"></Node>
+<Node name="Entity186270" orientation="-0.0833477 0 0.996521 0" parent="" position="4356.2 797 4007.14" scale="0.94 0.94 0.94" attachto="Entity186270"></Node>
+<Node name="Entity928818" orientation="0.427059 0 0.904224 0" parent="" position="4252.36 798 4153.45" scale="0.972 0.972 0.972" attachto="Entity928818"></Node>
+<Node name="Entity951738" orientation="-0.633125 0 0.77405 0" parent="" position="4283.41 737.134 3730.19" scale="1.42 1.42 1.42" attachto="Entity951738"></Node>
+<Node name="Entity616084" orientation="0.228674 0 0.973503 0" parent="" position="4227.24 730.75 3517.57" scale="1.6 1.6 1.6" attachto="Entity616084"></Node>
+<Node name="Entity978136" orientation="0.548746 0 0.835989 0" parent="" position="4256.52 740 3583.5" scale="0.88 0.88 0.88" attachto="Entity978136"></Node>
+<Node name="Entity145973" orientation="-0.993133 0 0.116991 0" parent="" position="4115.29 744.561 3641.55" scale="0.804 0.804 0.804" attachto="Entity145973"></Node>
+<Node name="Entity340710" orientation="0.993999 0 0.109393 0" parent="" position="3565.47 742.401 3234.47" scale="1.508 1.508 1.508" attachto="Entity340710"></Node>
+<Node name="Entity642941" orientation="0.826895 0 0.562357 0" parent="" position="3663.96 751 3209.4" scale="0.14 0.14 0.14" attachto="Entity642941"></Node>
+<Node name="Entity660911" orientation="-0.999751 0 0.0223055 0" parent="" position="3547.15 725 3289.43" scale="0.692 0.692 0.692" attachto="Entity660911"></Node>
+<Node name="Entity885024" orientation="-0.999751 0 0.0223055 0" parent="" position="3538.64 757.552 3220.76" scale="0.508 0.508 0.508" attachto="Entity885024"></Node>
+<Node name="Entity859806" orientation="0.66548 0 0.746416 0" parent="" position="3684.13 739 3532.73" scale="1.608 1.608 1.608" attachto="Entity859806"></Node>
+<Node name="Entity367964" orientation="0.558022 0 0.829826 0" parent="" position="3353.09 738.75 3355.17" scale="1.66 1.66 1.66" attachto="Entity367964"></Node>
+<Node name="Entity979473" orientation="0.931813 0 0.362938 0" parent="" position="3981.66 737.202 3262.66" scale="1.556 1.556 1.556" attachto="Entity979473"></Node>
+<Node name="Entity114711" orientation="0.931813 0 0.362938 0" parent="" position="3833.5 710.502 3336" scale="2.816 2.816 2.816" attachto="Entity114711"></Node>
+<Node name="Entity658202" orientation="0.931813 0 0.362938 0" parent="" position="3148.81 754.25 3901.64" scale="0.576 0.576 0.576" attachto="Entity658202"></Node>
+<Node name="Entity954537" orientation="-0.488151 0 0.872759 0" parent="" position="3167.74 740.5 3904.02" scale="1.432 1.432 1.432" attachto="Entity954537"></Node>
+<Node name="Entity532691" orientation="0.157828 0 0.987467 0" parent="" position="3205.2 743.75 4032.39" scale="0.872 0.872 0.872" attachto="Entity532691"></Node>
+<Node name="Entity127677" orientation="-0.255123 0 0.966909 0" parent="" position="3254.32 745.75 4113.04" scale="1.26 1.26 1.26" attachto="Entity127677"></Node>
+<Node name="Entity274781" orientation="0.263551 0 0.964645 0" parent="" position="3447.78 752.75 3974.53" scale="0.948 0.948 0.948" attachto="Entity274781"></Node>
+<Node name="Entity178668" orientation="-0.826287 0 0.563249 0" parent="" position="3389.1 743.5 3965.71" scale="0.9 0.9 0.9" attachto="Entity178668"></Node>
+<Node name="Entity123424" orientation="-0.826287 0 0.563249 0" parent="" position="3434.25 746.75 3912.59" scale="0.992 0.992 0.992" attachto="Entity123424"></Node>
+<Node name="Entity132150" orientation="-0.16988 0 0.985465 0" parent="" position="3567.76 767.5 3860.48" scale="1.088 1.088 1.088" attachto="Entity132150"></Node>
+<Node name="Entity661929" orientation="0.994116 0 0.108322 0" parent="" position="3446.23 745.25 3848.35" scale="1.5 1.5 1.5" attachto="Entity661929"></Node>
+<Node name="Entity145003" orientation="-0.0996526 0 0.995022 0" parent="" position="3211.79 748 3511.22" scale="1.328 1.328 1.328" attachto="Entity145003"></Node>
+<Node name="Entity192287" orientation="-0.995757 0 0.0920259 0" parent="" position="3266.46 750 3442.23" scale="0.428 0.428 0.428" attachto="Entity192287"></Node>
+<Node name="Entity572255" orientation="-0.995757 0 0.0920259 0" parent="" position="3297.14 718 3510.44" scale="1.466 1.466 1.466" attachto="Entity572255"></Node>
+<Node name="Entity921823" orientation="0.077055 0 0.997027 0" parent="" position="3694.34 733.75 3225.91" scale="0.952 0.952 0.952" attachto="Entity921823"></Node>
+<Node name="Entity172012" orientation="0.888772 0 0.45835 0" parent="" position="3785.41 738.5 3221.77" scale="0.996 0.996 0.996" attachto="Entity172012"></Node>
+<Node name="Entity131952" orientation="0.0850832 0 0.996374 0" parent="" position="3871.33 747.75 3223.69" scale="0.516 0.516 0.516" attachto="Entity131952"></Node>
+<Node name="Entity673837" orientation="-0.999751 0 0.0223055 0" parent="" position="4183.9 755.75 3399.61" scale="1.04 1.04 1.04" attachto="Entity673837"></Node>
+<Node name="Entity385430" orientation="-0.796328 0 0.604865 0" parent="" position="4051.3 745.5 3297.84" scale="1.312 1.312 1.312" attachto="Entity385430"></Node>
+<Node name="Entity786423" orientation="-0.796328 0 0.604865 0" parent="" position="4192.75 742 3436.27" scale="1.208 1.208 1.208" attachto="Entity786423"></Node>
+<Node name="Entity536749" orientation="0.91858 0 0.395235 0" parent="" position="4043.53 754.53 3680.92" scale="1.056 1.056 1.056" attachto="Entity536749"></Node>
+<Node name="Entity485599" orientation="0.801576 0 0.597893 0" parent="" position="3794.56 794.246 3807.38" scale="0.56 0.56 0.56" attachto="Entity485599"></Node>
+<Node name="Entity684691" orientation="-0.997825 0 0.0659215 0" parent="" position="3741.01 788.25 3821.96" scale="1.108 1.108 1.108" attachto="Entity684691"></Node>
+<Node name="Entity217716" orientation="0.973503 0 0.228673 0" parent="" position="3755.9 790.25 3813.86" scale="0.516 0.516 0.516" attachto="Entity217716"></Node>
+<Node name="Entity259052" orientation="0.831769 0 0.555123 0" parent="" position="3781.32 782 3796.49" scale="1.58 1.58 1.58" attachto="Entity259052"></Node>
+<Node name="Entity280765" orientation="0.988177 0 0.153316 0" parent="" position="3199.95 747 3566.2" scale="0.764 0.764 0.764" attachto="Entity280765"></Node>
+<Node name="Entity944537" orientation="0.831769 0 0.555123 0" parent="" position="3415.13 760.5 4288.84" scale="1.508 1.508 1.508" attachto="Entity944537"></Node>
+<Node name="Entity521707" orientation="0.831769 0 0.555123 0" parent="" position="3711.46 803 4121.24" scale="0.412 0.412 0.412" attachto="Entity521707"></Node>
+<Node name="Entity120269" orientation="-0.938007 0 0.346617 0" parent="" position="3667.25 794 4098.17" scale="0.744 0.744 0.744" attachto="Entity120269"></Node>
+<Node name="Entity470440" orientation="-0.997291 0 0.073559 0" parent="" position="3534.75 759.5 4124.51" scale="1.412 1.412 1.412" attachto="Entity470440"></Node>
+<Node name="Entity292452" orientation="-0.997291 0 0.073559 0" parent="" position="3771.45 790 4384.73" scale="0.848 0.848 0.848" attachto="Entity292452"></Node>
+<Node name="Entity457678" orientation="-0.395237 0 0.918579 0" parent="" position="3977.89 805 4366.15" scale="0.74 0.74 0.74" attachto="Entity457678"></Node>
+<Node name="Entity836552" orientation="0.511754 0 0.859132 0" parent="" position="4042.74 789.5 4307.68" scale="1.28 1.28 1.28" attachto="Entity836552"></Node>
+<Node name="Entity751613" orientation="0.994034 0 0.109074 0" parent="" position="4383.34 793.26 2184.13" scale="1.064 1.064 1.064" attachto="Entity751613"></Node>
+<Node name="Entity251636" orientation="0.5 0 0.866025 0" parent="" position="2232.56 710.25 2926.1" scale="3.876 3.876 3.876" attachto="Entity251636"></Node>
+<Node name="Entity303387" orientation="-0.430511 0 0.902585 0" parent="" position="1446.19 719.25 2779.71" scale="2.52 2.52 2.52" attachto="Entity303387"></Node>
+<Node name="Entity245610" orientation="-0.989016 0 0.147809 0" parent="" position="2044.17 718.5 2744.1" scale="1.36 1.36 1.36" attachto="Entity245610"></Node>
+<Node name="Entity346010" orientation="-0.955665 0 0.294456 0" parent="" position="1700.16 721 2900.24" scale="1.468 1.468 1.468" attachto="Entity346010"></Node>
+<Node name="Entity709036" orientation="-0.701219 0 0.712946 0" parent="" position="1765.76 721.5 2781.16" scale="1.528 1.528 1.528" attachto="Entity709036"></Node>
+<Node name="Entity858163" orientation="-0.972877 0 0.231324 0" parent="" position="1944.69 722.5 2873.02" scale="1.348 1.348 1.348" attachto="Entity858163"></Node>
+<Node name="Entity277749" orientation="0.344069 0 0.938944 0" parent="" position="1880.51 723.25 2784.38" scale="1.188 1.188 1.188" attachto="Entity277749"></Node>
+<Node name="Entity644391" orientation="0.926365 0 0.376628 0" parent="" position="1742.57 716.75 2980.97" scale="0.948 0.948 0.948" attachto="Entity644391"></Node>
+<Node name="Entity531658" orientation="-0.160448 0 0.987044 0" parent="" position="762.959 927.939 4199.72" scale="0.452 0.452 0.452" attachto="Entity531658"></Node>
+<Node name="Entity685010" orientation="-0.589788 0 0.807558 0" parent="" position="1471.73 731.627 2903.48" scale="1 1 1" attachto="Entity685010"></Node>
+<Node name="Entity749461" orientation="0.624145 0 0.781309 0" parent="" position="865.228 729.785 3404.36" scale="1 1 1" attachto="Entity749461"></Node>
+<Node name="Entity810124" orientation="-0.999998 0 0.00182691 0" parent="" position="795.982 722.635 3338.97" scale="1.624 1.624 1.624" attachto="Entity810124"></Node>
+<Node name="Entity886138" orientation="-0.995921 0 0.0902312 0" parent="" position="1906.5 776.442 936.162" scale="3.794 3.794 3.794" attachto="Entity886138"></Node>
+<Node name="Entity644299" orientation="-0.895157 0 0.445751 0" parent="" position="1789.54 737.966 970.785" scale="2.103 2.103 2.103" attachto="Entity644299"></Node>
+<Node name="Entity874848" orientation="-0.909012 0 0.41677 0" parent="" position="2021.83 721.735 1074.38" scale="4.32 4.32 4.32" attachto="Entity874848"></Node>
+<Node name="Entity774733" orientation="0.802097 0 0.597194 0" parent="" position="1967.67 719.978 1051.41" scale="2.136 2.136 2.136" attachto="Entity774733"></Node>
+<Node name="Entity187060" orientation="0.483984 0 0.875077 0" parent="" position="1669.24 753.835 1047.88" scale="2.776 2.776 2.776" attachto="Entity187060"></Node>
+<Node name="Entity881540" orientation="0.533554 0 0.845766 0" parent="" position="1864.49 700.884 1096.4" scale="2.136 2.136 2.136" attachto="Entity881540"></Node>
+<Node name="Entity309399" orientation="0.0278324 0 0.999613 0" parent="" position="1675.04 706.282 1156.45" scale="2.644 2.644 2.644" attachto="Entity309399"></Node>
+<Node name="Entity740543" orientation="0.759666 0 0.650314 0" parent="" position="1818.96 724.11 1002.42" scale="0.532999 0.532999 0.532999" attachto="Entity740543"></Node>
+<Node name="Entity919732" orientation="0.428469 0 0.903556 0" parent="" position="1879.69 710.469 1139.19" scale="0.532999 0.532999 0.532999" attachto="Entity919732"></Node>
+<Entity name="Entity365823" meshfile="tree.09.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity703749" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity535807" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="CastleTower" meshfile="tower.01.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity569459" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity549051" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity919796" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity785869" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity366948" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity753156" meshfile="plant.03.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity781831" meshfile="plant.03.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity170232" meshfile="plant.03.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity312207" meshfile="plant.03.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity872801" meshfile="plant.03.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity104229" meshfile="plant.03.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity427869" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity814709" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity489724" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity550068" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity831573" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity274800" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity921389" meshfile="plant.02.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity753074" meshfile="plant.02.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity826684" meshfile="plant.02.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity820147" meshfile="plant.02.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity286004" meshfile="plant.02.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity132026" meshfile="plant.02.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity190502" meshfile="plant.02.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity970747" meshfile="plant.02.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity311438" meshfile="plant.02.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity245490" meshfile="plant.02.mesh" parent="" shadows="false"></Entity>
+<Entity name="house-01" meshfile="highlanderhouse.01.mesh" parent="" shadows="false"></Entity>
+<Entity name="fishing-dock-01" meshfile="hang.bridge.01.mesh" parent="" shadows="false"></Entity>
+<Entity name="small-fat-tree" meshfile="tree.09.mesh" parent="" shadows="false"></Entity>
+<Entity name="apple-tree" meshfile="tree.05.mesh" parent="" shadows="false"></Entity>
+<Entity name="fat-tree-01" meshfile="tree.09.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity544436" meshfile="tree.09.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity846271" meshfile="tree.09.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity700330" meshfile="tree.09.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity636996" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity726664" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity611070" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity654005" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity922636" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity698874" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity175561" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity770567" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity190332" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity586154" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity526119" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity467475" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity453990" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity778428" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity781861" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity406340" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity644365" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity423860" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity528201" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity459866" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity365153" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity811451" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity732085" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity477007" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity419254" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity164082" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity416373" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity186270" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity928818" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity951738" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity616084" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity978136" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity145973" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity340710" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity642941" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity660911" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity885024" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity859806" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity367964" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity979473" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity114711" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity658202" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity954537" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity532691" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity127677" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity274781" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity178668" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity123424" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity132150" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity661929" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity145003" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity192287" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity572255" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity921823" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity172012" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity131952" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity673837" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity385430" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity786423" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity536749" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity485599" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity684691" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity217716" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity259052" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity280765" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity944537" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity521707" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity120269" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity470440" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity292452" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity457678" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity836552" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity751613" meshfile="hang.bridge.01.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity251636" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity303387" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity245610" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity346010" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity709036" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity858163" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity277749" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity644391" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity531658" meshfile="tower.01.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity685010" meshfile="rock.05.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity749461" meshfile="rock.05.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity810124" meshfile="rock.05.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity886138" meshfile="rock.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity644299" meshfile="rock.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity874848" meshfile="rock.05.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity774733" meshfile="rock.05.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity187060" meshfile="rock.05.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity881540" meshfile="rock.05.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity309399" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity740543" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<Entity name="Entity919732" meshfile="tree.07.mesh" parent="" shadows="false"></Entity>
+<HeightTerrain name="terrain" heightmap.image="ETTerrain.png" worldtexture="artifexterra3d_colourmap.png" detailtexture="splatting0.png" detailtile="3" heightmap.raw.size="0" heightmap.raw.bpp="" pagesize="1025" tilesize="33" maxpixelerror="2" pageworldx="5000" pageworldz="5000" maxheight="1667" maxmipmaplevel="5" vertexnormals="true" vertexcolors="false" usetristrips="false" vertexprogrammorph="true" lodmorphstart="0.2" morphlodfactorparamname="" morphlodfactorparamindex="0" custommaterialname="ETTerrainMaterial" splatting="splatting0.png,splatting1.png,splatting2.png,splatting3.png,splatting4.png,splatting5.png,splatting6.png,splatting7.png,splatting8.png"></HeightTerrain>
+<Water watermaterial="OUTMaterials/Water.02" watervisible="true" waterwidthx="30000" waterwidthz="30000" waterxpos="5000" waterypos="720" waterzpos="5000"></Water>

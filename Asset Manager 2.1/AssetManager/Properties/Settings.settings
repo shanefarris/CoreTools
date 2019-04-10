@@ -1,0 +1,65 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AssetManager.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ScriptingExcludes" Type="System.Collections.Specialized.StringCollection" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;CBaseLayout_MyGui.h&lt;/string&gt;
+  &lt;string&gt;CBillboardManager.h&lt;/string&gt;
+  &lt;string&gt;CTextOutput.h&lt;/string&gt;
+  &lt;string&gt;OgreConsole.h&lt;/string&gt;
+  &lt;string&gt;CScriptManager.h&lt;/string&gt;
+  &lt;string&gt;OldPathway.h&lt;/string&gt;
+  &lt;string&gt;SoundEnginePrereqs.h&lt;/string&gt;
+  &lt;string&gt;SharedPointer.h&lt;/string&gt;
+  &lt;string&gt;CFpsFrameListener.h&lt;/string&gt;
+  &lt;string&gt;CFrameListenerFramework.h&lt;/string&gt;
+  &lt;string&gt;CPlayerAttributesComponent.h&lt;/string&gt;
+  &lt;string&gt;IPhysicsStrategy.h&lt;/string&gt;
+  &lt;string&gt;ICharacterController.h&lt;/string&gt;
+  &lt;string&gt;IPhysicsRagdoll.h&lt;/string&gt;
+  &lt;string&gt;IItemProfile.h&lt;/string&gt;
+  &lt;string&gt;IItemFactory.h&lt;/string&gt;
+  &lt;string&gt;IInventoryItem.h&lt;/string&gt;
+  &lt;string&gt;IGuiStrategy.h&lt;/string&gt;
+  &lt;string&gt;IMission.h&lt;/string&gt;
+  &lt;string&gt;IAiReactionComponent.h&lt;/string&gt;
+  &lt;string&gt;ICamera.h&lt;/string&gt;
+  &lt;string&gt;Defines.h&lt;/string&gt;
+  &lt;string&gt;CUtility.h&lt;/string&gt;
+  &lt;string&gt;CRagdollBoneInformation.h&lt;/string&gt;
+  &lt;string&gt;QueryStrings.h&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="Help" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">
+          Copy Assets:
+          This tab will copy all assets given a root directory, and will output it all into the output directory.  Using the Merge Materials checkbox will copy all the materials into one file.  This is useful when having to manage hundreds of lines of materials, and finding multiple material names.
+
+          Material Check:
+          Used to run validation rules on a material file.  The only validation rule coded now is a check for multiple names.
+
+          Archive:
+          Used to generate config XML for specifying directory and zip archives.
+
+          Profiles:
+          Used to generate XML for inventory profiles in scene files (scx).
+
+          Code Generator:
+          Game Object Plugin, given an asset directory, will generate boilerplate plugin code for every mesh file in the asset directory.  Compress button will take all the files in the asset directory and compress it in into a signle zip file.  This button is ment to be used once all the game oject code is generated, because the code will fail unless the asset can be foud so you might as well add it to the archive.
+
+          Scripting:
+          Used to generate script bindings.  Get a directory listing fo the include directories you want to use for binding.  Then generate the packaging files.
+
+          Todo:
+          1. Add validation to particles and overlays
+          2. These will also need to split up into there own just like materials and accessed by name and not file name.
+          3. When updating the material, if the name is changed, change it in the Db."
+        </Value>
+    </Setting>
+    <Setting Name="StandardSize" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">4.1182</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

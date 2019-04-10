@@ -1,0 +1,323 @@
+namespace Core
+{
+namespace Overlays
+{
+	class  BigTitleWidget 
+	{
+	public:
+		BigTitleWidget();
+		bool init(const char* uniqueName, float parentLeft, float parentTop, float parentRight, float parentBottom, const char* text);
+		// note xpos and ypos are 0.0-0.1
+		bool free();
+		bool defineParentBounds(float left, float top, float right, float bottom);	// tell this widget what the parent's dimensions are. Needs to be called if parent moved.
+		OverlayElement* getElement();
+		bool show();
+		bool hide();
+		bool moveWidget(float pixelX, float pixelY);	// note xpos and ypos are 0.0-0.1
+		bool setText(const char *text);
+};
+}
+}
+namespace Core
+{
+namespace Overlays
+{
+	// generic button. uses 3 default images {basic/mouseover/selected}
+	class  ButtonWidget 
+	{
+	public:
+		ButtonWidget();
+		bool init(const char* uniqueName, float parentLeft, float parentTop, float parentRight, float parentBottom, float xprop, float yprop, const char* text, bool toggleType = false);
+		// note xpos and ypos are 0.0-0.1
+		bool free();
+		bool defineParentBounds(float left, float top, float right, float bottom);	// tell this widget what the parent's dimensions are. Needs to be called if parent moved.
+		OverlayElement* getElement();
+		bool show();
+		bool hide();
+		bool moveWidget(float xprop, float yprop);	// note xpos and ypos are 0.0-0.1
+		bool setText(const char *text);
+		bool update(unsigned int mousex, unsigned int mousey, bool lmb); // change gfx if hover
+		bool isHighlighted();
+		bool isClicked();
+		bool isSelected();
+		void setSelected(bool selected);
+		void deactivate();
+		void activate();
+};
+}
+}
+// For the compass and position indicators
+namespace Core
+{
+namespace Overlays
+{
+	class  Compass
+	{
+	public:
+		Compass(Real worldWidthX, Real worldWidthZ);
+		~Compass();
+		void  show(void) { compassOverlay->show(); }
+		void  hide(void) { compassOverlay->hide(); }
+		//void  toggleVisibility();
+		void  FrameStarted(SceneNode *playerCameraNode);
+};
+}
+}
+namespace Core
+{
+namespace Overlays
+{
+	// A small button widget used as a clickable list item for combo-box type widgets
+	class  EntryWidget : public Core::Overlays::ButtonWidget 
+	{
+	public:
+		EntryWidget();
+		bool init(const char* uniqueName, float parentLeft, float parentTop, float parentRight, float parentBottom, float xprop, float yprop, const char* text, bool toggleType = true);
+		bool setText(const char *text);
+};
+}
+}
+ 
+namespace Ogre 
+{
+	class TextureUnitState;
+	class Overlay;
+}
+namespace Core
+{
+namespace Overlays
+{
+ 
+	class  FaderCallback
+	{
+	public:
+		 void fadeInCallback(void) {}
+		 void fadeOutCallback(void) {}
+	};
+	class  Fader
+	{
+	public:
+		Fader(const char *OverlayName, const char *MaterialName, FaderCallback *instance = 0);
+		~Fader(void);
+		void startFadeIn(double duration = 1.0f);
+		void startFadeOut(double duration = 1.0f);
+		void fade(double timeSinceLastFrame);
+};
+}
+}
+// Implementation 
+// fader = new Fader("Overlays/FadeInOut", "Materials/OverlayMaterial", this);
+// fader->startFadeIn(2.5);
+//bool frameStarted(const FrameEvent &evt)
+//     {
+//         if( !ExampleFrameListener::frameStarted(evt) )
+//             return false;
+// 
+//         // Fade in/out
+//         fader->fade(evt.timeSinceLastFrame);
+//Overlays/FadeInOut
+// {
+//     zorder 650
+// 
+//     container Panel(FadeInOutPanel)
+//     {
+//         left 0
+//         top 0
+//         width 1
+//         height 1
+//         material Materials/OverlayMaterial
+//     }
+// }
+//material Materials/OverlayMaterial
+// {
+//     technique
+//     {
+//         pass
+//         {
+//             scene_blend alpha_blend
+// 
+//             texture_unit
+//             {
+//                 texture black.png
+//             }
+//         }
+//     }
+// }
+namespace Core
+{
+namespace Overlays
+{
+	class  FileBrowserWidget 
+	{
+	public:
+		FileBrowserWidget();
+		bool init(const char* uniqueName, float parentLeft, float parentRight, float parentTop, float parentBottom, float xProp, float yProp);
+		bool free();
+		bool defineParentBounds(float left, float top, float right, float bottom);	// tell this widget what the parent's dimensions are. Needs to be called if parent moved.
+		bool scan(const char* subdir, const char* extension, bool recursive = false);
+		bool show();
+		bool hide();
+		bool moveWidget(float xProp, float yProp);									// move to a position relative to size of parent (0.0-1.0)
+		bool moveAbsWidget(float xprop, float yprop);
+		bool update(unsigned int mousex, unsigned int mousey, bool lmb);			// changes display if next/prev clicked
+		bool populatePage(int pageNumber);
+		char* getSelectedEntryName();
+		bool isOKClicked();
+		bool isCancelClicked();
+		bool IsVisible();
+		char mSelectedEntry[256];
+};
+}
+}
+// class for reading data directory contents
+class FileScanner {
+public:
+	FileScanner();
+	bool scan(const char* subdir, const char* extension, bool recursive = false);	// very basic scanner
+	int getFileCount();
+	char* getFileName(int i);
+	bool doesFileExist(const char* filename); // checks scanned files for this one
+};
+namespace Core
+{
+namespace Overlays
+{
+	class  ImageWidget 
+	{
+	public:
+		ImageWidget();
+		bool init(const char* uniqueName, const char* materialName, float picWidth, float picHeight, float xProp, float yProp, float parentLeft, float parentTop, float parentRight, float parentBottom);
+		bool free();
+		OverlayElement* getElement();
+		bool show();
+		bool hide();
+		bool setAlignment(const char* top, const char* left);
+		bool moveWidget(float xprop, float yprop);	// note xpos and ypos are 0.0-0.1
+		bool defineParentBounds(float left, float top, float right, float bottom); // tell this widget what the parent's dimensions are. Needs to be called if parent moved.
+};
+}
+}
+namespace Core
+{
+namespace Overlays
+{
+	class  LabelWidget 
+	{
+	public:
+		LabelWidget();
+		bool init(const char* uniqueName, float parentLeft, float parentTop, float parentRight, float parentBottom, float xprop, float yprop, const char* text);
+		bool free();
+		bool defineParentBounds(float left, float top, float right, float bottom);	// tell this widget what the parent's dimensions are. Needs to be called if parent moved.
+		OverlayElement* getElement();
+		bool show();
+		bool hide();
+		bool moveWidget(float xprop, float yprop);	// note xpos and ypos are 0.0-0.1
+		bool moveAbsWidget(float xprop, float yprop);
+		bool setAlignment(const char* top, const char* left);
+		bool setColour(float r, float g, float b, float a);
+		bool setSize(int charHeight);
+		bool setFont(const char* fontName);
+		bool centreText();
+		bool setText(const char *text);
+		char* getText();
+};
+}
+}
+//#ifdef 1
+namespace Core
+{
+namespace Overlays
+{
+	class  MiniMap
+	{
+	public:
+		MiniMap(const char* Overlay = nullptr, const char* OverlayImage = nullptr);
+		~MiniMap();
+		void Update();
+};
+}
+}
+//#endif // COMPILE_OVERLAYS
+namespace Core
+{
+namespace Overlays
+{
+	class  MouseCursor 
+	{
+	public:
+		void init();
+		void setImage(const String& filename);
+		void setWindowDimensions(unsigned int width, unsigned int height);
+		void setVisible(bool visible);
+		void updatePosition(int x, int y);
+		float clamp(float a, float min, float max);
+};
+}
+}
+namespace Core
+{
+namespace Overlays
+{
+	class  Notifications
+	{
+	public:
+         Notifications();
+        ~Notifications();
+	   void  FrameStarted(Real timeElapsed);
+	   void  AddNotification(String theNotification, ColourValue &textColor = ColourValue(1.0, 1.0, 1.0, 1.0));
+	   void  Show(void) { theOverlay->show(); }
+	   void  Hide(void) { theOverlay->hide(); }
+};
+}
+}
+namespace Core
+{
+namespace Overlays
+{
+	// This is a widget for capturing user-input text
+	class  TextEntryWidget 
+	{
+	public: // in a real gui this would extend some overcomplicated abstract class, but it isn't a real gui system
+		TextEntryWidget(); // set defaults
+		bool init(const char* uniqueName, float parentLeft, float parentTop, float parentRight, float parentBottom, float xprop, float yprop);
+		bool free(); // free allocated memory
+		bool defineParentBounds(float left, float top, float right, float bottom);	// tell this widget what the parent's dimensions are. Needs to be called if parent moved.
+		OverlayElement* getElement();
+		bool show();
+		bool hide();
+		bool moveWidget(float xprop, float yprop);	// note xpos and ypos are 0.0-0.1
+		bool setTitleText(const char *text);
+		bool setTypedText(const char *text); // call this method every time a user enters another character
+		char* getTypedText(); // get the user-typed text
+		bool update(unsigned int mousex, unsigned int mousey, bool lmb); // lets widget know if user is clicking to type or clicking to stop
+		bool isHighlighted();
+		bool isClicked();
+		bool isSelected();
+		void setSelected(bool selected);
+		void deactivate();
+		void activate();
+};
+}
+}
+namespace Core
+{
+namespace Overlays
+{
+	class  YesNoBoxWidget 
+	{
+	public:
+		YesNoBoxWidget();
+		bool init(const char* uniqueName, float parentLeft, float parentTop, float parentRight, float parentBottom, float xProp, float yProp);
+		bool free();
+		bool defineParentBounds(float left, float top, float right, float bottom);
+		bool show();
+		bool hide();
+		bool moveWidget(float xProp, float yProp);	// move to a position relative to size of parent (0.0-1.0)
+		bool update(unsigned int mousex, unsigned int mousey, bool lmb);  // changes display if next/prev clicked
+		bool isOKClicked();
+		bool isCancelClicked();
+		bool isShowing();
+		void setQuestion(const char* questionText);
+};
+}
+}

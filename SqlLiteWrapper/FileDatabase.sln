@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FileDatabase", "SqlLiteWraper.vcxproj", "{E86BC40D-76BE-482C-8CEB-5B1283F0CE3F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FileDatabaseTest", "SqlLiteWraperTest.vcxproj", "{CE08E085-C4EF-44E9-A47F-F709D6BB8966}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E86BC40D-76BE-482C-8CEB-5B1283F0CE3F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E86BC40D-76BE-482C-8CEB-5B1283F0CE3F}.Debug|Win32.Build.0 = Debug|Win32
+		{E86BC40D-76BE-482C-8CEB-5B1283F0CE3F}.Release|Win32.ActiveCfg = Release|Win32
+		{E86BC40D-76BE-482C-8CEB-5B1283F0CE3F}.Release|Win32.Build.0 = Release|Win32
+		{CE08E085-C4EF-44E9-A47F-F709D6BB8966}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CE08E085-C4EF-44E9-A47F-F709D6BB8966}.Debug|Win32.Build.0 = Debug|Win32
+		{CE08E085-C4EF-44E9-A47F-F709D6BB8966}.Release|Win32.ActiveCfg = Release|Win32
+		{CE08E085-C4EF-44E9-A47F-F709D6BB8966}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

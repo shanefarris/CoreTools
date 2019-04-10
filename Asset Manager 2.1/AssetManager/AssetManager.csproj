@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A7E47DDF-C7FA-45C2-B196-4F58ECE3169B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AssetManager</RootNamespace>
+    <AssemblyName>AssetManager</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Magick.NET-AnyCPU">
+      <HintPath>..\packages\Magick.NET-Q16-AnyCPU.6.8.8.1001\lib\net40-client\Magick.NET-AnyCPU.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.IO.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.IO.Compression.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssetTreeView.cs" />
+    <Compile Include="Code Generators\BuildingGenerator.cs" />
+    <Compile Include="Code Generators\CharacterGenerator.cs" />
+    <Compile Include="Code Generators\CodeGenerator.cs" />
+    <Compile Include="Code Generators\FontGenerator.cs" />
+    <Compile Include="Code Generators\GameObjectGenerator.cs" />
+    <Compile Include="Code Generators\Gui3dGuiGenerator.cs" />
+    <Compile Include="Code Generators\GuiGeneratorBase.cs" />
+    <Compile Include="Code Generators\MaterialGenerator.cs" />
+    <Compile Include="Code Generators\MyGuiGenerator.cs" />
+    <Compile Include="Code Generators\SceneFile.cs" />
+    <Compile Include="Forms\ExportFormat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ExportFormat.Designer.cs">
+      <DependentUpon>ExportFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ItemProfileHelper.cs" />
+    <Compile Include="Forms\ItemTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ItemTool.Designer.cs">
+      <DependentUpon>ItemTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LevelConverter.cs" />
+    <Compile Include="Forms\Magazine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Magazine.Designer.cs">
+      <DependentUpon>Magazine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MaterialAsset.cs" />
+    <Compile Include="MeshAsset.cs" />
+    <Compile Include="Controls\MeshControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MeshControl.Designer.cs">
+      <DependentUpon>MeshControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MeshConverter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MeshConverter.Designer.cs">
+      <DependentUpon>MeshConverter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Forms\Projectiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Projectiles.Designer.cs">
+      <DependentUpon>Projectiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceHelper.cs" />
+    <Compile Include="Forms\Scripting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Scripting.Designer.cs">
+      <DependentUpon>Scripting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptingHelper.cs" />
+    <EmbeddedResource Include="Forms\ExportFormat.resx">
+      <DependentUpon>ExportFormat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ItemTool.resx">
+      <DependentUpon>ItemTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Magazine.resx">
+      <DependentUpon>Magazine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MeshControl.resx">
+      <DependentUpon>MeshControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MeshConverter.resx">
+      <DependentUpon>MeshConverter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Projectiles.resx">
+      <DependentUpon>Projectiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Forms\Scripting.resx">
+      <DependentUpon>Scripting.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Tools\assimp.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\OgreAssimp.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\OgreMain.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\OgreMeshMagick\OgreMain.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\OgreMeshMagick\OgreMeshMagick.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\OgreMeshUpgrader.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\OgreXMLConverter.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AssetManager.Common\AssetManager.Common.csproj">
+      <Project>{69d0e703-38ec-4709-b414-e18f81236366}</Project>
+      <Name>AssetManager.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AssetManager.Dal\AssetManager.Dal.csproj">
+      <Project>{ca73fdc2-f005-4755-9590-d01921cff73c}</Project>
+      <Name>AssetManager.Dal</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

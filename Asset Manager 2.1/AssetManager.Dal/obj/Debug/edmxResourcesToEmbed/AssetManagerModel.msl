@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AssetManagerDalStoreContainer" CdmEntityContainer="AssetManagerEntities">
+    <FunctionImportMapping FunctionImportName="DeleteAssetFromProfile" FunctionName="AssetManager.Dal.Store.DeleteAssetFromProfile" />
+    <FunctionImportMapping FunctionImportName="DeleteProfile" FunctionName="AssetManager.Dal.Store.DeleteProfile" />
+    <FunctionImportMapping FunctionImportName="GetRootAssets" FunctionName="AssetManager.Dal.Store.GetRootAssets" />
+    <EntitySetMapping Name="Assets">
+      <EntityTypeMapping TypeName="AssetManager.Dal.Asset">
+        <MappingFragment StoreEntitySet="Asset">
+          <ScalarProperty Name="MeshTypeId" ColumnName="MeshTypeId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="AssetTypeId" ColumnName="AssetTypeId" />
+          <ScalarProperty Name="AssetId" ColumnName="AssetId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AssetDependencies">
+      <EntityTypeMapping TypeName="AssetManager.Dal.AssetDependency">
+        <MappingFragment StoreEntitySet="AssetDependency">
+          <ScalarProperty Name="ChildAssetId" ColumnName="ChildAssetId" />
+          <ScalarProperty Name="ParentAssetId" ColumnName="ParentAssetId" />
+          <ScalarProperty Name="AssetDependencyId" ColumnName="AssetDependencyId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AssetLists">
+      <EntityTypeMapping TypeName="AssetManager.Dal.AssetList">
+        <MappingFragment StoreEntitySet="AssetList">
+          <ScalarProperty Name="AssetId" ColumnName="AssetId" />
+          <ScalarProperty Name="AssetListSet" ColumnName="AssetListSet" />
+          <ScalarProperty Name="AssetListId" ColumnName="AssetListId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AssetTypes">
+      <EntityTypeMapping TypeName="AssetManager.Dal.AssetType">
+        <MappingFragment StoreEntitySet="AssetType">
+          <ScalarProperty Name="IsText" ColumnName="IsText" />
+          <ScalarProperty Name="Extension" ColumnName="Extension" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="AssetTypeId" ColumnName="AssetTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="AssetManager.Dal.Category">
+        <MappingFragment StoreEntitySet="Category">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ParentCategoryId" ColumnName="ParentCategoryId" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MeshTypes">
+      <EntityTypeMapping TypeName="AssetManager.Dal.MeshType">
+        <MappingFragment StoreEntitySet="MeshType">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="MeshTypeId" ColumnName="MeshTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Profiles">
+      <EntityTypeMapping TypeName="AssetManager.Dal.Profile">
+        <MappingFragment StoreEntitySet="Profile">
+          <ScalarProperty Name="AssetListSet" ColumnName="AssetListSet" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,3 @@
+LevelCoverter -artifex objects.s3db terrain.cfg zonesettings.cfg
+LevelCoverter -scene test.scene
+LevelCoverter -ogscene test.ogscene

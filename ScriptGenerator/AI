@@ -1,0 +1,3917 @@
+// AbstractVehicle: pure  base class for generic steerable vehicles
+namespace Core 
+{
+namespace AI
+{
+    class AbstractVehicle : public AbstractLocalSpace 
+    {
+    public:
+         ~AbstractVehicle() { }
+        
+        // mass (defaults to unity so acceleration=force)
+         float mass (void) const = 0;
+         float setMass (float) = 0;
+        // size of bounding sphere, for obstacle avoidance, etc.
+         float radius (void) const = 0;
+         float setRadius (float) = 0;
+        // velocity of vehicle
+         reVector3Df velocity (void) const = 0;
+        // speed of vehicle  (may be faster than taking magnitude of velocity)
+         float speed (void) const = 0;
+         float setSpeed (float) = 0;
+        // groups of (pointers to) abstract vehicles, and iterators over them
+        // predict position of this vehicle at some time in the future
+        // (assumes velocity remains constant)
+         reVector3Df predictFuturePosition (const float predictionTime) const = 0;
+        // ----------------------------------------------------------------------
+        // XXX this vehicle-model-specific functionality functionality seems out
+        // XXX of place on the abstract base class, but for now it is expedient
+        // the maximum steering force this vehicle can apply
+         float maxForce (void) const = 0;
+         float setMaxForce (float) = 0;
+        // the maximum speed this vehicle is allowed to move
+         float maxSpeed (void) const = 0;
+         float setMaxSpeed (float) = 0;
+		// dp - added to support heterogeneous flocks
+		 void update(const float currentTime, const float elapsedTime) = 0;
+    };
+    // more convenient short names for AbstractVehicle group and iterator
+}
+}
+namespace Core
+{
+	class CPlayer;
+	
+namespace AI
+{
+    class  CFpsVehicle : public SimpleVehicle_2
+    {
+    public:
+        CFpsVehicle(CPlayer* Player);
+        ~CFpsVehicle();
+        
+        CPlayer* GetPlayer() { return m_Player; }
+        // Reset vehicle state
+        void Reset (void)
+        {
+            // Reset LocalSpace state
+            resetLocalSpace ();
+            // Reset SteerLibraryMixin state
+            // (XXX this seems really fragile, needs to be redesigned XXX)
+            SimpleVehicle_2::reset();
+            setMass (1);          // mass (defaults to 1 so acceleration=force)
+            setSpeed (0);         // speed along Forward direction.
+            setRadius (0.5f);     // size of bounding sphere
+            setMaxForce (0.1f);   // steering force is clipped to this magnitude
+            setMaxSpeed (1.0f);   // velocity is clipped to this magnitude
+			setUp (reVector3Df::UNIT_Y);
+            // Reset bookkeeping to do running averages of these quanities
+            ResetSmoothedPosition ();
+            ResetSmoothedCurvature ();
+            ResetSmoothedAcceleration ();
+        }
+        // get/set mass
+        float mass (void) const {return _mass;}
+        float setMass (float m) {return _mass = m;}
+        // get velocity of vehicle
+        reVector3Df velocity (void) const {return forward() * _speed;}
+        // get/set speed of vehicle  (may be faster than taking mag of velocity)
+        float speed (void) const {return _speed;}
+        float setSpeed (float s) {return _speed = s;}
+        // size of bounding sphere, for obstacle avoidance, etc.
+        float radius (void) const {return _radius;}
+        float setRadius (float m) {return _radius = m;}
+        // get/set maxForce
+        float maxForce (void) const {return _maxForce;}
+        float setMaxForce (float mf) {return _maxForce = mf;}
+        // get/set maxSpeed
+        float maxSpeed (void) const {return _maxSpeed;}
+        float setMaxSpeed (float ms) {return _maxSpeed = ms;}
+        // ratio of speed to max possible speed (0 slowest, 1 fastest)
+        float GetRelativeSpeed (void) const {return speed () / maxSpeed ();}
+        // apply a given steering force to our momentum, adjusting our orientation to maintain velocity-alignment.
+        void ApplySteeringForce (const reVector3Df& force, const float deltaTime);
+        // the default version: keep FORWARD parallel to velocity, change
+        // UP as little as possible.
+         void RegenerateLocalSpace (const reVector3Df& newVelocity, const float elapsedTime);
+        // alternate version: keep FORWARD parallel to velocity, adjust UP
+        // according to a no-basis-in-reality "banking" behavior, something
+        // like what birds and airplanes do. 
+        void RegenerateLocalSpaceForBanking (const reVector3Df& newVelocity, const float elapsedTime);
+        // adjust the steering force passed to ApplySteeringForce.
+        // allows a specific vehicle class to redefine this adjustment.
+        // default is to disallow backward-facing steering at low speed.
+         reVector3Df AdjustRawSteeringForce (const reVector3Df& force, const float deltaTime);
+        // apply a given braking force (for a given dt) to our momentum.
+        void ApplyBrakingForce (const float rate, const float deltaTime);
+        // predict position of this vehicle at some time in the future (assumes velocity remains constant)
+        reVector3Df predictFuturePosition (const float predictionTime) const;
+        // get instantaneous GetCurvature (since last update)
+        float GetCurvature (void) const {return _curvature;}
+        // get/Reset GetSmoothedCurvature, GetSmoothedAcceleration and GetSmoothedPosition
+        float GetSmoothedCurvature (void) {return _smoothedCurvature;}
+        float ResetSmoothedCurvature (float value = 0)
+        {
+            _lastForward = reVector3Df::ZERO;
+            _lastPosition = reVector3Df::ZERO;
+            return _smoothedCurvature = _curvature = value;
+        }
+        reVector3Df GetSmoothedAcceleration (void) {return _smoothedAcceleration;}
+        reVector3Df ResetSmoothedAcceleration (const reVector3Df& value = reVector3Df::ZERO) { return _smoothedAcceleration = value; }
+        reVector3Df GetSmoothedPosition (void) {return _smoothedPosition;}
+        reVector3Df ResetSmoothedPosition (const reVector3Df& value = reVector3Df::ZERO) { return _smoothedPosition = value; }
+        // give each vehicle a unique number
+        int SerialNumber;
+        static int SerialNumberCounter;
+        // set a random "2D" heading: set local Up to global Y, then effectively
+        // rotate about it by a random angle (pick random forward, derive side).
+        void RandomizeHeadingOnXZPlane (void)
+        {
+			setUp (reVector3Df::UNIT_Y);
+            setForward (Vec3Utilities::RandomUnitVectorOnXZPlane ());
+            setSide (localRotateForwardToSide (forward()));
+        }
+		void update(const float currentTime, const float elapsedTime) { }
+};
+}
+}
+    
+// Color class and predefined colors.
+namespace Core 
+{
+namespace AI
+{
+    class  Color 
+	{
+    public:
+        Color();
+        explicit Color( float greyValue );
+        Color( float rValue, float gValue, float bValue, float aValue = 1.0f );
+        explicit Color( reVector3Df const& vector );
+        
+        float r() const;
+        float g() const;
+        float b() const;
+        float a() const;
+        
+        void setR( float value );
+        void setG( float value );
+        void setB( float value );
+		void setA( float value );
+        void set( float rValue, float gValue, float bValue, float aValue = 1.0f );
+        
+        reVector3Df convertToVec3() const;
+    
+		// this is necessary so that graphics API's such as DirectX
+		// requiring a pointer to colors can do their conversion
+		// without a lot of copying.
+		float const*const colorFloatArray() const { return &r_; }
+		static Color grayColor( float value ) { return Color( value ); }
+        Color& operator+=( Color const& other );
+        Color& operator-=( Color const& other );
+        Color& operator*=( float factor );
+        Color& operator/=( float factor );
+		static Color AddColor( Color const& lhs, Color const& rhs )
+		{
+			Color result( lhs );
+			return result += rhs;
+		}
+		static Color SubColor( Color const& lhs, Color const& rhs )
+		{
+			Color result( lhs );
+			return result -= rhs;    
+		}
+		static Color MultColor( Color const& lhs, float rhs )
+		{
+			Color result( lhs );
+			return result *= rhs;
+		}
+		static Color DivColor( Color const& lhs, float rhs )
+		{
+			Color result( lhs );
+			return result /= rhs;
+		}
+		static Color gBlack;
+		static Color gWhite; 
+		static Color gRed; 
+		static Color gGreen;
+		static Color gBlue;
+		static Color gYellow;
+		static Color gCyan;
+		static Color gMagenta;
+		static Color gOrange;
+		static Color gDarkRed;
+		static Color gDarkGreen;
+		static Color gDarkBlue;
+		static Color gDarkYellow;
+		static Color gDarkCyan;
+		static Color gDarkMagenta;
+		static Color gDarkOrange;
+			   
+		static Color gGray10;
+		static Color gGray20;
+		static Color gGray30;
+		static Color gGray40;
+		static Color gGray50;
+		static Color gGray60;
+		static Color gGray70;
+		static Color gGray80;
+		static Color gGray90;
+			   
+};
+    
+}
+}
+namespace Core
+{
+namespace AI
+{
+	class  LocalityQuery
+	{
+	public:
+		LocalityQuery();
+		~LocalityQuery();
+		/* This structure is a proxy for (and contains a pointer to) a client
+		   (application) object in the spatial database.  One of these exists
+		   for each client object.  This might be included within the
+		   structure of a client object, or could be allocated separately.  */
+		struct lqClientProxy
+		{
+			/* previous object in this bin, or nullptr */
+			struct lqClientProxy*  prev;
+			/* next object in this bin, or nullptr */
+			struct lqClientProxy*  next;
+			/* bin ID (pointer to pointer to bin contents list) */
+			/* pointer to client object */
+			void* object;
+			/* the object's location ("key point") used for spatial sorting */
+			float x;
+			float y;
+			float z;
+		};
+		/* ------------------------------------------------------------------ */
+		/* This structure represents the spatial database.  Typically one of
+		   these would be created, by a call to lqCreateDatabase, for a given
+		   application.  */
+		struct lqInternalDB
+		{
+			/* the origin is the super-brick corner minimum coordinates */
+			float originx, originy, originz;
+			/* length of the edges of the super-brick */
+			float sizex, sizey, sizez;
+			/* number of sub-brick divisions in each direction */
+			int divx, divy, divz;
+			/* pointer to an array of pointers, one for each bin */
+			/* extra bin for "everything else" (points outside super-brick) */
+			lqClientProxy* other;
+		};
+		struct lqFindNearestState
+		{
+			void* ignoreObject;
+			void* nearestObject;
+			float minDistanceSquared;
+		};
+		/* type for a pointer to a function used to map over client objects */
+		/* Allocate and initialize an LQ database, returns a pointer to it.
+		   The application needs to call this before using the LQ facility.
+		   The nine parameters define the properties of the "super-brick":
+			  (1) origin: coordinates of one corner of the super-brick, its
+				  minimum x, y and z extent.
+			  (2) size: the width, height and depth of the super-brick.
+			  (3) the number of subdivisions (sub-bricks) along each axis.
+		   This routine also allocates the bin array, and initialize its
+		   contents. */
+		lqInternalDB* lqCreateDatabase (float originx, float originy, float originz,
+					float sizex,   float sizey,   float sizez,
+					int   divx,    int   divy,    int   divz);
+		/* Deallocates the LQ database */
+		void lqDeleteDatabase (lqInternalDB*);
+		/* The application needs to call this once on each lqClientProxy at
+		   setup time to initialize its list pointers and associate the proxy
+		   with its client object. */ 
+		void lqInitClientProxy (lqClientProxy* proxy, void* clientObject);
+		/* Call for each client object every time its location changes.  For
+		   example, in an animation application, this would be called each
+		   frame for every moving object.  */
+		void lqUpdateForNewLocation (lqInternalDB* lq, lqClientProxy* object, float x, float y, float z);
+		void lqMapOverAllObjectsInLocality (lqInternalDB* lq,  float x, float y, float z, float radius, lqCallBackFunction func, void* clientQueryState);
+		/* Search the database to find the object whose key-point is nearest
+		   to a given location yet within a given radius.  That is, it finds
+		   the object (if any) within a given search sphere which is nearest
+		   to the sphere's center.  The ignoreObject argument can be used to
+		   exclude an object from consideration (or it can be nullptr).  This is
+		   useful when looking for the nearest neighbor of an object in the
+		   database, since otherwise it would be its own nearest neighbor.
+		   The function returns a void* pointer to the nearest object, or
+		   nullptr if none is found.  */
+		void* lqFindNearestNeighborWithinRadius (lqInternalDB* lq,  float x, float y, float z, float radius, void* ignoreObject);
+		/* Adds a given client object to a given bin, linking it into the bin contents list. */
+		/* Removes a given client object from its current bin, unlinking it from the bin contents list. */
+		void lqRemoveFromBin (lqClientProxy* object);
+		/* Given an LQ database object and the nine basic parameters: fill in
+		   the object's slots, allocate the bin array, and initialize its
+		   contents.  Normally the application does NOT call this directly, it
+		   is called by lqCreateDatabase.  */
+		void lqInitDatabase (lqInternalDB* lq,float originx, float originy, float originz,
+					 float sizex, float sizey, float sizez, int divx, int divy, int divz);
+		/* Find the bin ID for a location in space.  The location is given in
+		   terms of its XYZ coordinates.  The bin ID is a pointer to a pointer
+		   to the bin contents list.  */
+		/* Apply a user-supplied function to all objects in the database, regardless of locality (cf lqMapOverAllObjectsInLocality) */
+		void lqMapOverAllObjects (lqInternalDB* lq, lqCallBackFunction func, void* clientQueryState);
+		/* Removes (all proxies for) all objects from all bins */
+		void lqRemoveAllObjects (lqInternalDB* lq);
+		/* Get statistics about bin populations: min, max and average of non-empty bins. */
+		void lqGetBinPopulationStats (lqInternalDB* lq, int* min, int* max, float* average);
+};
+}
+}
+/*                   
+	Locality Query (LQ) Facility
+    This utility is a spatial database which stores objects each of
+    which is associated with a 3d point (a location in a 3d space).
+    The points serve as the "search key" for the associated object.
+    It is intended to efficiently answer "sphere inclusion" queries,
+    also known as range queries: basically questions like:
+        Which objects are within a radius R of the location L?
+    In this context, "efficiently" means significantly faster than the
+    naive, brute force O(n) testing of all known points.  Additionally
+    it is assumed that the objects move along unpredictable paths, so
+    that extensive preprocessing (for example, constructing a Delaunay
+    triangulation of the point set) may not be practical.
+    The implementation is a "bin lattice": a 3d rectangular array of
+    brick-shaped (rectangular parallelepipeds) regions of space.  Each
+    region is represented by a pointer to a (possibly empty) doubly-
+    linked list of objects.  All of these sub-bricks are the same
+    size.  All bricks are aligned with the global coordinate axes.
+    Terminology used here: the region of space associated with a bin
+    is called a sub-brick.  The collection of all sub-bricks is called
+    the super-brick.  The super-brick should be specified to surround
+    the region of space in which (almost) all the key-points will
+    exist.  If key-points move outside the super-brick everything will
+    continue to work, but without the speed advantage provided by the
+    spatial subdivision.  For more details about how to specify the
+    super-brick's position, size and subdivisions see lqCreateDatabase
+    below.
+    Overview of usage: an application using this facility would first
+    create a database with lqCreateDatabase.  For each client object
+    the application wants to put in the database it creates a
+    lqClientProxy and initializes it with lqInitClientProxy.  When a
+    client object moves, the application calls lqUpdateForNewLocation.
+    To perform a query lqMapOverAllObjectsInLocality is passed an
+    application-supplied call-back function to be applied to all
+    client objects in the locality.  See lqCallBackFunction below for
+    more detail.  The lqFindNearestNeighborWithinRadius function can
+    be used to find a single nearest neighbor using the database.
+    Note that "locality query" is also known as neighborhood query,
+    neighborhood search, near neighbor search, and range query.  For
+    additional information on this and related topics see:
+    http://www.red3d.com/cwr/boids/ips.html
+    For some description and illustrations of this database in use,
+    see this paper: http://www.red3d.com/cwr/papers/2000/pip.html
+*/
+// LocalSpace: a local coordinate system for 3d space
+//
+// Provide functionality such as transforming from local space to global
+// space and vice versa.  Also regenerates a valid space from a perturbed
+// "forward vector" which is the basis of abnstract vehicle turning.
+//
+// These are comparable to a 4x4 homogeneous transformation matrix where the
+// 3x3 (R) portion is constrained to be a pure rotation (no shear or scale).
+// The rows of the 3x3 R matrix are the basis vectors of the space.  They are
+// all constrained to be mutually perpendicular and of unit length.  The top
+// ("x") row is called "side", the middle ("y") row is called "up" and the
+// bottom ("z") row is called forward.  The translation vector is called
+// "position".  Finally the "homogeneous column" is always [0 0 0 1].
+//
+//     [ R R R  0 ]      [ Sx Sy Sz  0 ]
+//     [ R R R  0 ]      [ Ux Uy Uz  0 ]
+//     [ R R R  0 ]  ->  [ Fx Fy Fz  0 ]
+//     [          ]      [             ]
+//     [ T T T  1 ]      [ Tx Ty Tz  1 ]
+//
+// This file defines three classes:
+//   AbstractLocalSpace:  pure  interface
+//   LocalSpaceMixin:     mixin to layer LocalSpace functionality on any base
+//   LocalSpace:          a concrete object (can be instantiated)
+//
+namespace Core 
+{
+namespace AI
+{
+    class AbstractLocalSpace
+    {
+    public:
+         ~AbstractLocalSpace() { /* Nothing to do. */ }
+        
+        // accessors (get and set) for side, up, forward and position
+         reVector3Df side (void) const = 0;
+         reVector3Df setSide (reVector3Df s) = 0;
+         reVector3Df up (void) const = 0;
+         reVector3Df setUp (reVector3Df u) = 0;
+         reVector3Df forward (void) const = 0;
+         reVector3Df setForward (reVector3Df f) = 0;
+         reVector3Df position (void) const = 0;
+         reVector3Df setPosition (reVector3Df p) = 0;
+        // use right-(or left-)handed coordinate space
+         bool rightHanded (void) const = 0;
+        // reset transform to identity
+         void resetLocalSpace (void) = 0;
+        // transform a direction in global space to its equivalent in local space
+         reVector3Df localizeDirection (const reVector3Df& globalDirection) const = 0;
+        // transform a point in global space to its equivalent in local space
+         reVector3Df localizePosition (const reVector3Df& globalPosition) const = 0;
+        // transform a point in local space to its equivalent in global space
+         reVector3Df globalizePosition (const reVector3Df& localPosition) const = 0;
+        // transform a direction in local space to its equivalent in global space
+         reVector3Df globalizeDirection (const reVector3Df& localDirection) const = 0;
+        // set "side" basis vector to normalized cross product of forward and up
+         void setUnitSideFromForwardAndUp (void) = 0;
+        // regenerate the orthonormal basis vectors given a new forward
+        // (which is expected to have unit length)
+         void regenerateOrthonormalBasisUF (const reVector3Df& newUnitForward) = 0;
+        // for when the new forward is NOT of unit length
+         void regenerateOrthonormalBasis (const reVector3Df& newForward) = 0;
+        // for supplying both a new forward and and new up
+         void regenerateOrthonormalBasis (const reVector3Df& newForward,
+                                                 const reVector3Df& newUp) = 0;
+        // rotate 90 degrees in the direction implied by rightHanded()
+         reVector3Df localRotateForwardToSide (const reVector3Df& v) const = 0;
+         reVector3Df globalRotateForwardToSide (const reVector3Df& globalForward) const=0;
+    };
+    // ----------------------------------------------------------------------------
+    // LocalSpaceMixin is a mixin layer, a class template with a paramterized base
+    // class.  Allows "LocalSpace-ness" to be layered on any class.
+     class LocalSpaceMixin : public Super
+    {
+        // transformation as three orthonormal unit basis vectors and the
+        // origin of the local space.  These correspond to the "rows" of
+        // a 3x4 transformation matrix with [0 0 0 1] as the final column
+public:
+        // accessors (get and set) for side, up, forward and position
+        reVector3Df side     (void) const {return _side;};
+        reVector3Df up       (void) const {return _up;};
+        reVector3Df forward  (void) const {return _forward;};
+        reVector3Df position (void) const {return _position;};
+        reVector3Df setSide     (reVector3Df s) {return _side = s;};
+        reVector3Df setUp       (reVector3Df u) {return _up = u;};
+        reVector3Df setForward  (reVector3Df f) {return _forward = f;};
+        reVector3Df setPosition (reVector3Df p) {return _position = p;};
+        reVector3Df setSide     (float x, float y, float z){return _side.set    (x,y,z);};
+        reVector3Df setUp       (float x, float y, float z){return _up.set      (x,y,z);};
+        reVector3Df setForward  (float x, float y, float z){return _forward.set (x,y,z);};
+        reVector3Df setPosition (float x, float y, float z){return _position.set(x,y,z);};
+        // ------------------------------------------------------------------------
+        // Global compile-time switch to control handedness/chirality: should
+        // LocalSpace use a left- or right-handed coordinate system?  This can be
+        // overloaded in derived types (e.g. vehicles) to change handedness.
+        bool rightHanded (void) const {return true;}
+        // ------------------------------------------------------------------------
+        // constructors
+        LocalSpaceMixin (void) { resetLocalSpace (); };
+        LocalSpaceMixin (const reVector3Df& Side, const reVector3Df& Up, const reVector3Df& Forward, const reVector3Df& Position)
+            : _side( Side ), _up( Up ), _forward( Forward ), _position( Position ) {}
+        LocalSpaceMixin (const reVector3Df& Up, const reVector3Df& Forward, const reVector3Df& Position)
+            : _side(), _up( Up ), _forward( Forward ), _position( Position ) { setUnitSideFromForwardAndUp (); }
+         ~LocalSpaceMixin() { /* Nothing to do. */ }
+        
+        // ------------------------------------------------------------------------
+        // reset transform: set local space to its identity state, equivalent to a
+        // 4x4 homogeneous transform like this:
+        //
+        //     [ X 0 0 0 ]
+        //     [ 0 1 0 0 ]
+        //     [ 0 0 1 0 ]
+        //     [ 0 0 0 1 ]
+        //
+        // where X is 1 for a left-handed system and -1 for a right-handed system.
+        void resetLocalSpace (void)
+        {
+			_forward = reVector3Df::UNIT_Z;
+            _side = localRotateForwardToSide (_forward);
+			_up = reVector3Df::UNIT_Y;
+			_position = reVector3Df::ZERO;
+        };
+        // ------------------------------------------------------------------------
+        // transform a direction in global space to its equivalent in local space
+        reVector3Df localizeDirection (const reVector3Df& globalDirection) const
+        {
+            // dot offset with local basis vectors to obtain local coordiantes
+            return reVector3Df (globalDirection.dotProduct (_side),
+                         globalDirection.dotProduct (_up),
+                         globalDirection.dotProduct (_forward));
+        };
+        // ------------------------------------------------------------------------
+        // transform a point in global space to its equivalent in local space
+        reVector3Df localizePosition (const reVector3Df& globalPosition) const
+        {
+            // global offset from local origin
+            reVector3Df globalOffset = globalPosition - _position;
+            // dot offset with local basis vectors to obtain local coordiantes
+            return localizeDirection (globalOffset);
+        };
+        // ------------------------------------------------------------------------
+        // transform a point in local space to its equivalent in global space
+        reVector3Df globalizePosition (const reVector3Df& localPosition) const
+        {
+            return _position + globalizeDirection (localPosition);
+        };
+        // ------------------------------------------------------------------------
+        // transform a direction in local space to its equivalent in global space
+        reVector3Df globalizeDirection (const reVector3Df& localDirection) const
+        {
+            return ((_side    * localDirection.x) +
+                    (_up      * localDirection.y) +
+                    (_forward * localDirection.z));
+        };
+        // ------------------------------------------------------------------------
+        // set "side" basis vector to normalized cross product of forward and up
+        void setUnitSideFromForwardAndUp (void)
+        {
+            // derive new unit side basis vector from forward and up
+            if (rightHanded())
+                _side = Vec3Utilities::crossProduct (_forward, _up);
+            else
+                _side = Vec3Utilities::crossProduct (_forward, _up);
+            _side = Vec3Utilities::normalise (_side);
+        }
+        // ------------------------------------------------------------------------
+        // regenerate the orthonormal basis vectors given a new forward
+        // (which is expected to have unit length)
+        void regenerateOrthonormalBasisUF (const reVector3Df& newUnitForward)
+        {
+            _forward = newUnitForward;
+            // derive new side basis vector from NEW forward and OLD up
+            setUnitSideFromForwardAndUp ();
+            // derive new Up basis vector from new Side and new Forward
+            // (should have unit length since Side and Forward are
+            // perpendicular and unit length)
+            if (rightHanded())
+                _up = Vec3Utilities::crossProduct (_side, _forward);
+            else
+                _up = Vec3Utilities::crossProduct (_forward, _side);
+        }
+        // for when the new forward is NOT know to have unit length
+        void regenerateOrthonormalBasis (const reVector3Df& newForward)
+        {
+            regenerateOrthonormalBasisUF (Vec3Utilities::normalise(newForward));
+        }
+        // for supplying both a new forward and and new up
+        void regenerateOrthonormalBasis (const reVector3Df& newForward,
+                                         const reVector3Df& newUp)
+        {
+            _up = newUp;
+            regenerateOrthonormalBasis (Vec3Utilities::normalise(newForward));
+        }
+        // ------------------------------------------------------------------------
+        // rotate, in the canonical direction, a vector pointing in the
+        // "forward" (+Z) direction to the "side" (+/-X) direction
+        reVector3Df localRotateForwardToSide (const reVector3Df& v) const
+        {
+            return reVector3Df (rightHanded () ? -v.z : +v.z, v.y, v.x);
+        }
+        // not currently used, just added for completeness
+        reVector3Df globalRotateForwardToSide (const reVector3Df& globalForward) const
+        {
+            const reVector3Df localForward = localizeDirection (globalForward);
+            const reVector3Df localSide = localRotateForwardToSide (localForward);
+            return globalizeDirection (localSide);
+        }
+    };
+    // ----------------------------------------------------------------------------
+    // Concrete LocalSpace class, and a global constant for the identity transform
+    const LocalSpace gGlobalSpace;
+}
+} 
+// ----------------------------------------------------------------------------
+// Obstacles for use with obstacle avoidance
+namespace Core 
+{
+namespace AI
+{
+    // Forward declaration.
+    class Color;
+    class  AbstractObstacle
+    {
+    public:
+         ~AbstractObstacle() { }
+        // compute steering for a vehicle to avoid this obstacle, if needed
+         reVector3Df steerToAvoid (const AbstractVehicle& v, const float minTimeToCollision) const = 0;
+        // PathIntersection object: used internally to analyze and store
+        // information about intersections of vehicle paths and obstacles.
+        class PathIntersection
+        {
+        public:
+            bool intersect; // was an intersection found?
+            float distance; // how far was intersection point from vehicle?
+            reVector3Df surfacePoint; // position of intersection
+            reVector3Df surfaceNormal; // unit normal at point of intersection
+            reVector3Df steerHint; // where to steer away from intersection
+            bool vehicleOutside; // is the vehicle outside the obstacle?
+            const AbstractObstacle* obstacle; // obstacle the path intersects
+            // determine steering based on path intersection tests
+            reVector3Df steerToAvoidIfNeeded (const AbstractVehicle& vehicle,
+                                       const float minTimeToCollision) const;
+        };
+        // find first intersection of a vehicle's path with this obstacle
+        // (this must be specialized for each new obstacle shape class)
+         void findIntersectionWithVehiclePath (const AbstractVehicle& vehicle, PathIntersection& pi) const = 0 ;
+        //  function for drawing -- normally does nothing, can be
+        // specialized by derived types to provide graphics for obstacles
+         void draw (const bool filled, const Color& color, const reVector3Df& viewpoint) const = 0 ;
+        // seenFrom (eversion): does this obstacle contrain vehicle to stay
+        // inside it or outside it (or both)?  "Inside" describes a clear space
+        // within a solid (for example, the interior of a room inside its
+        // walls). "Ouitside" describes a solid chunk in the midst of clear
+        // space.
+        enum seenFromState {outside, inside, both};
+         seenFromState seenFrom (void) const = 0;
+         void setSeenFrom (seenFromState s) = 0;
+		// Obstacle Type
+		enum OBSTACLE_TYPE
+		{
+			OT_SPHERE	 = 0,
+			OT_BOX		 = 1,
+		};
+};
+	class Obstacle;
+    // an STL vector of AbstractObstacle pointers and an iterator for it:
+    // ----------------------------------------------------------------------------
+    // Obstacle is a utility base class providing some shared functionality
+    class  Obstacle : public AbstractObstacle
+    {
+    public:
+        Obstacle (void) : _seenFrom (outside), radius(0) {}
+         ~Obstacle() { }
+        
+		 reVector3Df getPosition() = 0;
+        // compute steering for a vehicle to avoid this obstacle, if needed 
+        reVector3Df steerToAvoid (const AbstractVehicle& v, const float minTimeToCollision) const;
+        // static method to apply steerToAvoid to nearest obstacle in an ObstacleGroup
+        static reVector3Df steerToAvoidObstacles(const AbstractVehicle& vehicle, const float minTimeToCollision, const ObstacleGroup& obstacles);
+        // static method to find first vehicle path intersection in an ObstacleGroup
+        static void firstPathIntersectionWithObstacleGroup(const AbstractVehicle& vehicle, const ObstacleGroup& obstacles, PathIntersection& nearest, PathIntersection& next);
+		// Find the closest obstacle to the vehicle
+		static Obstacle* closestObstacle(AbstractVehicle* vehicle, const ObstacleGroup& obstacles);
+        // default do-nothing draw function (derived class can overload this)
+        void draw (const bool, const Color&, const reVector3Df&) const {}
+        seenFromState seenFrom (void) const { return _seenFrom; }
+        void setSeenFrom (seenFromState s) { _seenFrom = s; }
+		OBSTACLE_TYPE getObstacleType() { return m_ObstacleType; }
+		float radius;
+};
+    // ----------------------------------------------------------------------------
+    // SphereObstacle a simple ball-shaped obstacle
+    class  SphereObstacle : public Obstacle
+    {
+    public:
+        reVector3Df center;
+        // constructors
+		SphereObstacle (float r, reVector3Df c) : center (c) 
+		{ 
+			m_ObstacleType = AbstractObstacle::OT_SPHERE;
+			radius = r;
+		}
+		reVector3Df getPosition() { return center; }
+         ~SphereObstacle() { }
+        
+        // find first intersection of a vehicle's path with this obstacle
+        void findIntersectionWithVehiclePath (const AbstractVehicle& vehicle, PathIntersection& pi) const;
+    };
+    // ----------------------------------------------------------------------------
+    // LocalSpaceObstacle: a mixture of LocalSpace and Obstacle methods
+    // ----------------------------------------------------------------------------
+    // BoxObstacle: a box-shaped (cuboid) obstacle of a given height, width,
+    // depth, position and orientation.  The box is centered on and aligned
+    // with a local space.
+    class  BoxObstacle : public LocalSpaceObstacle
+    {
+    public:
+        float width;  // width  of box centered on local X (side)    axis
+        float height; // height of box centered on local Y (up)      axis
+        float depth;  // depth  of box centered on local Z (forward) axis
+        // constructors
+		BoxObstacle (float w, float h, float d) : width(w), height(h), depth(d) { m_ObstacleType = AbstractObstacle::OT_BOX; }
+		BoxObstacle (void) :  width(1.0f), height(1.0f), depth(1.0f) { m_ObstacleType = AbstractObstacle::OT_BOX; }
+         ~BoxObstacle() { }
+		reVector3Df getPosition() { return position(); }
+        
+        
+        // find first intersection of a vehicle's path with this obstacle
+        void findIntersectionWithVehiclePath (const AbstractVehicle& vehicle, PathIntersection& pi) const;
+    };
+    // ----------------------------------------------------------------------------
+    // PlaneObstacle: a planar obstacle of a given position and orientation.
+    // The plane is defined as the XY (aka side/up) plane of a local space.
+    // The +Z (forward) half-space is considered "outside" the obstacle.  
+    //
+    // This is also the base class for several other obstacles which represent
+    // 2d shapes (rectangle, triangle, ...) arbitarily oriented and positioned
+    // in 2d space.  They specialize this class via xyPointInsideShape which
+    // tests if a given point on the XZ plane is inside the obstacle's shape.
+    class  PlaneObstacle : public LocalSpaceObstacle
+    {
+    public:
+        // constructors
+        PlaneObstacle (void) { }
+        PlaneObstacle (const reVector3Df& s,
+                       const reVector3Df& u,
+                       const reVector3Df& f,
+                       const reVector3Df& p) : LocalSpaceObstacle( s, u, f, p ) { }
+		reVector3Df getPosition() { return position(); }
+        // find first intersection of a vehicle's path with this obstacle
+        void findIntersectionWithVehiclePath (const AbstractVehicle& vehicle, PathIntersection& pi) const;
+        // determines if a given point on XY plane is inside obstacle shape
+         bool xyPointInsideShape (const reVector3Df& /*point*/, float /*radius*/) const
+        {
+            return true; // always true for PlaneObstacle
+        }
+    };
+    // ----------------------------------------------------------------------------
+    // RectangleObstacle: a rectangular obstacle of a given height, width,
+    // position and orientation.  It is a rectangle centered on the XY (aka
+    // side/up) plane of a local space.
+    class  RectangleObstacle : public PlaneObstacle
+    {
+    public:
+        float width;  // width  of rectangle centered on local X (side) axis
+        float height; // height of rectangle centered on local Y (up)   axis
+        // constructors
+        RectangleObstacle (float w, float h) : width(w), height(h) {}
+        RectangleObstacle (void) :  width(1.0f), height(1.0f) {}
+        RectangleObstacle (float w, float h, const reVector3Df& s,
+                           const reVector3Df& u, const reVector3Df& f, const reVector3Df& p,
+                           seenFromState sf) : PlaneObstacle( s, u, f, p ), width(w), height(h) { setSeenFrom (sf); }
+		reVector3Df getPosition() { return position(); }
+        
+         ~RectangleObstacle() { /* Nothing to do. */ }
+        // determines if a given point on XY plane is inside obstacle shape
+        bool xyPointInsideShape (const reVector3Df& point, float radius) const;
+    };
+}
+}   
+// ----------------------------------------------------------------------------
+//
+//
+// OpenSteer -- Steering Behaviors for Autonomous Characters
+//
+// Copyright (c) 2002-2005, Sony Computer Entertainment America
+// Original author: Craig Reynolds <craig_reynolds@playstation.sony.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// DEALINGS IN THE SOFTWARE.
+//
+//
+// ----------------------------------------------------------------------------
+//
+//
+// OpenSteerDemo
+//
+// This class encapsulates the state of the OpenSteerDemo application and
+// the services it provides to its plug-ins
+//
+// 10-04-04 bk:  put everything into the OpenSteer namespace
+// 11-14-02 cwr: recast App class as OpenSteerDemo 
+// 06-26-02 cwr: App class created 
+//
+//
+// ----------------------------------------------------------------------------
+namespace OpenSteer {
+    class Color;
+    class Vec3;
+    
+    class OpenSteerDemo
+    {
+    public:
+        // ------------------------------------------------------ component objects
+        // clock keeps track of both "real time" and "simulation time"
+        static Clock clock;
+        // camera automatically tracks selected vehicle
+        static Camera camera;
+        // ------------------------------------------ addresses of selected objects
+        // currently selected plug-in (user can choose or cycle through them)
+        static PlugIn* selectedPlugIn;
+        // currently selected vehicle.  Generally the one the camera follows and
+        // for which additional information may be displayed.  Clicking the mouse
+        // near a vehicle causes it to become the Selected Vehicle.
+        static AbstractVehicle* selectedVehicle;
+        // -------------------------------------------- initialize, update and exit
+        // initialize OpenSteerDemo
+        //     XXX  if I switch from "totally static" to "singleton"
+        //     XXX  class structure this becomes the constructor
+        static void initialize (void);
+        // main update function: step simulation forward and redraw scene
+        static void updateSimulationAndRedraw (void);
+        // exit OpenSteerDemo with a given text message or error code
+        static void errorExit (const char* message);
+        static void exit (int exitCode);
+        // ------------------------------------------------------- PlugIn interface
+        // select the default PlugIn
+        static void selectDefaultPlugIn (void);
+        
+        // select the "next" plug-in, cycling through "plug-in selection order"
+        static void selectNextPlugIn (void);
+        // handle function keys an a per-plug-in basis
+        static void functionKeyForPlugIn (int keyNumber);
+        // return name of currently selected plug-in
+        static const char* nameOfSelectedPlugIn (void);
+        // open the currently selected plug-in
+        static void openSelectedPlugIn (void);
+        // do a simulation update for the currently selected plug-in
+        static void updateSelectedPlugIn (const float currentTime,
+                                          const float elapsedTime);
+        // redraw graphics for the currently selected plug-in
+        static void redrawSelectedPlugIn (const float currentTime,
+                                          const float elapsedTime);
+        // close the currently selected plug-in
+        static void closeSelectedPlugIn (void);
+        // reset the currently selected plug-in
+        static void resetSelectedPlugIn (void);
+        static const AVGroup& allVehiclesOfSelectedPlugIn(void);
+        // ---------------------------------------------------- OpenSteerDemo phase
+        static bool phaseIsDraw     (void) {return phase == drawPhase;}
+        static bool phaseIsUpdate   (void) {return phase == updatePhase;}
+        static bool phaseIsOverhead (void) {return phase == overheadPhase;}
+        static float phaseTimerDraw     (void) {return phaseTimers[drawPhase];}
+        static float phaseTimerUpdate   (void) {return phaseTimers[updatePhase];}
+        // XXX get around shortcomings in current implementation, see note
+        // XXX in updateSimulationAndRedraw
+        //static float phaseTimerOverhead(void){return phaseTimers[overheadPhase];}
+        static float phaseTimerOverhead (void)
+        {
+            return (clock.getElapsedRealTime() -
+                    (phaseTimerDraw() + phaseTimerUpdate()));
+        }
+        // ------------------------------------------------------ delayed reset XXX
+        // XXX to be reconsidered
+        static void queueDelayedResetPlugInXXX (void);
+        static void doDelayedResetPlugInXXX (void);
+        // ------------------------------------------------------ vehicle selection
+        // select the "next" vehicle: cycle through the registry
+        static void selectNextVehicle (void);
+        // select vehicle nearest the given screen position (e.g.: of the mouse)
+        static void selectVehicleNearestScreenPosition (int x, int y);
+        // ---------------------------------------------------------- mouse support
+        // Find the AbstractVehicle whose screen position is nearest the
+        // current the mouse position.  Returns NULL if mouse is outside
+        // this window or if there are no AbstractVehicles.
+        static AbstractVehicle* vehicleNearestToMouse (void);
+        // Find the AbstractVehicle whose screen position is nearest the
+        // given window coordinates, typically the mouse position.  Note
+        // this will return NULL if there are no AbstractVehicles.
+        static AbstractVehicle* findVehicleNearestScreenPosition (int x, int y);
+        // for storing most recent mouse state
+        static int mouseX;
+        static int mouseY;
+        static bool mouseInWindow;
+        // ------------------------------------------------------- camera utilities
+        // set a certain initial camera state used by several plug-ins
+        static void init2dCamera (AbstractVehicle& selected);
+        static void init2dCamera (AbstractVehicle& selected,
+                                  float distance,
+                                  float elevation);
+        static void init3dCamera (AbstractVehicle& selected);
+        static void init3dCamera (AbstractVehicle& selected,
+                                  float distance,
+                                  float elevation);
+        // set initial position of camera based on a vehicle
+        static void position3dCamera (AbstractVehicle& selected);
+        static void position3dCamera (AbstractVehicle& selected,
+                                      float distance,
+                                      float elevation);
+        static void position2dCamera (AbstractVehicle& selected);
+        static void position2dCamera (AbstractVehicle& selected,
+                                      float distance,
+                                      float elevation);
+        // camera updating utility used by several (all?) plug-ins
+        static void updateCamera (const float currentTime,
+                                  const float elapsedTime,
+                                  const AbstractVehicle& selected);
+        // some camera-related default constants
+        static const float camera2dElevation;
+        static const float cameraTargetDistance;
+        static const Vec3 cameraTargetOffset;
+        // ------------------------------------------------ graphics and annotation
+        // do all initialization related to graphics
+        static void initializeGraphics (void);
+        // ground plane grid-drawing utility used by several plug-ins
+        static void gridUtility (const Vec3& gridTarget);
+        // draws a gray disk on the XZ plane under a given vehicle
+        static void highlightVehicleUtility (const AbstractVehicle& vehicle);
+        // draws a gray circle on the XZ plane under a given vehicle
+        static void circleHighlightVehicleUtility (const AbstractVehicle& vehicle);
+        // draw a box around a vehicle aligned with its local space
+        // xxx not used as of 11-20-02
+        static void drawBoxHighlightOnVehicle (const AbstractVehicle& v,
+                                               const Color& color);
+        // draws a colored circle (perpendicular to view axis) around the center
+        // of a given vehicle.  The circle's radius is the vehicle's radius times
+        // radiusMultiplier.
+        static void drawCircleHighlightOnVehicle (const AbstractVehicle& v,
+                                                  const float radiusMultiplier,
+                                                  const Color& color);
+        // ----------------------------------------------------------- console text
+        // print a line on the console with "OpenSteerDemo: " then the given ending
+        static void printMessage (const char* message);
+        static void printMessage (const std::ostringstream& message);
+        // like printMessage but prefix is "OpenSteerDemo: Warning: "
+        static void printWarning (const char* message);
+        static void printWarning (const std::ostringstream& message);
+        // print list of known commands
+        static void keyboardMiniHelp (void);
+        // ---------------------------------------------------------------- private
+};
+    // ----------------------------------------------------------------------------
+    // do all initialization related to graphics
+    void initializeGraphics (int argc, char **argv);
+    // ----------------------------------------------------------------------------
+    // run graphics event loop
+    void runGraphics (void);
+    // ----------------------------------------------------------------------------
+    // accessors for GLUT's window dimensions
+    float drawGetWindowHeight (void);
+    float drawGetWindowWidth (void);
+} // namespace OpenSteer
+    
+    
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+//Abstract interface for paths.
+namespace Core 
+{
+namespace AI
+{   
+     // Path in space that might be cyclic.
+     // Paths are infinitesimal thin.
+    class Path 
+	{
+    public:
+         ~Path() = 0;
+        
+        /**
+         * Returns @c true if the path is valid, @c false otherwise.
+         */
+         bool isValid() const = 0;
+        
+        /**
+         * Given an arbitrary point ("A"), returns the nearest point ("P") on
+		 * this path center line.  Also returns, via output arguments, the path
+         * tangent at P and a measure of how far A is outside the Pathway's 
+         * "tube".  Note that a negative distance indicates A is inside the 
+         * Pathway.
+         *
+         * If @c isValid is @c false the behavior is undefined.
+         */
+		 reVector3Df mapPointToPath (const reVector3Df& point,
+                                     reVector3Df& tangent,
+                                     float& outside) const = 0;
+        
+		/**
+         * Given a distance along the path, convert it to a point on the path.
+         * If @c isValid is @c false the behavior is undefined.
+         */
+		 reVector3Df mapPathDistanceToPoint (float pathDistance) const = 0;
+        
+		/**
+         * Given an arbitrary point, convert it to a distance along the path.
+         * If @c isValid is @c false the behavior is undefined.
+         */
+		 float mapPointToPathDistance (const reVector3Df& point) const = 0;
+        
+        /**
+         * Returns @c true f the path is closed, otherwise @c false.
+         */
+         bool isCyclic() const = 0;
+        
+        /**
+         * Returns the length of the path.
+         */
+         float length() const = 0;
+        
+    }; // class Path
+    
+}
+}
+// Abstract base class for pathways - paths with associated radii.
+namespace Core 
+{
+namespace AI
+{
+    /**
+     * Pure  base class representing an abstract pathway in space.
+     * Could be used for example in path following.
+     */
+    class Pathway 
+	{
+    public:
+         ~Pathway() = 0;
+        
+        /**
+         * Returns @c true if the path is valid, @c false otherwise.
+         */
+         bool isValid() const = 0;
+        
+        /**
+         * Given an arbitrary point ("A"), returns the nearest point ("P") on
+		 * this path center line.  Also returns, via output arguments, the path
+         * tangent at P and a measure of how far A is outside the Pathway's 
+         * "tube".  Note that a negative distance indicates A is inside the 
+         * Pathway.
+         *
+         * If @c isValid is @c false the behavior is undefined.
+         */
+		 reVector3Df mapPointToPath (const reVector3Df& point,
+                                     reVector3Df& tangent,
+                                     float& outside) const = 0;
+        
+		/**
+         * Given a distance along the path, convert it to a point on the path.
+         * If @c isValid is @c false the behavior is undefined.
+         */
+		 reVector3Df mapPathDistanceToPoint (float pathDistance) const = 0;
+        
+		/**
+         * Given an arbitrary point, convert it to a distance along the path.
+         * If @c isValid is @c false the behavior is undefined.
+         */
+		 float mapPointToPathDistance (const reVector3Df& point) const = 0;
+        
+        /**
+         * Returns @c true f the path is closed, otherwise @c false.
+         */
+         bool isCyclic() const = 0;
+        
+        /**
+         * Returns the length of the path.
+         */
+         float length() const = 0;
+        
+    }; // class Pathway
+    
+}
+}
+namespace Core 
+{
+namespace AI
+{
+    /**
+     * Segmented path build by polylines. The last point of the path might be 
+     * connected to the first point building a closed cycle.
+     */
+    class  PolylineSegmentedPath : public SegmentedPath 
+	{
+    public:
+        
+        /**
+         * Constructs an invalid path. Behavior of most member functions is
+         * undefined if a path has less than two distinct points.
+         */
+        PolylineSegmentedPath();
+        
+        /**
+         * Constructs a new path.
+         *
+         * @param numOfPoints Number of points. Must be at least two.
+         * @param newPoints As many points as indicated by @a numOfPoints. Two
+         *                  adjacent points mustn't be identical and the first
+         *                  the last point mustn't be identical.
+         * @param closedCycle If @c true the first point of @a newPoints is
+         *                    copied to the end of the path to represent the 
+         *                    cycle closing segment.
+         */
+        PolylineSegmentedPath( unsigned int numOfPoints,
+                               reVector3Df const newPoints[],
+                               bool closedCycle );
+        
+        PolylineSegmentedPath( PolylineSegmentedPath const& other );
+        
+         ~PolylineSegmentedPath();
+        
+        PolylineSegmentedPath& operator=( PolylineSegmentedPath other );
+        
+        void swap( PolylineSegmentedPath& other );
+        
+        
+        /**
+         * Replaces all path information by the given ones.
+         *
+         * @param numOfPoints Number of points. Must be at least two.
+         * @param newPoints As many points as indicated by @a numOfPoints. Two
+         *                  adjacent points mustn't be identical and the first
+         *                  the last point mustn't be identical.
+         * @param closedCycle If @c true the first point of @a newPoints is
+         *                    copied to the end of the path to represent the 
+         *                    cycle closing segment.
+         */
+        void setPath( unsigned int numOfPoints,
+                      reVector3Df const newPoints[],
+                      bool closedCycle );
+        
+        /**
+         * Replaces @a numOfPoints points starting at @a startIndex.
+         *
+         * In the resulting sequence of points there mustn't be two adjacent 
+         * ones that are equal. The first and last point mustn't be identical,
+         * too.
+         *
+         * If the first point is changed and the path is cyclic the duplication
+         * of the first point at the end of the sequence representing the
+         * path closing segment is updated automatically.
+         *
+         * @param startIndex First point to be moved or replaced.
+         * @param numOfPoints Number of points to move or replace. 
+         *                    <code> numOfPoints + startIndex </code> must be
+         *                    lesser or equal to @c pointCount.
+         * @param newPoints Moved points to replace the old ones.
+         */
+        void movePoints( unsigned int startIndex,
+                         unsigned int numOfPoints,
+                         reVector3Df const newPoints[]);
+        
+        
+        
+         bool isValid() const;
+         reVector3Df mapPointToPath (const reVector3Df& point,
+                                     reVector3Df& tangent,
+                                     float& outside) const;
+		 reVector3Df mapPathDistanceToPoint (float pathDistance) const;
+		 float mapPointToPathDistance (const reVector3Df& point) const;
+         bool isCyclic() const;
+         float length() const;
+        
+        
+         unsigned int pointCount() const;
+         reVector3Df point( unsigned int pointIndex ) const;        
+        
+        
+         unsigned int segmentCount() const;
+         float segmentLength( unsigned int segmentIndex ) const;
+         reVector3Df segmentStart( unsigned int segmentIndex ) const;
+         reVector3Df segmentEnd( unsigned int segmentIndex ) const;
+         float mapPointToSegmentDistance( unsigned int segmentIndex, 
+                                                 reVector3Df const& point ) const;
+         reVector3Df mapSegmentDistanceToPoint( unsigned int segmentIndex, 
+                                                float segmentDistance ) const;
+         reVector3Df mapSegmentDistanceToTangent( unsigned int segmentIndex, 
+                                                  float segmentDistance ) const;
+        
+         void mapDistanceToSegmentPointAndTangent( unsigned int segmentIndex,
+                                                          float distance,
+                                                          reVector3Df& pointOnPath,
+                                                          reVector3Df& tangent ) const;
+        
+         void mapPointToSegmentDistanceAndPointAndTangent( unsigned int segmentIndex,
+                                                                  reVector3Df const& point,
+                                                                  float& distance,
+                                                                  reVector3Df& pointOnPath,
+                                                                  reVector3Df& tangent ) const;
+        
+};
+    
+    
+    /**
+     * Swaps the content of @a lhs and @a rhs.
+     */
+    inline void swap( PolylineSegmentedPath& lhs, PolylineSegmentedPath& rhs ) 
+	{
+        lhs.swap( rhs );
+    }
+    
+    
+    /**
+     * Extracts the base data of @c PolylineSegmentedPath.
+     */
+     class PointToPathAlikeBaseDataExtractionPolicy< PolylineSegmentedPath > 
+	{
+    public:
+        
+        static void extract( PolylineSegmentedPath const& pathAlike,
+                             unsigned int segmentIndex,
+                             reVector3Df const& point, 
+                             float& segmentDistance, 
+                             float&, 
+                             float& distancePointToPath, 
+                             reVector3Df& pointOnPathCenterLine, 
+                             reVector3Df& tangent ) {
+            pathAlike.mapPointToSegmentDistanceAndPointAndTangent( segmentIndex, point, segmentDistance, pointOnPathCenterLine, tangent );
+			distancePointToPath = Vec3Utilities::distance( point, pointOnPathCenterLine );
+        }
+        
+    }; // class PointToPathAlikeBaseDataExtractionPolicy
+    
+    /**
+     * Extracts the base data of @c PolylineSegmentedPath.
+     */
+     class  DistanceToPathAlikeBaseDataExtractionPolicy< PolylineSegmentedPath > 
+	{
+    public:
+        static void extract( PolylineSegmentedPath const& pathAlike,
+                             unsigned int segmentIndex,
+                             float segmentDistance, 
+                             reVector3Df& pointOnPathCenterLine, 
+                             reVector3Df& tangent, 
+                             float&  )  {
+            pathAlike.mapDistanceToSegmentPointAndTangent( segmentIndex, segmentDistance, pointOnPathCenterLine, tangent );     
+        }
+        
+        
+    }; // DistanceToPathAlikeBaseDataExtractionPolicy   
+    
+}  
+} 
+// Segmented pathway build of polylines. Every segmented is associated with its own radius.
+namespace Core 
+{
+namespace AI
+{ 
+    /**
+     * Segmented pathway build by polylines that associates every segment with 
+     * its own radius.
+     */
+    class  PolylineSegmentedPathwaySegmentRadii : public SegmentedPathway 
+	{
+    public:
+        PolylineSegmentedPathwaySegmentRadii();
+        
+        /**
+         * Constructs a segmented pathway consisting of @a numOfPoints @a points
+         * associating every segment with its own radius @a radii.
+         *
+         * If @a closedCycle is @c false @a radii must have 
+         * <code>numOfPoints - 1</code> elements, for every segment one. If
+         * @a closedCycle is @c true <code>numOfPoints</code> @a radii
+         * elements are needed.
+         *
+         * There mustn't be two adjacent points that are equal. The first and 
+         * last point mustn't be identical, too.
+         */
+        PolylineSegmentedPathwaySegmentRadii( unsigned int numOfPoints,
+                                              reVector3Df const points[],
+                                              float const radii[],
+                                              bool closedCycle );
+        PolylineSegmentedPathwaySegmentRadii( PolylineSegmentedPathwaySegmentRadii const& other );
+         ~PolylineSegmentedPathwaySegmentRadii();
+        
+        PolylineSegmentedPathwaySegmentRadii& operator=( PolylineSegmentedPathwaySegmentRadii other );
+        
+        /**
+         * Swaps the content with @a other.
+         */
+        void swap( PolylineSegmentedPathwaySegmentRadii& other );
+        
+        /**
+         * Replaces @a numOfPoints points starting at @a startIndex.
+         *
+         * In the resulting sequence of points there mustn't be two adjacent 
+         * ones that are equal. The first and last point mustn't be identical,
+         * too.
+         *
+         * If the first point is changed and the path is cyclic the duplication
+         * of the first point at the end of the sequence representing the
+         * path closing segment is updated automatically.
+         *
+         * @param startIndex First point to be moved or replaced.
+         * @param numOfPoints Number of points to move or replace. 
+         *                    <code> numOfPoints + startIndex </code> must be
+         *                    lesser or equal to @c pointCount.
+         * @param points Moved points to replace the old ones.
+         */
+        void movePoints( unsigned int startIndex,
+                         unsigned int numOfPoints,
+                         reVector3Df const points[] );
+        /**
+         * Replaces the pathway information completely.
+         *
+         * If @a closedCycle is @c true then the pathway has @a numOfPoints
+         * segments and the first point is duplicated and added as the last
+         * point to represent the end point of the segment closing the pathway
+         * cycle. If @a closedCycle is false the pathway has 
+         * <code>numOfPoints - 1</code> segments.
+         * 
+         * If @a closedCycle is @c false @a radii must have 
+         * <code>numOfPoints - 1</code> elements, for every segment one. If
+         * @a closedCycle is @c true provide <code>numOfPoints</code> @a radii
+         * elements.
+         *
+         * @param numOfPoints Number of points defining the pathway.
+         * @param points The actual points.
+         * @param radii Radii of the segments.
+         * @param closedCycle @c true if the pathway is cyclic, @a false 
+         *        otherwise.
+         */
+        void setPathway( unsigned int numOfPoints,
+                         reVector3Df const points[],
+                         float const radii[],
+                         bool closedCycle );
+        
+        /**
+         * Returns the radius of the segment @a segmentIndex.
+         */
+        float segmentRadius( unsigned int segmentIndex ) const;
+        
+        /**
+         * Sets the radius @a r of the segment @a segmentIndex.
+         */
+        void setSegmentRadius( unsigned int segmentIndex, float r );
+        
+        /**
+         * Replace @a numOfRadii segment radii starting with segment 
+         * @a startIndex with the elements of @a radii.
+         *
+         * <code>startIndex + numOfRadii</code> must be lesser or equal to 
+         * @c segmentCount.
+         *
+         * @todo Write unit test.
+         */
+        void setSegmentRadii( unsigned int startIndex, unsigned int numOfRadii, float const radii[] );
+        
+         bool isValid() const;
+         reVector3Df mapPointToPath (const reVector3Df& point,
+                                     reVector3Df& tangent,
+                                     float& outside) const;
+		 reVector3Df mapPathDistanceToPoint (float pathDistance) const;
+		 float mapPointToPathDistance (const reVector3Df& point) const;
+         bool isCyclic() const;
+         float length() const;
+        
+         unsigned int pointCount() const;
+         reVector3Df point( unsigned int pointIndex ) const;  
+        
+         unsigned int segmentCount() const;
+         float segmentLength( unsigned int segmentIndex ) const;
+         reVector3Df segmentStart( unsigned int segmentIndex ) const;
+         reVector3Df segmentEnd( unsigned int segmentIndex ) const;
+         float mapPointToSegmentDistance( unsigned int segmentIndex, reVector3Df const& point ) const;
+         reVector3Df mapSegmentDistanceToPoint( unsigned int segmentIndex, float segmentDistance ) const;
+         float mapSegmentDistanceToRadius( unsigned int segmentIndex, float distanceOnSegment ) const;
+         reVector3Df mapSegmentDistanceToTangent( unsigned int segmentIndex, float segmentDistance ) const;
+         void mapDistanceToSegmentPointAndTangentAndRadius( unsigned int segmentIndex,
+                                                                   float segmentDistance,
+                                                                   reVector3Df& pointOnPath,
+                                                                   reVector3Df& tangent,
+                                                                   float& radius ) const;
+         void mapPointToSegmentDistanceAndPointAndTangentAndRadius( unsigned int segmentIndex,
+                                                                           reVector3Df const& point,
+                                                                           float& distance,
+                                                                           reVector3Df& pointOnPath,
+                                                                           reVector3Df& tangent,
+                                                                           float& radius) const;
+};
+    
+    /**
+     * Swaps the content of @a lhs and @a rhs.
+     */
+    inline void swap( PolylineSegmentedPathwaySegmentRadii& lhs, PolylineSegmentedPathwaySegmentRadii& rhs ) 
+	{
+        lhs.swap( rhs );
+    }
+    
+    /**
+     * Extracts the base data of @c PolylineSegmentedPathwaySegmentRadii.
+     */
+     class PointToPathAlikeBaseDataExtractionPolicy< PolylineSegmentedPathwaySegmentRadii > 
+	{
+    public:
+            
+        static void extract( PolylineSegmentedPathwaySegmentRadii const& pathAlike,
+                             unsigned int segmentIndex,
+                             reVector3Df const& point, 
+                             float& segmentDistance, 
+                             float& radius, 
+                             float& distancePointToPath, 
+                             reVector3Df& pointOnPathCenterLine, 
+                             reVector3Df& tangent ) 
+		{
+            pathAlike.mapPointToSegmentDistanceAndPointAndTangentAndRadius( segmentIndex, point, segmentDistance, pointOnPathCenterLine, tangent, radius );
+			distancePointToPath = Vec3Utilities::distance( point, pointOnPathCenterLine ) - radius;
+        }
+        
+    }; // class PointToPathAlikeBaseDataExtractionPolicy
+    
+    
+    /**
+        * Extracts the base data of @c PolylineSegmentedPathwaySegmentRadii.
+     */
+     class  DistanceToPathAlikeBaseDataExtractionPolicy< PolylineSegmentedPathwaySegmentRadii > 
+	{
+    public:
+        static void extract( PolylineSegmentedPathwaySegmentRadii const& pathAlike,
+                             unsigned int segmentIndex,
+                             float segmentDistance, 
+                             reVector3Df& pointOnPathCenterLine, 
+                             reVector3Df& tangent, 
+                             float& radius )  
+		{
+            pathAlike.mapDistanceToSegmentPointAndTangentAndRadius( segmentIndex, segmentDistance, pointOnPathCenterLine, tangent, radius );     
+        }
+        
+        
+    }; // DistanceToPathAlikeBaseDataExtractionPolicy 
+} 
+}
+// Segmented pathway build of polylines. The whole path has one associated radius.
+namespace Core 
+{
+namespace AI
+{ 
+    /**
+     * Segmented pathway build by polylines with a single radius for the whole
+     * pathway.
+     */
+    class  PolylineSegmentedPathwaySingleRadius : public SegmentedPathway 
+	{
+    public:
+        PolylineSegmentedPathwaySingleRadius();
+        explicit PolylineSegmentedPathwaySingleRadius( float r );
+        PolylineSegmentedPathwaySingleRadius( unsigned int numOfPoints,
+                                              reVector3Df const points[],
+                                              float r,
+                                              bool closeCycle );
+        PolylineSegmentedPathwaySingleRadius( PolylineSegmentedPathwaySingleRadius const& other );
+         ~PolylineSegmentedPathwaySingleRadius();
+        PolylineSegmentedPathwaySingleRadius& operator=( PolylineSegmentedPathwaySingleRadius other );
+        
+        /**
+         * Swaps the content with @a other.
+         */
+        void swap( PolylineSegmentedPathwaySingleRadius& other );
+        
+        /**
+         * Replaces @a numOfPoints points starting at @a startIndex.
+         *
+         * In the resulting sequence of points there mustn't be two adjacent 
+         * ones that are equal. The first and last point mustn't be identical,
+         * too.
+         *
+         * If the first point is changed and the path is cyclic the duplication
+         * of the first point at the end of the sequence representing the
+         * path closing segment is updated automatically.
+         *
+         * @param startIndex First point to be moved or replaced.
+         * @param numOfPoints Number of points to move or replace. 
+         *                    <code> numOfPoints + startIndex </code> must be
+         *                    lesser or equal to @c pointCount.
+         * @param newPointValues Moved points to replace the old ones.
+         */
+        void movePoints( unsigned int startIndex, unsigned int numOfPoints, reVector3Df const newPointValues[] );
+        /**
+         * Replaces the pathway information completely.
+         *
+         * If @a closedCycle is @c true then the pathway has @a numOfPoints
+         * segments and the first point is duplicated and added as the last
+         * point to represent the end point of the segment closing the pathway
+         * cycle. If @a closedCycle is false the pathway has 
+         * <code>numOfPoints - 1</code> segments.
+         *
+         * @param numOfPoints Number of points defining the pathway.
+         * @param points The actual points.
+         * @param r Radius of the whole pathway.
+         * @param closedCycle @c true if the pathway is cyclic, @a false 
+         *        otherwise.
+         */
+        void setPathway( unsigned int numOfPoints, reVector3Df const points[], float r, bool closedCycle );
+        
+        /**
+         * Sets the radius of the whole pathway to @a r.
+         */
+        void setRadius( float r );
+        
+        /**
+         * Returns the pathway radius.
+         */
+        float radius() const;
+        
+        
+         bool isValid() const;
+		 reVector3Df mapPointToPath (const reVector3Df& point, reVector3Df& tangent, float& outside) const;
+		 reVector3Df mapPathDistanceToPoint (float pathDistance) const;
+		 float mapPointToPathDistance (const reVector3Df& point) const;
+         bool isCyclic() const;
+         float length() const;
+        
+         unsigned int pointCount() const;
+         reVector3Df point( unsigned int pointIndex ) const;
+        
+         unsigned int segmentCount() const;
+         float segmentLength( unsigned int segmentIndex ) const;
+         reVector3Df segmentStart( unsigned int segmentIndex ) const;
+         reVector3Df segmentEnd( unsigned int segmentIndex ) const;
+         float mapPointToSegmentDistance( unsigned int segmentIndex, reVector3Df const& point ) const;
+         reVector3Df mapSegmentDistanceToPoint( unsigned int segmentIndex, float segmentDistance ) const;
+         float mapSegmentDistanceToRadius( unsigned int segmentIndex, float distanceOnSegment ) const;
+         reVector3Df mapSegmentDistanceToTangent( unsigned int segmentIndex, float segmentDistance ) const;
+         void mapDistanceToSegmentPointAndTangentAndRadius( unsigned int segmentIndex,
+                                                                   float segmentDistance,
+                                                                   reVector3Df& pointOnPath,
+                                                                   reVector3Df& tangent,
+                                                                   float& radius ) const;
+         void mapPointToSegmentDistanceAndPointAndTangentAndRadius( unsigned int segmentIndex,
+                                                                           reVector3Df const& point,
+                                                                           float& distance,
+                                                                           reVector3Df& pointOnPath,
+                                                                           reVector3Df& tangent,
+                                                                           float& radius) const;
+         
+};
+    
+    
+    /**
+     * Swaps the content of @a lhs and @a rhs.
+     */
+    inline void swap( PolylineSegmentedPathwaySingleRadius& lhs, 
+               PolylineSegmentedPathwaySingleRadius& rhs ) 
+	{
+        lhs.swap( rhs );
+    }
+    
+    
+    /**
+     * Extracts the base data of @c PolylineSegmentedPathwaySingleRadius.
+     */
+     class PointToPathAlikeBaseDataExtractionPolicy< PolylineSegmentedPathwaySingleRadius > 
+	{
+    public:
+        static void extract( PolylineSegmentedPathwaySingleRadius const& pathAlike,
+                             unsigned int segmentIndex,
+                             reVector3Df const& point, 
+                             float& segmentDistance, 
+                             float& radius, 
+                             float& distancePointToPath, 
+                             reVector3Df& pointOnPathCenterLine, 
+                             reVector3Df& tangent ) 
+		{
+            pathAlike.mapPointToSegmentDistanceAndPointAndTangentAndRadius( segmentIndex, point, segmentDistance, pointOnPathCenterLine, tangent, radius );
+			distancePointToPath = Vec3Utilities::distance( point, pointOnPathCenterLine ) - radius;
+        }
+            
+    }; // class PointToPathAlikeBaseDataExtractionPolicy
+    
+    
+    /**
+     * Extracts the base data of @c PolylineSegmentedPathwaySingleRadius.
+     */
+     class  DistanceToPathAlikeBaseDataExtractionPolicy< PolylineSegmentedPathwaySingleRadius > 
+	{
+    public:
+        static void extract( PolylineSegmentedPathwaySingleRadius const& pathAlike,
+                             unsigned int segmentIndex,
+                             float segmentDistance, 
+                             reVector3Df& pointOnPathCenterLine, 
+                             reVector3Df& tangent, 
+                             float& radius )  
+		{
+            pathAlike.mapDistanceToSegmentPointAndTangentAndRadius( segmentIndex, segmentDistance, pointOnPathCenterLine, tangent, radius );     
+        }
+        
+        
+    }; // DistanceToPathAlikeBaseDataExtractionPolicy 
+    
+} 
+}
+// Proximity 
+// Data structures for accelerating proximity/locality/neighborhood queries
+namespace Core 
+{
+namespace AI
+{
+    // ----------------------------------------------------------------------------
+    // "tokens" are the objects manipulated by the spatial database
+     class AbstractTokenForProximityDatabase
+    {
+    public:
+         ~AbstractTokenForProximityDatabase () {}
+        // the client object calls this each time its position changes
+         void updateForNewPosition (const reVector3Df& position) = 0;
+        // find all neighbors within the given sphere (as center and radius)
+         void findNeighbors (const reVector3Df& center,
+                                    const float radius,
+                                    std::vector<ContentType>& results) = 0;
+        // only meaningful for LQProximityDatabase, provide dummy default
+         void getBinPopulationStats (int& min, int& max, float& average) { min = max=0; average = 0.0;}
+    };
+    // ----------------------------------------------------------------------------
+    // abstract type for all kinds of proximity databases
+     class AbstractProximityDatabase
+    {
+    public:
+        // type for the "tokens" manipulated by this spatial database
+        
+         ~AbstractProximityDatabase() { }
+        
+        // allocate a token to represent a given client object in this database
+         tokenType* allocateToken (ContentType parentObject) = 0;
+        // insert
+        // XXX maybe this should return an iterator?
+        // XXX see http://www.sgi.com/tech/stl/set.html
+        //  void insert (const ContentType& x) = 0;
+        // XXX name?
+        // returns the number of tokens in the proximity database
+         int getPopulation (void) = 0;
+    };
+    // ----------------------------------------------------------------------------
+    // This is the "brute force" O(n^2) approach implemented in terms of the
+    // AbstractProximityDatabase protocol so it can be compared directly to other
+    // approaches.  (e.g. the Boids plugin allows switching at runtime.)
+     class BruteForceProximityDatabase : public AbstractProximityDatabase<ContentType>
+    {
+    public:
+        BruteForceProximityDatabase (void) { }
+         ~BruteForceProximityDatabase () { }
+        // "token" to represent objects stored in the database
+        class tokenType : public AbstractTokenForProximityDatabase<ContentType>
+        {
+        public:
+            tokenType (ContentType parentObject, BruteForceProximityDatabase& pd)
+            {
+                // store pointer to our associated database and the object this
+                // token represents, and store this token on the database's vector
+                bfpd = &pd;
+                object = parentObject;
+                bfpd->group.push_back (this);
+            }
+             ~tokenType ()
+            {
+                // remove this token from the database's vector
+                bfpd->group.erase (std::find (bfpd->group.begin(), bfpd->group.end(), this));
+            }
+            // the client object calls this each time its position changes
+            void updateForNewPosition (const reVector3Df& newPosition)
+            {
+                position = newPosition;
+            }
+            // find all neighbors within the given sphere (as center and radius)
+            void findNeighbors (const reVector3Df& center,
+                                const float radius,
+                                std::vector<ContentType>& results)
+            {
+                // loop over all tokens
+                const float r2 = radius * radius;
+                for (tokenIterator i = bfpd->group.begin(); i != bfpd->group.end(); i++)
+                {
+                    const reVector3Df offset = center - (**i).position;
+                    const float d2 = offset.dotProduct(offset);
+                    // push onto result vector when within given radius
+                    if (d2 < r2) results.push_back ((**i).object);
+                }
+            }
+};
+        // allocate a token to represent a given client object in this database
+        tokenType* allocateToken (ContentType parentObject)
+        {
+            return new tokenType (parentObject, *this);
+        }
+        // return the number of tokens currently in the database
+        int getPopulation (void)
+        {
+            return (int) group.size();
+        }
+        
+};
+    // ----------------------------------------------------------------------------
+    // A AbstractProximityDatabase-style wrapper for the LQ bin lattice system
+     class LQProximityDatabase : public AbstractProximityDatabase<ContentType>
+    {
+    public:
+        LQProximityDatabase (const reVector3Df& center,
+                             const reVector3Df& dimensions,
+                             const reVector3Df& divisions)
+        {
+            const reVector3Df halfsize (dimensions * 0.5f);
+            const reVector3Df origin (center - halfsize);
+			m_LocalityQuery = new LocalityQuery();
+			lq = m_LocalityQuery->lqCreateDatabase (origin.x, origin.y, origin.z, 
+                                   dimensions.x, dimensions.y, dimensions.z,  
+                                   (int) round (divisions.x),
+                                   (int) round (divisions.y),
+                                   (int) round (divisions.z));
+        }
+        // destructor
+         ~LQProximityDatabase ()
+        {
+            m_LocalityQuery->lqDeleteDatabase (lq);
+            lq = nullptr;
+        }
+        // "token" to represent objects stored in the database
+        class tokenType : public AbstractTokenForProximityDatabase<ContentType>
+        {
+        public:
+            tokenType (ContentType parentObject, LQProximityDatabase& lqsd)
+            {
+				m_LocalityQuery = new LocalityQuery();
+                m_LocalityQuery->lqInitClientProxy (&proxy, parentObject);
+                lq = lqsd.lq;
+            }
+             ~tokenType (void)
+            {
+                m_LocalityQuery->lqRemoveFromBin (&proxy);
+            }
+            // the client object calls this each time its position changes
+            void updateForNewPosition (const reVector3Df& p)
+            {
+                m_LocalityQuery->lqUpdateForNewLocation (lq, &proxy, p.x, p.y, p.z);
+            }
+            // find all neighbors within the given sphere (as center and radius)
+            void findNeighbors (const reVector3Df& center,
+                                const float radius,
+                                std::vector<ContentType>& results)
+            {
+                m_LocalityQuery->lqMapOverAllObjectsInLocality (lq, 
+                                               center.x, center.y, center.z,
+                                               radius,
+                                               perNeighborCallBackFunction,
+                                               (void*)&results);
+            }
+            // called by LQ for each clientObject in the specified neighborhood:
+            // push that clientObject onto the ContentType vector in void*
+            // clientQueryState
+            // (parameter names commented out to prevent compiler warning from "-W")
+            static void perNeighborCallBackFunction  (void* clientObject,
+                                                      float /*distanceSquared*/,
+                                                      void* clientQueryState)
+            {
+                ctv& results = *((ctv*) clientQueryState);
+                results.push_back ((ContentType) clientObject);
+            }
+            // Get statistics about bin populations: min, max and
+            // average of non-empty bins.
+            void getBinPopulationStats (int& min, int& max, float& average)
+            {
+                m_LocalityQuery->lqGetBinPopulationStats (lq, &min, &max, &average);
+            }
+};
+        // allocate a token to represent a given client object in this database
+        tokenType* allocateToken (ContentType parentObject)
+        {
+            return new tokenType (parentObject, *this);
+        }
+        // count the number of tokens currently in the database
+        int getPopulation (void)
+        {
+            int count = 0;
+            m_LocalityQuery->lqMapOverAllObjects (lq, counterCallBackFunction, &count);
+            return count;
+        }
+        
+        // (parameter names commented out to prevent compiler warning from "-W")
+        static void counterCallBackFunction  (void* /*clientObject*/,
+                                              float /*distanceSquared*/,
+                                              void* clientQueryState)
+        {
+            int& counter = *(int*)clientQueryState;
+            counter++;
+        }
+};
+}
+}
+// ----------------------------------------------------------------------------
+// Functionality to map points or distances to path alikes and to extract the assocaited information.
+namespace Core 
+{
+namespace AI
+{
+    /**
+     * Provides functionality to map points or distances to path alikes and
+     * to extract associated information.
+     */
+    
+    class PointToPathAlikeMapping 
+	{
+    public:
+        
+        /**
+         * Maps @a queryPoint to a path alike @a pathAlike and returns the  
+         * queried data in @a mapping.
+         *
+         * @c Mapping must provide the following member functions to
+         * set queried values. Member functions might be empty if the specific 
+         * data isn't needed. A good compiler should optimize the
+         * empty member function calls and the associated calculations for its
+         * parameters away.
+         *
+         * <code> void setPointOnPathCenterLine( reVector3Df const& ) </code>
+         * <code> void setPointOnPathBoundary( reVector3Df const& ) </code>
+         * <code> void setRadius( float ) </code>
+         * <code> void setTangent( reVector3Df const& ) </code>
+         * <code> void setSegmentIndex( typename SegmentedPathAlike::unsigned int ) </code>
+         * <code> void setDistancePointToPath( float ) </code>
+         * <code> void setDistancePointToPathCenterLine( float ) </code>
+         * <code> void setDistanceOnPath( float ) </code>
+         * <code> void setDistanceOnSegment( float ) </code>
+         *
+         * To query for the distance on the path the two following member functions
+         * of @c Mapping must be provided too:
+         *
+         * <code> void setDistanceOnPathFlag( float ) </code> and
+         * <code> float distanceOnPathFlag() const </code>.
+         *
+         * If the distance along the path shouldn't be extracted empty 
+         * versions of these member functions are possible.
+         *
+         * @c QueryPathAlikeUtilities.h provides some base classes to inherit
+         * from to automatically get some of the functionality described above.
+         */
+        static void map( PathAlike const& pathAlike, reVector3Df const& queryPoint, Mapping& mapping ) 
+		{
+            float minDistancePointToPath = std::numeric_limits< float >::max();
+            mapping.setDistanceOnPathFlag( 0.0f );
+            
+            unsigned int const segmentCount = pathAlike.segmentCount();
+            for ( unsigned int segmentIndex = 0; segmentIndex < segmentCount; ++segmentIndex ) 
+			{
+                float segmentDistance = 0.0f;
+                float radius = 0.0f;
+                float distancePointToPath = 0.0f;
+                reVector3Df pointOnPathCenterLine( 0.0f, 0.0f, 0.0f );
+                reVector3Df tangent( 0.0f, 0.0f, 0.0f );
+                
+                BaseDataExtractionPolicy::extract( pathAlike, segmentIndex, queryPoint, segmentDistance, radius, distancePointToPath, pointOnPathCenterLine, tangent );
+                
+                if ( distancePointToPath < minDistancePointToPath ) 
+				{
+                    minDistancePointToPath = distancePointToPath;
+                    mapping.setPointOnPathCenterLine( pointOnPathCenterLine );
+                    mapping.setPointOnPathBoundary( pointOnPathCenterLine + ( ( queryPoint - pointOnPathCenterLine ).normalise() * radius ) );
+                    mapping.setRadius( radius );
+                    mapping.setTangent( tangent );
+                    mapping.setSegmentIndex( segmentIndex );
+                    mapping.setDistancePointToPath( distancePointToPath );
+                    mapping.setDistancePointToPathCenterLine( distancePointToPath + radius );
+                    mapping.setDistanceOnPath( mapping.distanceOnPathFlag() + segmentDistance );
+                    mapping.setDistanceOnSegment( segmentDistance );
+                }
+                
+                mapping.setDistanceOnPathFlag( mapping.distanceOnPathFlag() + pathAlike.segmentLength( segmentIndex ) );
+            }
+        }
+        
+    }; // class PointToPathAlikeMapping
+    
+    /**
+     * Maps @a point to @a pathAlike and returns the data extracted in 
+     * @a mapping.
+     *
+     * See @c MapPointToPathAlike::map for further information.
+     */
+    
+    void mapPointToPathAlike( PathAlike const& pathAlike, reVector3Df const& point, Mapping& mapping )
+	{
+        PointToPathAlikeMapping< PathAlike, Mapping >::map( pathAlike, point, mapping );
+    }
+    
+    
+    /**
+     * Provides functionality to map distances to path alikes and to extract
+     * the associated data.
+     */
+    
+    class  DistanceToPathAlikeMapping 
+	{
+    public:
+    
+        /**
+         * Maps @a distanceOnPath to a path alike @a pathAlike and returns the 
+         * queried data in @a mapping.
+         *
+         * @c Mapping must provide the following member functions 
+         * to set queried values. Member functions might be empty if the  
+         * specific data isn't needed. A good compiler should optimize the
+         * empty member function calls and the associated calculations for its
+         * parameters away.
+         *
+         * <code> void setPointOnPathCenterLine( reVector3Df const& ) </code>
+         * <code> void setRadius( float ) </code>
+         * <code> void setTangent( reVector3Df const& ) </code>
+         * <code> void setSegmentIndex( typename SegmentedPathAlike::unsigned int ) </code>
+         * <code> void setDistanceOnPath( float ) </code>
+         * <code> void setDistanceOnSegment( float ) </code>
+         */
+        static void map( PathAlike const& pathAlike, float distanceOnPath, Mapping& mapping ) 
+		{
+            float const pathLength = pathAlike.length();
+            
+            // Modify @c distanceOnPath to applicable values.
+            if ( pathAlike.isCyclic() ) 
+			{
+                distanceOnPath = modulo( distanceOnPath, pathLength );       
+            }
+            distanceOnPath = clamp( distanceOnPath, 0.0f, pathLength );
+            
+            // Which path alike segment is reached by @c distanceOnPath?
+            float remainingDistance = distanceOnPath;
+            unsigned int segmentIndex = 0;        
+            unsigned int const maxSegmentIndex = pathAlike.segmentCount() - 1;
+            while( ( segmentIndex < maxSegmentIndex ) && 
+                   ( remainingDistance > pathAlike.segmentLength( segmentIndex ) ) ) 
+			{
+                remainingDistance -= pathAlike.segmentLength( segmentIndex );
+                ++segmentIndex;
+            }
+            
+            // Extract the path related data associated with the segment reached
+            // by @c distanceOnPath.
+            reVector3Df pointOnPathCenterLine( 0.0f, 0.0f, 0.0f );
+            reVector3Df tangent( 0.0f, 0.0f, 0.0f );
+            float radius = 0.0f;
+            BaseDataExtractionPolicy::extract( pathAlike, segmentIndex, remainingDistance, pointOnPathCenterLine, tangent, radius );
+            
+            // Store the extracted data in @c mapping to return it to the caller.
+            mapping.setPointOnPathCenterLine( pointOnPathCenterLine );
+            mapping.setRadius( radius );
+            mapping.setTangent( tangent );
+            mapping.setSegmentIndex( segmentIndex );
+            mapping.setDistanceOnPath( distanceOnPath );
+            mapping.setDistanceOnSegment( remainingDistance );            
+        }
+        
+    }; // class DistanceToPathAlikeMapping
+    
+    
+    /**
+     * Maps @a distance to @a pathAlike and stores the data queried in
+     * @a mapping.
+     *
+     * See @c DistanceToPathAlikeMapping::map for further information.
+     */
+    
+    void mapDistanceToPathAlike( PathAlike const& pathAlike, float distance, Mapping& mapping ) 
+	{
+        DistanceToPathAlikeMapping< PathAlike, Mapping >::map( pathAlike, distance, mapping );
+    }
+    
+    
+}
+}
+// Declarations of policies used by @c OpenSteer::mapPointToPathAlike and
+// @c OpenSteer::mapDistanceToPathAlike to extract informations of path alikes.
+namespace Core 
+{
+namespace AI
+{
+    
+    /**
+     * Extracts the base data like the segment distance, the radius, the
+     * distance of the query point to the path alike, the point on the path
+     * alike center line and the tangent at that point.
+     *
+     * Specialize it for the path alike to use and provide a static member
+     * function with the following signature:
+     *
+     * <code>static void extract( PathAlike const& pathAlike, typename PathAlike::unsigned int segmentIndex, reVector3Df const& point, float& segmentDistance, float& radius, float& distancePointToPath, reVector3Df& pointOnPathCenterLine, reVector3Df& tangent )</code>
+     *
+     * @attention Be aware of the references that are passed in.
+     */
+     class  PointToPathAlikeBaseDataExtractionPolicy;
+    
+    
+    /**
+     * Extracts the base data like the radius, the point on the path
+     * alike center line and the tangent at that point.
+     *
+     * Specialize it for the path alike to use and provide a static member
+     * function with the following signature:
+     *
+     * <code>static void extract( PathAlike const& pathAlike, typename PathAlike::unsigned int segmentIndex, float segmentDistance, reVector3Df& pointOnPathCenterLine, reVector3Df& tangent, float& radius )</code>
+     *
+     * @attention Be aware of the references that are passed in.
+     */    
+    
+    class DistanceToPathAlikeBaseDataExtractionPolicy;
+    
+}
+}
+// Predefined mappings used by @c OpenSteer::mapPointToPathAlike and 
+// @c OpenSteer::mapDistanceToPathAlike used by implementations of segmented paths and pathways.
+namespace Core 
+{
+namespace AI
+{   
+    /**
+     * Stores the point on a pathway boundary, the tangent at the associated
+     * path center line and the distance of a query point to the point on the 
+     * path boundary - used by @c OpenSteer::mapPointToPathAlike.
+     */
+    class  PointToPathMapping : public DontExtractPathDistance 
+	{
+    public:
+        PointToPathMapping() : pointOnPathCenterLine( 0.0f, 0.0f, 0.0f ), tangent( 0.0f, 0.0f, 0.0f ), distancePointToPath( 0.0f ) {}
+            
+        void setPointOnPathCenterLine( reVector3Df const& point ) 
+		{
+            pointOnPathCenterLine = point;
+        }
+        void setPointOnPathBoundary( reVector3Df const& ) 
+		{
+            // pointOnPathBoundary = point;
+        }
+        void setRadius( float ) {}
+        void setTangent( reVector3Df const& t) 
+		{
+            tangent = t;
+        }
+        void setSegmentIndex( unsigned int ) {}
+        void setDistancePointToPath( float distance ) 
+		{
+            distancePointToPath = distance;
+        }
+        void setDistancePointToPathCenterLine( float ) {}
+        void setDistanceOnPath( float ) {}
+        void setDistanceOnSegment( float ) {}
+            
+        reVector3Df pointOnPathCenterLine;
+        // reVector3Df pointOnPathBoundary; 
+        reVector3Df tangent;
+        float distancePointToPath;
+            
+    }; // class PointToPathMapping
+    
+    
+    /**
+     * Stores the point on a path center line for a given distance from the
+     * start of the path - used by @c OpenSteer::mapDistanceToPathAlike.
+     */
+    class  PathDistanceToPointMapping :  public DontExtractPathDistance 
+	{
+    public:
+        
+        void setPointOnPathCenterLine( reVector3Df const& vec )
+		{
+            pointOnPathCenterLine = vec;
+        }
+        void setRadius( float ) {}
+        void setTangent( reVector3Df const& ){}
+        void setSegmentIndex( unsigned int ){}
+        void setDistanceOnPath( float ){}
+        void setDistanceOnSegment( float ){}
+            
+        reVector3Df pointOnPathCenterLine; 
+            
+            
+    }; // class PathDistanceToPointMapping
+    
+    
+    /**
+     * Stores the distance of from the start of a path to a point on the 
+     * center line of the path - used by @c OpenSteer::mapPointToPathAlike.
+     */
+    class  PointToPathDistanceMapping : public ExtractPathDistance 
+	{
+    public:
+        PointToPathDistanceMapping() : distanceOnPath( 0.0f ) {}
+            
+        void setPointOnPathCenterLine( reVector3Df const& ) {}
+        void setPointOnPathBoundary( reVector3Df const&  ) {}
+        void setRadius( float ) {}
+        void setTangent( reVector3Df const& ) {}
+        void setSegmentIndex( unsigned int ) {}
+        void setDistancePointToPath( float  ) {}
+        void setDistancePointToPathCenterLine( float ) {}
+        void setDistanceOnPath( float distance ) 
+		{
+            distanceOnPath = distance;
+        }
+        void setDistanceOnSegment( float ) {}
+            
+        float distanceOnPath;
+    }; // class PointToPathDistanceMapping
+    
+    
+}
+}
+// Collection of helper classes to inherit from to create mappings as used by  
+// @c OpenSteer::mapDistanceToPathAlike and 
+// @c OpenSteer::mapPointToPathAlike.
+namespace Core 
+{
+namespace AI
+{
+    /**
+     * Inherit from it to create a mapping class used by 
+     * @c OpenSteer::mapDistanceToPathAlike and 
+     * @c OpenSteer::mapPointToPathAlike that calculates and extracts the
+     * distance along the path alike.
+     */    
+    class  ExtractPathDistance 
+	{
+    public:
+        void setDistanceOnPathFlag( float distance ) 
+		{
+            distanceOnPathFlag_ = distance;
+        }
+        
+        float distanceOnPathFlag() const 
+		{
+            return distanceOnPathFlag_;
+        }
+        
+};
+    
+    
+    /**
+     * Inherit from it to create a mapping class used by 
+     * @c OpenSteer::mapDistanceToPathAlike and 
+     * @c OpenSteer::mapPointToPathAlike that shouldn't calculate and extract the
+     * distance along the path alike.
+     */
+    class  DontExtractPathDistance 
+	{
+    public:
+        void setDistanceOnPathFlag( float ) { }
+        
+        float distanceOnPathFlag() const 
+		{
+            return 0.0f;
+        };
+        
+};
+    
+}   
+}
+// Abstract segmented path class for paths build of segments between waypoints.
+namespace Core 
+{
+namespace AI
+{
+    /**
+     * Path build by segments between points on the path.
+     */
+    class SegmentedPath : public Path 
+	{
+    public:       
+         ~SegmentedPath() = 0;
+        
+        /**
+         * Returns the number of points defining the segments.
+         *
+         * This also includes the duplicated first point if the path is cyclic.
+         */
+         unsigned int pointCount() const = 0;
+        
+        /**
+         * Returns the point @a pointIndex.
+         *
+         * If the path is cyclic also the last point that is the duplicated
+         * first one is accessible.
+         */
+         reVector3Df point( unsigned int pointIndex ) const = 0;
+        
+        
+        /**
+         * Returns the number of segments that build the pathway.
+         */
+         unsigned int segmentCount() const = 0;
+        
+        /**
+         * Returns the length of segment @a segmentIndex.
+         */
+         float segmentLength( unsigned int segmentIndex ) const = 0;
+        
+        /**
+         * Returns the start point of the segment @a segmentIndex.
+         */
+         reVector3Df segmentStart( unsigned int segmentIndex ) const = 0;
+        
+        /**
+         * Returns the end point of segment @a segmentIndex.
+         */
+         reVector3Df segmentEnd( unsigned int segmentIndex ) const = 0;
+        
+        
+        /**
+         * Maps @a point to the nearest point on the center line of segment
+         * @a segmentIndex and returns the distance from the segment start to 
+         * this point.
+         */
+         float mapPointToSegmentDistance( unsigned int segmentIndex, reVector3Df const& point ) const = 0;
+        
+        
+        /**
+         * Maps @a segmentDistance to the center line of segment @a segmentIndex
+         * and returns the reached point.
+         *
+         * If @a segmentDistance is greater or smaller than the segment length
+         * is is clamped to @c 0.0f or @c segmentLength().
+         */
+         reVector3Df mapSegmentDistanceToPoint( unsigned int segmentIndex, float segmentDistance ) const = 0;
+        
+        /**
+         * Maps @a segmentDistance to the centerline of the segment 
+         * @a segmentIndex and returns the tangent of the pathway at the reached
+         * point.
+         *
+         * If @a segmentDistance is greater or smaller than the segment length
+         * is is clamped to @c 0.0f or @c segmentLength().
+         */
+         reVector3Df mapSegmentDistanceToTangent( unsigned int segmentIndex, float segmentDistance ) const = 0;
+        
+        
+        /**
+         * Combines @c mapSegmentDistanceToPoint and 
+         * @c mapSegmentDistanceToTangent.
+         */
+         void mapDistanceToSegmentPointAndTangent( unsigned int segmentIndex,
+                                                          float distance,
+                                                          reVector3Df& pointOnPath,
+                                                          reVector3Df& tangent ) const = 0;
+        
+        
+        /**
+         * Combines @c mapPointToSegmentDistance, @c mapSegmentDistanceToPoint, 
+         * and @c mapSegmentDistanceToTangent.
+         */
+         void mapPointToSegmentDistanceAndPointAndTangent( unsigned int segmentIndex,
+                                                                  reVector3Df const& point,
+                                                                  float& distance,
+                                                                  reVector3Df& pointOnPath,
+                                                                  reVector3Df& tangent ) const = 0;
+        
+    }; // class SegmentedPath
+    
+}   
+}
+// Utilitites to get the next or previous segment of a segmented path alike.
+namespace Core 
+{
+namespace AI
+{
+    /**
+     * Returns the next Segment after @a segmentIndex for @a pathAlike.
+     * 
+     * If @a segmentIndex is the last valid index and @a pathAlike is cylic the
+     * first segment index is returned. If @a pathAlike isn't cyclic the last 
+     * valid segment index is returned.
+     *
+     * @c SegmentedPathAlike must provide the following member functions:
+     * <code>unsigned int  segmentCount() const</code>
+     * <code>bool isValid() const </code>
+     * <code>bool isCyclic() const </code>
+     */
+    template< typename SegmentedPathAlike > unsigned int nextSegment( SegmentedPathAlike const& pathAlike, unsigned int segmentIndex ) 
+	{
+        assert( pathAlike.isValid() && "pathAlike isn't valid." );
+        assert( segmentIndex < pathAlike.segmentCount() && "segmentIndex out of range." );
+        
+        ++segmentIndex;
+        
+        if ( segmentIndex == pathAlike.segmentCount() ) 
+		{
+            if ( pathAlike.isCyclic() ) 
+			{
+                segmentIndex = 0;
+            } 
+			else 
+			{
+                --segmentIndex;
+            }
+        } 
+        
+        return segmentIndex;
+    }
+    
+    /**
+     * Returns the previous Segment before @a segmentIndex for @a pathAlike.
+     * 
+     * If @a segmentIndex is the first valid index and @a pathAlike is cylic the
+     * last segment index is returned. If @a pathAlike isn't cyclic the first 
+     * valid segment index is returned.
+     *
+     * @c SegmentedPathAlike must provide the following member functions:
+     * <code>unsigned int  segmentCount() const</code>
+     * <code>bool isValid() const </code>
+     * <code>bool isCyclic() const </code>
+     */
+    template< typename SegmentedPathAlike > unsigned int previousSegment( SegmentedPathAlike const& pathAlike, unsigned int segmentIndex ) 
+	{
+        assert( pathAlike.isValid() && "pathAlike isn't valid." );
+        assert( segmentIndex < pathAlike.segmentCount() && "segmentIndex out of range." );
+        if ( 0 != segmentIndex ) 
+		{
+            --segmentIndex;
+        } else if ( pathAlike.isCyclic() ) 
+		{
+            segmentIndex = pathAlike.segmentCount() - 1;
+        }
+        
+        return segmentIndex;
+    }  
+    
+}
+}
+// Abstract pathway build of segments between waypoints.
+namespace Core 
+{
+namespace AI
+{
+    /**
+     * Path defined by path segments.
+     *
+     * Look at @c QueryPathAlikes.h for functionality to query paths and
+     * pathways for information not provided here.
+     */
+    class  SegmentedPathway : public Pathway 
+	{
+    public:
+         ~SegmentedPathway() = 0;
+        
+        /**
+         * Returns the number of points defining the segments.
+         *
+         * This also includes the duplicated first point if the path is cyclic.
+         */
+         unsigned int pointCount() const = 0;
+        
+        /**
+         * Returns the point @a pointIndex.
+         *
+         * If the path is cyclic also the last point that is the duplicated
+         * first one is accessible.
+         */
+         reVector3Df point( unsigned int pointIndex ) const = 0;
+        
+        
+        /**
+         * Returns the number of segments that build the pathway.
+         */
+         unsigned int segmentCount() const = 0;
+        
+        /**
+         * Returns the length of segment @a segmentIndex.
+         */
+         float segmentLength( unsigned int segmentIndex ) const = 0;
+        
+        /**
+         * Returns the start point of the segment @a segmentIndex.
+         */
+         reVector3Df segmentStart( unsigned int segmentIndex ) const = 0;
+        
+        /**
+         * Returns the end point of segment @a segmentIndex.
+         */
+         reVector3Df segmentEnd( unsigned int segmentIndex ) const = 0;
+        
+        
+        
+        /**
+         * Maps @a point to the nearest point on the center line of segment
+         * @a segmentIndex and returns the distance from the segment start to 
+         * this point.
+         */
+         float mapPointToSegmentDistance( unsigned int segmentIndex, reVector3Df const& point ) const = 0;
+        
+        
+        /**
+         * Maps @a segmentDistance to the center line of segment @a segmentIndex
+         * and returns the reached point.
+         *
+         * If @a segmentDistance is greater or smaller than the segment length
+         * is is clamped to @c 0.0f or @c segmentLength().
+         */
+         reVector3Df mapSegmentDistanceToPoint( unsigned int segmentIndex, float segmentDistance ) const = 0;
+        
+        /**
+         * Maps @a segmentDistance to the center line of segment @a segmentIndex
+         * and returns the radius at the reached point.
+         *
+         * If @a segmentDistance is greater or smaller than the segment length
+         * is is clamped to @c 0.0f or @c segmentLength().
+         */
+         float mapSegmentDistanceToRadius( unsigned int segmentIndex, float distanceOnSegment ) const = 0;
+        
+        /**
+         * Maps @a segmentDistance to the centerline of the segment 
+         * @a segmentIndex and returns the tangent of the pathway at the reached
+         * point.
+         *
+         * If @a segmentDistance is greater or smaller than the segment length
+         * is is clamped to @c 0.0f or @c segmentLength().
+         */
+         reVector3Df mapSegmentDistanceToTangent( unsigned int segmentIndex, float segmentDistance ) const = 0;
+        
+        /**
+         * Combines @c mapSegmentDistanceToPoint and 
+         * @c mapSegmentDistanceToTangent and @c mapSegmentDistanceToRadius.
+         */
+         void mapDistanceToSegmentPointAndTangentAndRadius( unsigned int segmentIndex,
+                                                                   float segmentDistance,
+                                                                   reVector3Df& pointOnPath,
+                                                                   reVector3Df& tangent,
+                                                                   float& radius ) const = 0;        
+        
+        /**
+         * Combines @c mapPointToSegmentDistance, @c mapSegmentDistanceToPoint,
+         * @c mapSegmentDistanceToRadius, and @c mapSegmentDistanceToTangent.
+         */
+         void mapPointToSegmentDistanceAndPointAndTangentAndRadius( unsigned int segmentIndex,
+                                                                           reVector3Df const& point,
+                                                                           float& distance,
+                                                                           reVector3Df& pointOnPath,
+                                                                           reVector3Df& tangent,
+                                                                           float& radius) const = 0;
+    }; // class SegmentedPathway
+    
+}
+}
+/**
+ * OpenSteer -- Steering Behaviors for Autonomous Characters
+ *
+ * Copyright (c) 2002-2005, Sony Computer Entertainment America
+ * Original authors: Craig Reynolds <craig_reynolds@playstation.sony.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ *
+ *
+ * @file
+ *
+ * Primitive standard types.
+ */
+// Include std::unsigned int, std::ptrdiff_t
+namespace OpenSteer {
+    
+    
+    
+} // namespace OpenSteer
+namespace Core 
+{
+namespace AI
+{
+     class SteerLibraryMixin : public Super
+    {
+    public:
+        using Super::velocity;
+        using Super::maxSpeed;
+        using Super::speed;
+        using Super::radius;
+        using Super::maxForce;
+        using Super::forward;
+        using Super::position;
+        using Super::side;
+        using Super::up;
+        using Super::predictFuturePosition;
+        
+    public:
+        // Constructor: initializes state
+        SteerLibraryMixin ()
+        {
+            // set inital state
+            reset ();
+        }
+        // reset state
+        void reset (void)
+        {
+            // initial state of wander behavior
+            WanderSide = 0;
+            WanderUp = 0;
+            // default to non-gaudyPursuitAnnotation
+            gaudyPursuitAnnotation = false;
+        }
+        // Wander behavior
+        float WanderSide;
+        float WanderUp;
+        reVector3Df steerForWander (float dt);
+        // Seek behavior
+        reVector3Df steerForSeek (const reVector3Df& target);
+        // Flee behavior
+        reVector3Df steerForFlee (const reVector3Df& target);
+        // xxx proposed, experimental new seek/flee [cwr 9-16-02]
+        reVector3Df xxxsteerForFlee (const reVector3Df& target);
+        reVector3Df xxxsteerForSeek (const reVector3Df& target);
+        // Path Following behaviors
+        reVector3Df steerToFollowPath (const int direction, const float predictionTime, Pathway& path);
+        reVector3Df steerToStayOnPath (const float predictionTime, Pathway& path);
+		// Walls
+		reVector3Df steerForWallAvoidance(const Vector<Wall*>& Walls);
+		// Quick sphere obstacle avoidance
+		reVector3Df steerToAvoidOabstacles_QuickSphere(const Vector<Obstacle*>& Obstacles);
+        // ------------------------------------------------------------------------
+        // Obstacle Avoidance behavior
+        //
+        // Returns a steering force to avoid a given obstacle.  The purely
+        // lateral steering force will turn our vehicle towards a silhouette edge
+        // of the obstacle.  Avoidance is required when (1) the obstacle
+        // intersects the vehicle's current path, (2) it is in front of the
+        // vehicle, and (3) is within minTimeToCollision seconds of travel at the
+        // vehicle's current velocity.  Returns a zero vector value (reVector3Df::ZERO)
+        // when no avoidance is required.
+        reVector3Df steerToAvoidObstacle (const float minTimeToCollision, const Obstacle& obstacle);
+        // avoids all obstacles in an ObstacleGroup
+        reVector3Df steerToAvoidObstacles (const float minTimeToCollision, const ObstacleGroup& obstacles);
+        // Unaligned collision avoidance behavior: avoid colliding with other
+        // nearby vehicles moving in unconstrained directions.  Determine which
+        // (if any) other other vehicle we would collide with first, then steers
+        // to avoid the site of that potential collision.  Returns a steering
+        // force vector, which is zero length if there is no impending collision.
+        reVector3Df steerToAvoidNeighbors (const float minTimeToCollision, const AVGroup& others);
+        // Given two vehicles, based on their current positions and velocities,
+        // determine the time until nearest approach
+        float predictNearestApproachTime (AbstractVehicle& otherVehicle);
+        // Given the time until nearest approach (predictNearestApproachTime)
+        // determine position of each vehicle at that time, and the distance
+        // between them
+        float computeNearestApproachPositions (AbstractVehicle& otherVehicle, float time);
+        /// XXX globals only for the sake of graphical annotation
+        reVector3Df hisPositionAtNearestApproach;
+        reVector3Df ourPositionAtNearestApproach;
+        // avoidance of "close neighbors" -- used only by steerToAvoidNeighbors
+        //
+        // XXX  Does a hard steer away from any other agent who comes withing a
+        // XXX  critical distance.  Ideally this should be replaced with a call
+        // XXX  to steerForSeparation.
+        reVector3Df steerToAvoidCloseNeighbors (const float minSeparationDistance, const AVGroup& others);
+        // used by boid behaviors
+        bool inBoidNeighborhood (const AbstractVehicle& otherVehicle,
+                                 const float minDistance,
+                                 const float maxDistance,
+                                 const float cosMaxAngle);
+        // Separation behavior -- determines the direction away from nearby boids
+        reVector3Df steerForSeparation (const float maxDistance,
+                                 const float cosMaxAngle,
+                                 const AVGroup& flock);
+        // Alignment behavior
+        reVector3Df steerForAlignment (const float maxDistance,
+                                const float cosMaxAngle,
+                                const AVGroup& flock);
+        // Cohesion behavior
+        reVector3Df steerForCohesion (const float maxDistance,
+                               const float cosMaxAngle,
+                               const AVGroup& flock);
+        // pursuit of another vehicle (& version with ceiling on prediction time)
+        reVector3Df steerForPursuit (const AbstractVehicle& quarry);
+        reVector3Df steerForPursuit (const AbstractVehicle& quarry, const float maxPredictionTime);
+        // for annotation
+        bool gaudyPursuitAnnotation;
+        // evasion of another vehicle
+        reVector3Df steerForEvasion (const AbstractVehicle& menace, const float maxPredictionTime);
+        // tries to maintain a given speed, returns a maxForce-clipped steering
+        // force along the forward/backward axis
+        reVector3Df steerForTargetSpeed (const float targetSpeed);
+        // ----------------------------------------------------------- utilities
+        // XXX these belong somewhere besides the steering library
+        // XXX above AbstractVehicle, below SimpleVehicle
+        // XXX ("utility vehicle"?)
+        // xxx cwr experimental 9-9-02 -- names OK?
+        bool isAhead (const reVector3Df& target) const {return isAhead (target, 0.707f);};
+        bool isAside (const reVector3Df& target) const {return isAside (target, 0.707f);};
+        bool isBehind (const reVector3Df& target) const {return isBehind (target, -0.707f);};
+        bool isAhead (const reVector3Df& target, float cosThreshold) const
+        {
+            const reVector3Df targetDirection = Vec3Utilities::normalise(target - position ());
+            return forward().dotProduct(targetDirection) > cosThreshold;
+        };
+        bool isAside (const reVector3Df& target, float cosThreshold) const
+        {
+            const reVector3Df targetDirection = (Vec3Utilities::normalise(target - position()));
+            const float dp = forward().dotProduct(targetDirection);
+            return (dp < cosThreshold) && (dp > -cosThreshold);
+        };
+        bool isBehind (const reVector3Df& target, float cosThreshold) const
+        {
+			const reVector3Df targetDirection = Vec3Utilities::normalise(target - position());
+            return forward().dotProduct(targetDirection) < cosThreshold;
+        };
+        // ------------------------------------------------ graphical annotation
+        // (parameter names commented out to prevent compiler warning from "-W")
+        // called when steerToAvoidObstacles decides steering is required
+        // (default action is to do nothing, layered classes can overload it)
+         void annotateAvoidObstacle (const float /*minDistanceToCollision*/) { }
+        // called when steerToFollowPath decides steering is required
+        // (default action is to do nothing, layered classes can overload it)
+         void annotatePathFollowing (const reVector3Df& /*future*/,
+                                            const reVector3Df& /*onPath*/,
+                                            const reVector3Df& /*target*/,
+                                            const float /*outside*/) { }
+        // called when steerToAvoidCloseNeighbors decides steering is required
+        // (default action is to do nothing, layered classes can overload it)
+         void annotateAvoidCloseNeighbor (const AbstractVehicle& /*other*/,
+                                                 const float /*additionalDistance*/) { }
+        // called when steerToAvoidNeighbors decides steering is required
+        // (default action is to do nothing, layered classes can overload it)
+         void annotateAvoidNeighbor (const AbstractVehicle& /*threat*/,
+                                            const float /*steer*/,
+                                            const reVector3Df& /*ourFuture*/,
+                                            const reVector3Df& /*threatFuture*/) { }
+    };
+}    
+}
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerForWander (float dt)
+{
+    // random walk WanderSide and WanderUp between -1 and +1
+    const float speed = 12.0f * dt; // maybe this (12) should be an argument?
+    WanderSide = scalarRandomWalk (WanderSide, speed, -1, +1);
+    WanderUp   = scalarRandomWalk (WanderUp,   speed, -1, +1);
+    // return a pure lateral steering vector: (+/-Side) + (+/-Up)
+    return (side() * WanderSide) + (up() * WanderUp);
+}
+// Seek behavior
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerForSeek (const reVector3Df& target)
+{
+    const reVector3Df desiredVelocity = target - position();
+    return desiredVelocity - velocity();
+}
+// Flee behavior
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerForFlee (const reVector3Df& target)
+{
+    const reVector3Df desiredVelocity = position() - target;
+    return desiredVelocity - velocity();
+}
+// ----------------------------------------------------------------------------
+// xxx proposed, experimental new seek/flee [cwr 9-16-02]
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::xxxsteerForFlee (const reVector3Df& target)
+{
+//  const reVector3Df offset = position - target;
+    const reVector3Df offset = position() - target;
+    const reVector3Df desiredVelocity = offset.truncateLength (maxSpeed ()); //xxxnew
+    return desiredVelocity - velocity();
+}
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::xxxsteerForSeek (const reVector3Df& target)
+{
+//  const reVector3Df offset = target - position;
+    const reVector3Df offset = target - position();
+    const reVector3Df desiredVelocity = offset.truncateLength (maxSpeed ()); //xxxnew
+    return desiredVelocity - velocity();
+}
+// ----------------------------------------------------------------------------
+// Path Following behaviors
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerToStayOnPath (const float predictionTime, Pathway& path)
+{
+    // predict our future position
+    const reVector3Df futurePosition = predictFuturePosition (predictionTime);
+    // find the point on the path nearest the predicted future position
+    reVector3Df tangent;
+    float outside;
+    const reVector3Df onPath = path.mapPointToPath (futurePosition,
+                                             tangent,     // output argument
+                                             outside);    // output argument
+    if (outside < 0)
+    {
+        // our predicted future position was in the path,
+        // return zero steering.
+        return reVector3Df::ZERO;
+    }
+    else
+    {
+        // our predicted future position was outside the path, need to
+        // steer towards it.  Use onPath projection of futurePosition
+        // as seek target
+        annotatePathFollowing (futurePosition, onPath, onPath, outside);
+        return steerForSeek (onPath);
+    }
+}
+// Walls
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerForWallAvoidance(const Vector<Wall*>& Walls)
+{
+	reVector3Df ret = reVector3Df::ZERO;
+	//for each wall
+	for (unsigned int i = 0; i < Walls.size(); i++)
+	{
+		//test intersection
+		reVector3Df player_pos = position();
+		player_pos.y = 0;
+		reVector3Df line1start = player_pos;
+		reVector3Df line1end = player_pos + (velocity() * 5);
+		reVector3Df line2start = Walls[i]->GetFrom();
+		reVector3Df line2end = Walls[i]->GetTo();
+		line2start.y = 0;
+		line2end.y = 0;
+		reVector3Df d1 = line1end - line1start;
+		reVector3Df d2 = line2end - line2start;
+		float mangle = d1.getRotationTo(d2).getYaw().valueDegrees();
+		//test intersection only if angle between velocity and wall normal is positive
+		if (mangle > 0)
+		{
+			reVector3Df result = Utility::LineIntersect(line1start, line1end, line2start, line2end);
+			float dist = result.distance(player_pos);
+			float mindist = 5 * radius();
+			if (result != reVector3Df(-1,-1,-1) && dist < mindist)
+			{
+				reVector3Df v1 = result - position();			//find if we need to turn left or right to avoid from agent to intersection
+				reVector3Df v2 = Walls[i]->GetNormal();			//wall normal
+				float angle = v1.getRotationTo(v2).getYaw().valueDegrees();	//find angle between v1 & v2
+				
+				if (angle > 0)	//left
+				{
+					Quaternion q;
+					q.FromAngleAxis(Radian(Math::fDeg2Rad * 90), reVector3Df::UNIT_Y);
+					ret = q * d2;
+				}
+				else	//right
+				{
+					Quaternion q;
+					q.FromAngleAxis(Radian(Math::fDeg2Rad * 90), reVector3Df::UNIT_Y);
+					ret = q * d2;
+				}
+				break;
+			}
+		}
+	}
+	return ret.normalisedCopy() * maxSpeed();
+}
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerToAvoidOabstacles_QuickSphere(const Vector<Obstacle*>& Obstacles)
+{
+	reVector3Df ret = reVector3Df::ZERO;
+	//prepare ray
+	Ogre::Ray r;
+	reVector3Df tpos = position();
+	r.setDirection(velocity().normalisedCopy());
+	//for each obstacle
+	for (unsigned int i = 0; i < Obstacles.size(); i++)
+	{
+		//if close enough
+		float dist = position().distance(Obstacles[i]->getPosition());
+		float mindist = radius() + Obstacles[i]->radius;
+		if (dist < mindist)
+		{
+			tpos.y = Obstacles[i]->getPosition().y;
+			r.setOrigin(tpos);
+			reVector3Df intersection;
+			bool result = Utility::IntersectLineCircle(
+				Obstacles[i]->getPosition(), Obstacles[i]->radius, r.getOrigin(), r.getOrigin() + dist * r.getDirection(), intersection);
+			if (result)
+			{
+				reVector3Df v1 = Obstacles[i]->getPosition() - r.getOrigin();	//find if we need to turn left or right to avoid from agent to obstacle center
+				reVector3Df v2 = Obstacles[i]->getPosition() - intersection;	//from collision point to obstacle center
+				float angle = v1.getRotationTo(v2).getYaw().valueDegrees();		//find angle between v1 & v2
+				
+				if (angle <= 0)	//left
+				{
+					Quaternion q;
+					q.FromAngleAxis(Radian(Math::fDeg2Rad * 90), reVector3Df::UNIT_Y);
+					ret = q * r.getDirection();
+				}
+				
+				else if (angle > 0)	//right
+				{
+					Quaternion q;
+					q.FromAngleAxis(Radian(Math::fDeg2Rad * -90), reVector3Df::UNIT_Y);
+					ret = q * r.getDirection();
+				}
+				break;
+			}
+		}
+	}
+	return ret.normalisedCopy() * maxSpeed();
+}
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerToFollowPath (
+	const int direction, const float predictionTime, Pathway& path)
+{
+    // our goal will be offset from our path distance by this amount
+    const float pathDistanceOffset = direction * predictionTime * speed();
+    // predict our future position
+    const reVector3Df futurePosition = predictFuturePosition (predictionTime);
+    // measure distance along path of our current and predicted positions
+    const float nowPathDistance =
+        path.mapPointToPathDistance (position ());
+    const float futurePathDistance =
+        path.mapPointToPathDistance (futurePosition);
+    // are we facing in the correction direction?
+    const bool rightway = ((pathDistanceOffset > 0) ?
+                           (nowPathDistance < futurePathDistance) :
+                           (nowPathDistance > futurePathDistance));
+    // find the point on the path nearest the predicted future position
+    // XXX need to improve calling sequence, maybe change to return a
+    // XXX special path-defined object which includes two Vec3s and a 
+    // XXX bool (onPath,tangent (ignored), withinPath)
+    reVector3Df tangent;
+    float outside;
+    const reVector3Df onPath = path.mapPointToPath (futurePosition,
+                                             // output arguments:
+                                             tangent,
+                                             outside);
+    // no steering is required if (a) our future position is inside
+    // the path tube and (b) we are facing in the correct direction
+    if ((outside < 0) && rightway)
+    {
+        // all is well, return zero steering
+        return reVector3Df::ZERO;
+    }
+    else
+    {
+        // otherwise we need to steer towards a target point obtained
+        // by adding pathDistanceOffset to our current path position
+        float const targetPathDistance = nowPathDistance + pathDistanceOffset;
+        reVector3Df const target = path.mapPathDistanceToPoint (targetPathDistance);
+        annotatePathFollowing (futurePosition, onPath, target, outside);
+        // return steering to seek target on path
+        return steerForSeek (target);
+    }
+}
+// ----------------------------------------------------------------------------
+// Obstacle Avoidance behavior
+//
+// Returns a steering force to avoid a given obstacle.  The purely lateral
+// steering force will turn our vehicle towards a silhouette edge of the
+// obstacle.  Avoidance is required when (1) the obstacle intersects the
+// vehicle's current path, (2) it is in front of the vehicle, and (3) is
+// within minTimeToCollision seconds of travel at the vehicle's current
+// velocity.  Returns a zero vector value (reVector3Df::ZERO) when no avoidance is
+// required.
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerToAvoidObstacle (
+	const float minTimeToCollision, const Obstacle& obstacle)
+{
+    const reVector3Df avoidance = obstacle.steerToAvoid (*this, minTimeToCollision);
+    // XXX more annotation modularity problems (assumes spherical obstacle)
+    if (avoidance != reVector3Df::ZERO)
+        annotateAvoidObstacle (minTimeToCollision * speed());
+    return avoidance;
+}
+// this version avoids all of the obstacles in an ObstacleGroup
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerToAvoidObstacles (
+	const float minTimeToCollision, const ObstacleGroup& obstacles)
+{
+    const reVector3Df avoidance = Obstacle::steerToAvoidObstacles (*this, minTimeToCollision, obstacles);
+    // XXX more annotation modularity problems (assumes spherical obstacle)
+    if (avoidance != reVector3Df::ZERO)
+        annotateAvoidObstacle (minTimeToCollision * speed());
+    return avoidance;
+}
+// ----------------------------------------------------------------------------
+// Unaligned collision avoidance behavior: avoid colliding with other nearby
+// vehicles moving in unconstrained directions.  Determine which (if any)
+// other other vehicle we would collide with first, then steers to avoid the
+// site of that potential collision.  Returns a steering force vector, which
+// is zero length if there is no impending collision.
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerToAvoidNeighbors (
+	const float minTimeToCollision, const AVGroup& others)
+{
+    // first priority is to prevent immediate interpenetration
+    const reVector3Df separation = steerToAvoidCloseNeighbors (0, others);
+    if (separation != reVector3Df::ZERO) return separation;
+    // otherwise, go on to consider potential future collisions
+    float steer = 0;
+    AbstractVehicle* threat = nullptr;
+    // Time (in seconds) until the most immediate collision threat found
+    // so far.  Initial value is a threshold: don't look more than this
+    // many frames into the future.
+    float minTime = minTimeToCollision;
+    // xxx solely for annotation
+    reVector3Df xxxThreatPositionAtNearestApproach;
+    reVector3Df xxxOurPositionAtNearestApproach;
+    // for each of the other vehicles, determine which (if any)
+    // pose the most immediate threat of collision.
+    for (AVIterator i = others.begin(); i != others.end(); i++)
+    {
+        AbstractVehicle& other = **i;
+        if (&other != this)
+        {	
+            // avoid when future positions are this close (or less)
+            const float collisionDangerThreshold = radius() * 2;
+            // predicted time until nearest approach of "this" and "other"
+            const float time = predictNearestApproachTime (other);
+            // If the time is in the future, sooner than any other
+            // threatened collision...
+            if ((time >= 0) && (time < minTime))
+            {
+                // if the two will be close enough to collide,
+                // make a note of it
+                if (computeNearestApproachPositions (other, time)
+                    < collisionDangerThreshold)
+                {
+                    minTime = time;
+                    threat = &other;
+                    xxxThreatPositionAtNearestApproach
+                        = hisPositionAtNearestApproach;
+                    xxxOurPositionAtNearestApproach
+                        = ourPositionAtNearestApproach;
+                }
+            }
+        }
+    }
+    // if a potential collision was found, compute steering to avoid
+    if (threat != nullptr)
+    {
+        // parallel: +1, perpendicular: 0, anti-parallel: -1
+        float parallelness = forward().dotProduct(threat->forward());
+        float angle = 0.707f;
+        if (parallelness < -angle)
+        {
+            // anti-parallel "head on" paths:
+            // steer away from future threat position
+            reVector3Df offset = xxxThreatPositionAtNearestApproach - position();
+            float sideDot = offset.dotProduct(side());
+            steer = (sideDot > 0) ? -1.0f : 1.0f;
+        }
+        else
+        {
+            if (parallelness > angle)
+            {
+                // parallel paths: steer away from threat
+                reVector3Df offset = threat->position() - position();
+                float sideDot = offset.dotProduct(side());
+                steer = (sideDot > 0) ? -1.0f : 1.0f;
+            }
+            else
+            {
+                // perpendicular paths: steer behind threat
+                // (only the slower of the two does this)
+                if (threat->speed() <= speed())
+                {
+                    float sideDot = side().dotProduct(threat->velocity());
+                    steer = (sideDot > 0) ? -1.0f : 1.0f;
+                }
+            }
+        }
+        annotateAvoidNeighbor (*threat,
+                               steer,
+                               xxxOurPositionAtNearestApproach,
+                               xxxThreatPositionAtNearestApproach);
+    }
+    return side() * steer;
+}
+// Given two vehicles, based on their current positions and velocities,
+// determine the time until nearest approach
+//
+// XXX should this return zero if they are already in contact?
+template<class Super> float Core::AI::SteerLibraryMixin<Super>::predictNearestApproachTime (AbstractVehicle& otherVehicle)
+{
+    // imagine we are at the origin with no velocity,
+    // compute the relative velocity of the other vehicle
+    const reVector3Df myVelocity = velocity();
+    const reVector3Df otherVelocity = otherVehicle.velocity();
+    const reVector3Df relVelocity = otherVelocity - myVelocity;
+    const float relSpeed = relVelocity.length();
+    // for parallel paths, the vehicles will always be at the same distance,
+    // so return 0 (aka "now") since "there is no time like the present"
+    if (relSpeed == 0) return 0;
+    // Now consider the path of the other vehicle in this relative
+    // space, a line defined by the relative position and velocity.
+    // The distance from the origin (our vehicle) to that line is
+    // the nearest approach.
+    // Take the unit tangent along the other vehicle's path
+    const reVector3Df relTangent = relVelocity / relSpeed;
+    // find distance from its path to origin (compute offset from
+    // other to us, find length of projection onto path)
+    const reVector3Df relPosition = position() - otherVehicle.position();
+    const float projection = relTangent.dotProduct(relPosition);
+    return projection / relSpeed;
+}
+// Given the time until nearest approach (predictNearestApproachTime)
+// determine position of each vehicle at that time, and the distance
+// between them
+template<class Super> float Core::AI::SteerLibraryMixin<Super>::computeNearestApproachPositions (AbstractVehicle& otherVehicle, float time)
+{
+    const reVector3Df    myTravel =       forward () *       speed () * time;
+    const reVector3Df otherTravel = otherVehicle.forward () * otherVehicle.speed () * time;
+    const reVector3Df    myFinal =       position () +    myTravel;
+    const reVector3Df otherFinal = otherVehicle.position () + otherTravel;
+    // xxx for annotation
+    ourPositionAtNearestApproach = myFinal;
+    hisPositionAtNearestApproach = otherFinal;
+    return Vec3Utilities::distance (myFinal, otherFinal);
+}
+// ----------------------------------------------------------------------------
+// avoidance of "close neighbors" -- used only by steerToAvoidNeighbors
+//
+// XXX  Does a hard steer away from any other agent who comes withing a
+// XXX  critical distance.  Ideally this should be replaced with a call
+// XXX  to steerForSeparation.
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerToAvoidCloseNeighbors (
+	const float minSeparationDistance, const AVGroup& others)
+{
+    // for each of the other vehicles...
+    for (AVIterator i = others.begin(); i != others.end(); i++)    
+    {
+        AbstractVehicle& other = **i;
+        if (&other != this)
+        {
+            const float sumOfRadii = radius() + other.radius();
+            const float minCenterToCenter = minSeparationDistance + sumOfRadii;
+            const reVector3Df offset = other.position() - position();
+            const float currentDistance = offset.length();
+            if (currentDistance < minCenterToCenter)
+            {
+                annotateAvoidCloseNeighbor (other, minSeparationDistance);
+                return (-offset).perpendicularComponent (forward());
+            }
+        }
+    }
+    // otherwise return zero
+    return reVector3Df::ZERO;
+}
+// ----------------------------------------------------------------------------
+// used by boid behaviors: is a given vehicle within this boid's neighborhood?
+template<class Super> bool Core::AI::SteerLibraryMixin<Super>::inBoidNeighborhood (const AbstractVehicle& otherVehicle,
+	const float minDistance, const float maxDistance, const float cosMaxAngle)
+{
+    if (&otherVehicle == this)
+    {
+        return false;
+    }
+    else
+    {
+        const reVector3Df offset = otherVehicle.position() - position();
+        const float distanceSquared = offset.dotProduct (offset);
+        // definitely in neighborhood if inside minDistance sphere
+        if (distanceSquared < (minDistance * minDistance))
+        {
+            return true;
+        }
+        else
+        {
+            // definitely not in neighborhood if outside maxDistance sphere
+            if (distanceSquared > (maxDistance * maxDistance))
+            {
+                return false;
+            }
+            else
+            {
+                // otherwise, test angular offset from forward axis
+                const reVector3Df unitOffset = offset / sqrt (distanceSquared);
+                const float forwardness = forward().dotProduct(unitOffset);
+                return forwardness > cosMaxAngle;
+            }
+        }
+    }
+}
+// ----------------------------------------------------------------------------
+// Separation behavior: steer away from neighbors
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerForSeparation (const float maxDistance,
+	const float cosMaxAngle, const AVGroup& flock)
+{
+    // steering accumulator and count of neighbors, both initially zero
+    reVector3Df steering;
+    int neighbors = 0;
+    // for each of the other vehicles...
+    AVIterator flockEndIter = flock.end();
+    for (AVIterator otherVehicle = flock.begin(); otherVehicle != flockEndIter; ++otherVehicle )
+    {
+        if (inBoidNeighborhood (**otherVehicle, radius()*3, maxDistance, cosMaxAngle))
+        {
+            // add in steering contribution
+            // (opposite of the offset direction, divided once by distance
+            // to normalise, divided another time to get 1/d falloff)
+            const reVector3Df offset = (**otherVehicle).position() - position();
+            const float distanceSquared = offset.dotProduct(offset);
+            steering += (offset / -distanceSquared);
+            // count neighbors
+            ++neighbors;
+        }
+    }
+    
+    return Vec3Utilities::normalise(steering);
+}
+// ----------------------------------------------------------------------------
+// Alignment behavior: steer to head in same direction as neighbors
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerForAlignment (const float maxDistance,
+	const float cosMaxAngle, const AVGroup& flock)
+{
+    // steering accumulator and count of neighbors, both initially zero
+    reVector3Df steering;
+    int neighbors = 0;
+    // for each of the other vehicles...
+    for (AVIterator otherVehicle = flock.begin(); otherVehicle != flock.end(); otherVehicle++)
+    {
+        if (inBoidNeighborhood (**otherVehicle, radius()*3, maxDistance, cosMaxAngle))
+        {
+            // accumulate sum of neighbor's heading
+            steering += (**otherVehicle).forward();
+            // count neighbors
+            neighbors++;
+        }
+    }
+    // divide by neighbors, subtract off current heading to get error-
+    // correcting direction, then normalise to pure direction
+    if (neighbors > 0) 
+	{
+		steering = ((steering / (float)neighbors) - forward());
+		steering.normalise();
+	}
+    return steering;
+}
+// ----------------------------------------------------------------------------
+// Cohesion behavior: to to move toward center of neighbors
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerForCohesion (const float maxDistance,
+	const float cosMaxAngle, const AVGroup& flock)
+{
+    // steering accumulator and count of neighbors, both initially zero
+    reVector3Df steering;
+    int neighbors = 0;
+    // for each of the other vehicles...
+    for (AVIterator otherVehicle = flock.begin(); otherVehicle != flock.end(); otherVehicle++)
+    {
+        if (inBoidNeighborhood (**otherVehicle, radius()*3, maxDistance, cosMaxAngle))
+        {
+            // accumulate sum of neighbor's positions
+            steering += (**otherVehicle).position();
+            // count neighbors
+            neighbors++;
+        }
+    }
+    // divide by neighbors, subtract off current position to get error-
+    // correcting direction, then normalise to pure direction
+    if (neighbors > 0) 
+		steering = ((steering / (float)neighbors) - position()).normalise();
+    return steering;
+}
+// ----------------------------------------------------------------------------
+// pursuit of another vehicle (& version with ceiling on prediction time)
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerForPursuit (const AbstractVehicle& quarry)
+{
+    return steerForPursuit (quarry, FLT_MAX);
+}
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerForPursuit (
+	const AbstractVehicle& quarry, const float maxPredictionTime)
+{
+    // offset from this to quarry, that distance, unit vector toward quarry
+    const reVector3Df offset = quarry.position() - position();
+    const float distance = offset.length ();
+    const reVector3Df unitOffset = offset / distance;
+    // how parallel are the paths of "this" and the quarry
+    // (1 means parallel, 0 is pependicular, -1 is anti-parallel)
+    const float parallelness = forward().dotProduct (quarry.forward());
+    // how "forward" is the direction to the quarry
+    // (1 means dead ahead, 0 is directly to the side, -1 is straight back)
+    const float forwardness = forward().dotProduct (unitOffset);
+    const float directTravelTime = distance / speed ();
+    const int f = intervalComparison (forwardness,  -0.707f, 0.707f);
+    const int p = intervalComparison (parallelness, -0.707f, 0.707f);
+    float timeFactor = 0; // to be filled in below
+    // Break the pursuit into nine cases, the cross product of the
+    // quarry being [ahead, aside, or behind] us and heading
+    // [parallel, perpendicular, or anti-parallel] to us.
+	Color color;           // to be filled in below (xxx just for debugging)
+	switch (f)
+    {
+    case +1:
+        switch (p)
+        {
+        case +1:          // ahead, parallel
+            timeFactor = 4;
+            color = Color::gBlack;
+            break;
+        case 0:           // ahead, perpendicular
+            timeFactor = 1.8f;
+            color = Color::gGray50;
+            break;
+        case -1:          // ahead, anti-parallel
+            timeFactor = 0.85f;
+            color = Color::gWhite;
+            break;
+        }
+        break;
+    case 0:
+        switch (p)
+        {
+        case +1:          // aside, parallel
+            timeFactor = 1;
+            color = Color::gRed;
+            break;
+        case 0:           // aside, perpendicular
+            timeFactor = 0.8f;
+            color = Color::gYellow;
+            break;
+        case -1:          // aside, anti-parallel
+            timeFactor = 4;
+            color = Color::gGreen;
+            break;
+        }
+        break;
+    case -1:
+        switch (p)
+        {
+        case +1:          // behind, parallel
+            timeFactor = 0.5f;
+            color= Color::gCyan;
+            break;
+        case 0:           // behind, perpendicular
+            timeFactor = 2;
+            color= Color::gBlue;
+            break;
+        case -1:          // behind, anti-parallel
+            timeFactor = 2;
+            color = Color::gMagenta;
+            break;
+        }
+        break;
+    }
+	switch (f)
+    {
+    case +1:
+        switch (p)
+        {
+        case +1:          // ahead, parallel
+            timeFactor = 4;
+            break;
+        case 0:           // ahead, perpendicular
+            timeFactor = 1.8f;
+            break;
+        case -1:          // ahead, anti-parallel
+            timeFactor = 0.85f;
+            break;
+        }
+        break;
+    case 0:
+        switch (p)
+        {
+        case +1:          // aside, parallel
+            timeFactor = 1;
+            break;
+        case 0:           // aside, perpendicular
+            timeFactor = 0.8f;
+            break;
+        case -1:          // aside, anti-parallel
+            timeFactor = 4;
+            break;
+        }
+        break;
+    case -1:
+        switch (p)
+        {
+        case +1:          // behind, parallel
+            timeFactor = 0.5f;
+            break;
+        case 0:           // behind, perpendicular
+            timeFactor = 2;
+            break;
+        case -1:          // behind, anti-parallel
+            timeFactor = 2;
+            break;
+        }
+        break;
+    }
+    // estimated time until intercept of quarry
+    const float et = directTravelTime * timeFactor;
+    // xxx experiment, if kept, this limit should be an argument
+    const float etl = (et > maxPredictionTime) ? maxPredictionTime : et;
+    // estimated position of quarry at intercept
+    const reVector3Df target = quarry.predictFuturePosition (etl);
+    // annotation
+    annotationLine (position(),
+                    target,
+                    gaudyPursuitAnnotation ? color : Color::gGray40);
+    return steerForSeek (target);
+}
+// ----------------------------------------------------------------------------
+// evasion of another vehicle
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerForEvasion (
+	const AbstractVehicle& menace, const float maxPredictionTime)
+{
+    // offset from this to menace, that distance, unit vector toward menace
+    const reVector3Df offset = menace.position() - position();
+    const float distance = offset.length ();
+    const float roughTime = distance / menace.speed();
+    const float predictionTime = ((roughTime > maxPredictionTime) ?
+                                  maxPredictionTime :
+                                  roughTime);
+    const reVector3Df target = menace.predictFuturePosition (predictionTime);
+    return steerForFlee (target);
+}
+// ----------------------------------------------------------------------------
+// tries to maintain a given speed, returns a maxForce-clipped steering
+// force along the forward/backward axis
+template<class Super> reVector3Df Core::AI::SteerLibraryMixin<Super>::steerForTargetSpeed (const float targetSpeed)
+{
+    const float mf = maxForce ();
+    const float speedError = targetSpeed - speed ();
+    return forward () * clip (speedError, -mf, +mf);
+}
+/*
+---------------------------------------------------------------------------------
+	TerrainRayTest.h
+	Project(s):
+	TerrainRayTest Project
+	Author:
+	Paul Edmondson
+	Description:
+	Interface for the RayTester class
+	Notes:
+	None at this time.
+	Known Issues:
+	None at this time.
+---------------------------------------------------------------------------------
+*/
+// This is so that everything can be changed to double precision if needed:
+// This controls whether or not the data set is transformed or just the query values are transformed
+//	into the local coordinate system. This should probably be left commented out unless the entire
+//	pipeline is double precision
+//#define TRT_TRANSFORM_DATA
+// You may want to get better performance by precomputing normals, at the expense of a little
+//	extra computation time at load and more memory consumption. If you want the normals pre-computed,
+//	define the following:
+// If you do not precompute the normals, you may not want the tester to normalise the collision
+//	normals if you have to rescale them later. This will save you a little computation for every
+//	collision. If you want the ray test normals pre-normalized, define the following:
+//#define TRT_NORMALIZE
+// Set up the typedef for floating point values
+// The structure for raytest results
+struct RayTestInfo {
+	bool hitOccurred;				// Infinite ray test collission
+	TRTScalar t;					// Normal scale to intersect point
+	TRTScalar pos[3];				// Intersect point
+	TRTScalar norm[3];
+};
+// The ray tester object
+class RayTester{
+public:
+	RayTester();						// simple constructor
+	~RayTester();						// destructor
+	void LoadData( char *fname,	TRTScalar xMin=0, TRTScalar xMax=0,
+								TRTScalar yMin=0, TRTScalar yMax=0,
+								TRTScalar zMin=0, TRTScalar zMax=0 );
+	void RayCast( RayTestInfo &results, const TRTScalar *eyePos, const TRTScalar *viewNorm, TRTScalar maxt=TRT_INFINITY ) const;
+};
+		static bool IntersectLineCircle(const reVector3Df& vOrginCircle, float r,const reVector3Df& vtLineStart, const reVector3Df& vtLineEnd, reVector3Df outIp)
+		{
+			reVector3Df vOrginNew = vOrginCircle - vtLineStart;
+			reVector3Df vtRay = (vtLineEnd - vtLineStart).normalisedCopy();
+			float b = vOrginNew.x * vtRay.x + vtRay.y * vOrginNew.y;
+			float c = r * r - ( vOrginNew.x * vOrginNew.x + vOrginNew.y * vOrginNew.y );
+			float a = vtRay.x * vtRay.x + vtRay.y * vtRay.y;	// Norm2() is x*x + y*y
+			float diva = 1.0F / a;
+			// Negative doesn't have square root.
+			if( (b*b + a * c ) <= 0 ) 
+				return false;
+			float b4ac = sqrt( (b*b + a * c ) );
+			float l1 = (b - b4ac) * diva;
+			float l2 = (b + b4ac) * diva;
+			// we need the closest intersection point.. so find smaller l.
+			// To get the other end , just change the comparison operator.
+			float l = l2;
+			if (l2 < l1)
+			{
+				l = l1;
+			}
+			// find the intersecting point
+			outIp = (vtRay * l) + vtLineStart;
+			return true;
+		}
+	};
+    // Generic interpolation
+    template<class T> inline T interpolate (float alpha, const T& x0, const T& x1)
+    {
+        return x0 + ((x1 - x0) * alpha);
+    }
+	inline Core::AI::Color interpolate (float alpha, const Core::AI::Color& x0, const Core::AI::Color& x1)
+    {
+        //return x0 + ((x1 - x0) * alpha);
+		return Core::AI::Color::gMagenta;
+    }
+    // Random number utilities
+    // Returns a float randomly distributed between 0 and 1
+    inline float frandom01 (void)
+    {
+        return (((float) rand ()) / ((float) RAND_MAX));
+    }
+    // Returns a float randomly distributed between lowerBound and upperBound
+    inline float frandom2 (float lowerBound, float upperBound)
+    {
+        return lowerBound + (frandom01 () * (upperBound - lowerBound));
+    }
+    // Constrain a given value (x) to be between two (ordered) bounds: min
+    // and max.  Returns x if it is between the bounds, otherwise returns
+    // the nearer bound.
+    inline float clip (const float x, const float min, const float max)
+    {
+        if (x < min) return min;
+        if (x > max) return max;
+        return x;
+    }
+    // remap a value specified relative to a pair of bounding values
+    // to the corresponding value relative to another pair of bounds.
+    // Inspired by (dyna:remap-interval y y0 y1 z0 z1)
+    inline float remapInterval (float x, float in0, float in1, float out0, float out1)
+    {
+        // uninterpolate: what is x relative to the interval in0:in1?
+        float relative = (x - in0) / (in1 - in0);
+        // now interpolate between output interval based on relative x
+        return interpolate (relative, out0, out1);
+    }
+    // Like remapInterval but the result is clipped to remain between out0 and out1
+    inline float remapIntervalClip (float x, float in0, float in1, float out0, float out1)
+    {
+        // uninterpolate: what is x relative to the interval in0:in1?
+        float relative = (x - in0) / (in1 - in0);
+        // now interpolate between output interval based on relative x
+        return interpolate (clip (relative, 0, 1), out0, out1);
+    }
+    // classify a value relative to the interval between two bounds:
+    //     returns -1 when below the lower bound
+    //     returns  0 when between the bounds (inside the interval)
+    //     returns +1 when above the upper bound
+    inline int intervalComparison (float x, float lowerBound, float upperBound)
+    {
+        if (x < lowerBound) return -1;
+        if (x > upperBound) return +1;
+        return 0;
+    }
+    inline float scalarRandomWalk (const float initial, const float walkspeed, const float min, const float max)
+    {
+        const float next = initial + (((frandom01() * 2) - 1) * walkspeed);
+        if (next < min) return min;
+        if (next > max) return max;
+        return next;
+    }
+    inline float square (float x)
+    {
+        return x * x;
+    }
+    // for debugging: prints one line with a given C expression, an equals sign,
+    // and the value of the expression.  For example "angle = 35.6"
+    // ----------------------------------------------------------------------------
+    // blends new values into an accumulator to produce a smoothed time series
+    //
+    // Modifies its third argument, a reference to the float accumulator holding
+    // the "smoothed time series."
+    //
+    // The first argument (smoothRate) is typically made proportional to "dt" the
+    // simulation time step.  If smoothRate is 0 the accumulator will not change,
+    // if smoothRate is 1 the accumulator will be set to the new value with no
+    // smoothing.  Useful values are "near zero".
+    //
+    // Usage:
+    //         blendIntoAccumulator (dt * 0.4f, currentFPS, smoothedFPS);
+    template<class T> inline void blendIntoAccumulator (const float smoothRate, const T& newValue, T& smoothedAccumulator)
+    {
+        smoothedAccumulator = interpolate (clip (smoothRate, 0, 1), smoothedAccumulator, newValue);
+    }
+    // ----------------------------------------------------------------------------
+    // Functions to encapsulate cross-platform differences for several <cmath>
+    // functions.  Specifically, the C++ standard says that these functions are
+    // in the std namespace (std::sqrt, etc.)  Apparently the MS VC6 compiler (or
+    // its header files) do not implement this correctly and the function names
+    // are in the global namespace.  We hope these -XXX versions are a temporary
+    // expedient, to be removed later.
+    inline float floorXXX (float x)          {return ::floor (x);}
+    inline float  sqrtXXX (float x)          {return ::sqrt (x);}
+    inline float   sinXXX (float x)          {return ::sin (x);}
+    inline float   cosXXX (float x)          {return ::cos (x);}
+    inline float   absXXX (float x)          {return ::abs (x);}
+    inline int     absXXX (int x)            {return ::abs (x);}
+    inline float   maxXXX (float x, float y) {if (x > y) return x; else return y;}
+    inline float   minXXX (float x, float y) {if (x < y) return x; else return y;}
+    inline float floorXXX (float x)          {return std::floor (x);}
+    inline float  sqrtXXX (float x)          {return std::sqrt (x);}
+    inline float   sinXXX (float x)          {return std::sin (x);}
+    inline float   cosXXX (float x)          {return std::cos (x);}
+    inline float   absXXX (float x)          {return std::abs (x);}
+    inline int     absXXX (int x)            {return std::abs (x);}
+    inline float   maxXXX (float x, float y) {return std::max (x, y);}
+    inline float   minXXX (float x, float y) {return std::min (x, y);}
+    // ----------------------------------------------------------------------------
+    // round (x)  "round off" x to the nearest integer (as a float value)
+    //
+    // This is a Gnu-sanctioned(?) post-ANSI-Standard(?) extension (as in
+    // http://www.opengroup.org/onlinepubs/007904975/basedefs/math.h.html)
+    // which may not be present in all C++ environments.  It is defined in
+    // math.h headers in Linux and Mac OS X, but apparently not in Win32:
+    inline float round (float x)
+    {
+      if (x < 0)
+          return -floorXXX (0.5f - x);
+      else
+          return  floorXXX (0.5f + x);
+    }
+    
+    inline float round( float x )
+    {
+        return ::round( x );
+    }
+    
+    
+    // Returns @a valueToClamp clamped to the range @a minValue - @a maxValue.
+    template< typename T > T clamp( T const& valueToClamp, T const& minValue, T const& maxValue) 
+	{
+        assert( minValue <= maxValue && "minValue must be lesser or equal to maxValue."  );
+        
+        if ( valueToClamp < minValue ) 
+		{
+            return minValue;
+        } 
+		else if ( valueToClamp > maxValue )
+		{
+            return maxValue;
+        }
+        
+        return valueToClamp;
+    }
+    
+    // Returns the floating point remainder of the division of @a x by @a y. If @a y is @c 0 the behavior is undefined.
+    inline float modulo( float x, float y ) 
+	{
+        assert( 0.0f != y && "Division by zero." );
+        return std::fmod( x, y );
+    }
+    
+    /**
+     * Returns the floating point remainder of the division of @a x by @a y.
+     * If @a y is @c 0 the behavior is undefined.
+     */
+    inline double modulo( double x, double y ) 
+	{
+        assert( 0.0 != y && "Division by zero." );
+        return std::fmod( x, y );
+    }    
+    
+    /**
+     * Returns the floating point remainder of the division of @a x by @a y.
+     * If @a y is @c 0 the behavior is undefined.
+     */
+    inline long double modulo( long double x, long double y ) 
+	{
+        assert( 0.0 != y && "Division by zero." );
+        return std::fmod( x, y );
+    }
+    
+    /**
+     * Returns the floating point remainder of the division of @a x by @a y.
+     * If @a y is @c 0 the behavior is undefined.
+     */
+    inline short modulo( short x, short y ) 
+	{
+        assert( 0 != y && "Division by zero." );
+        return x % y;
+    }
+    
+    /**
+     * Returns the floating point remainder of the division of @a x by @a y.
+     * If @a y is @c 0 the behavior is undefined.
+     */
+    inline int modulo( int x, int y ) 
+	{
+        assert( 0 != y && "Division by zero." );
+        return x % y;
+    }
+    
+    /**
+     * Returns the floating point remainder of the division of @a x by @a y.
+     * If @a y is @c 0 the behavior is undefined.
+     */
+    inline long modulo( long x, long y ) 
+	{
+        assert( 0 != y && "Division by zero." );
+        return x % y;
+    }
+    
+    /**
+     * Returns <code>value</code> if <code>value >= 0 </code>, otherwise
+     * <code>-value</code>.
+     */
+    template< typename T > T abs( T const& value ) 
+	{
+        return absXXX( value );
+    }
+    
+    /**
+     * Returns the maximum of the three values @a v0, @a v1, and @a v2.
+     *
+     * @todo Write a unit test.
+     */
+    template< typename T > T max( T const& v0, T const& v1, T const& v2 ) 
+	{
+        return maxXXX( v0, maxXXX( v1, v2 ) );
+    }
+    
+    /**
+     * Returns the minimum of the three values @a v0, @a v1, and @a v2.
+     *
+     * @todo Write a unit test.
+     */
+    template< typename T > T min( T const& v0, T const& v1, T const& v2 ) 
+	{
+        return minXXX( v0, minXXX( v1, v2 ) );
+    }
+    
+    /**
+     * Compares the absolute value of @a v with @a tolerance.
+     *
+     * See Christer Ericson, Real-Time Collision Detection, Morgan Kaufmann, 
+     * 2005, pp. 441--443.
+     *
+     * @todo Write a unit test.
+     */
+    template< typename T > bool isZero( T const& v, T const& tolerance = std::numeric_limits< T >::epsilon() ) 
+	{
+        return abs( v ) <= tolerance;
+    }
+    
+    /**
+     * Compares @a lhs with @a rhs given a specific @a tolerance.
+     *
+     * @attention Adapt @a tolerance to the range of values of @a lhs and 
+     * @a rhs.
+     * See Christer Ericson, Real-Time Collision Detection, Morgan Kaufmann, 
+     * 2005, pp. 441--443.
+     *
+     * @return <code>abs( lhs - rhs ) <= tolerance</code>
+     *
+     * @todo Write a unit test.
+     */
+    template< typename T > bool equalsAbsolute( T const& lhs, T const& rhs, T const& tolerance = std::numeric_limits< T >::epsilon() ) 
+	{
+        return isZero( lhs - rhs, tolerance );
+    }
+    
+    /**
+     * Compares @a lhs with @a rhs given a specific @a tolerance taking the 
+     * range of values into account.
+     *
+     * See Christer Ericson, Real-Time Collision Detection, Morgan Kaufmann, 
+     * 2005, pp. 441--443.
+     *
+     * @return <code>abs( lhs - rhs ) <= tolerance * max( abs( lhs ), abs( rhs ), 1 )</code>
+     *
+     * @todo Write a unit test.
+     */
+    template< typename T > bool equalsRelative( T const& lhs, T const& rhs, T const& tolerance = std::numeric_limits< T >::epsilon()  ) 
+	{
+        return isZero( lhs - rhs, tolerance * max( abs( lhs ), abs( rhs ), T( 1 ) ) );
+    }
+    
+    /**
+     * Approximately compares @a lhs with @a rhs given a specific @a tolerance  
+     * taking the range of values into account.
+     *
+     * See Christer Ericson, Real-Time Collision Detection, Morgan Kaufmann, 
+     * 2005, pp. 441--443.
+     *
+     * @return <code>abs( lhs - rhs ) <= tolerance * ( abs( lhs ) + abs( rhs ) + 1 )</code>
+     *
+     * @todo Write a unit test.
+     */
+    template< typename T > bool equalsRelativeApproximately(T const& lhs, T const& rhs, T const& tolerance = std::numeric_limits< T >::epsilon()) 
+	{
+        return isZero( lhs - rhs, tolerance * ( abs( lhs ) + abs( rhs ) + T( 1 ) ) );
+    }    
+    
+    /**
+     * Shrinks the capacity of a std::vector to fit its content.
+     *
+     * See Scott Meyer, Effective STL, Addison-Wesley, 2001, pp. 77--79.
+     */
+    template< typename T > void shrinkToFit( std::vector< T >& v ) 
+	{
+        std::vector< T >( v ).swap( v );
+    }
+    
+}
+}   
+    
+namespace Core 
+{
+namespace AI
+{
+	class Vec3Utilities
+	{
+	public:           
+		/**
+		 * Retuns distance between @a a and @a b.
+		 */
+		static inline float distance (const reVector3Df& a, const reVector3Df& b) 
+		{
+			return (a-b).length();
+		} 
+		// normalize: returns normalized version (parallel to this, length = 1)
+		static inline reVector3Df normalise (const reVector3Df& vec)
+		{
+			// skip divide if length is zero
+			const float len = vec.length ();
+			return (len>0) ? vec / len : vec;
+		}
+		static inline reVector3Df setYtoZero (reVector3Df vec)  
+		{
+			return reVector3Df (vec.x, 0, vec.z);
+		}
+		// ----------------------------------------------------------------------------
+		// Returns a position randomly distributed inside a sphere of unit radius
+		// centered at the origin.  Orientation will be random and length will range
+		// between 0 and 1
+		static reVector3Df RandomVectorInUnitRadiusSphere (void)
+		{
+			reVector3Df v;
+			do
+			{
+				v.x = frandom01()*2 - 1;
+				v.y = frandom01()*2 - 1;
+				v.z = frandom01()*2 - 1;
+			}
+			while (v.length() >= 1);
+			return v;
+		}
+		// ----------------------------------------------------------------------------
+		// Returns a position randomly distributed on a disk of unit radius
+		// on the XZ (Y=0) plane, centered at the origin.  Orientation will be
+		// random and length will range between 0 and 1
+		static reVector3Df randomVectorOnUnitRadiusXZDisk (void)
+		{
+			reVector3Df v;
+			do
+			{
+				v.x = frandom01()*2 - 1;
+				v.y = 0;
+				v.z = frandom01()*2 - 1;
+			}
+			while (v.length() >= 1);
+			return v;
+		}
+		// ----------------------------------------------------------------------------
+		// Returns a position randomly distributed on the surface of a sphere
+		// of unit radius centered at the origin.  Orientation will be random
+		// and length will be 1
+		static inline reVector3Df RandomUnitVector (void)
+		{
+			return Vec3Utilities::normalise(RandomVectorInUnitRadiusSphere());
+		}
+		// ----------------------------------------------------------------------------
+		// Returns a position randomly distributed on a circle of unit radius
+		// on the XZ (Y=0) plane, centered at the origin.  Orientation will be
+		// random and length will be 1
+		static inline reVector3Df RandomUnitVectorOnXZPlane (void)
+		{
+			return normalise(setYtoZero(RandomVectorInUnitRadiusSphere()));
+		}
+		// ----------------------------------------------------------------------------
+		// used by limitMaxDeviationAngle / limitMinDeviationAngle below
+		static reVector3Df vecLimitDeviationAngleUtility (const bool insideOrOutside,
+											const reVector3Df& source,
+											const float cosineOfConeAngle,
+											const reVector3Df& basis)
+		{
+			// immediately return zero length input vectors
+			float sourceLength = source.length();
+			if (sourceLength == 0) return source;
+			// measure the angular diviation of "source" from "basis"
+			const reVector3Df direction = source / sourceLength;
+			float cosineOfSourceAngle = direction.dotProduct (basis);
+			// Simply return "source" if it already meets the angle criteria.
+			// (note: we hope this top "if" gets compiled out since the flag
+			// is a constant when the function is inlined into its caller)
+			if (insideOrOutside)
+			{
+			// source vector is already inside the cone, just return it
+			if (cosineOfSourceAngle >= cosineOfConeAngle) return source;
+			}
+			else
+			{
+			// source vector is already outside the cone, just return it
+			if (cosineOfSourceAngle <= cosineOfConeAngle) return source;
+			}
+			// find the portion of "source" that is perpendicular to "basis"
+			reVector3Df perp = source.perpendicularComponent (basis);
+			// normalize that perpendicular
+			const reVector3Df unitPerp = Vec3Utilities::normalise(perp);
+			// construct a new vector whose length equals the source vector,
+			// and lies on the intersection of a plane (formed the source and
+			// basis vectors) and a cone (whose axis is "basis" and whose
+			// angle corresponds to cosineOfConeAngle)
+			float perpDist = sqrt(1 - (cosineOfConeAngle * cosineOfConeAngle));
+			const reVector3Df c0 = basis * cosineOfConeAngle;
+			const reVector3Df c1 = unitPerp * perpDist;
+			return (c0 + c1) * sourceLength;
+		}
+		// ----------------------------------------------------------------------------
+		// Enforce an upper bound on the angle by which a given arbitrary vector
+		// diviates from a given reference direction (specified by a unit basis
+		// vector).  The effect is to clip the "source" vector to be inside a cone
+		// defined by the basis and an angle.
+		static inline reVector3Df limitMaxDeviationAngle (const reVector3Df& source,
+											const float cosineOfConeAngle,
+											const reVector3Df& basis)
+		{
+			return vecLimitDeviationAngleUtility (true,  source, cosineOfConeAngle, basis);
+		}
+		// ----------------------------------------------------------------------------
+		// Enforce a lower bound on the angle by which a given arbitrary vector
+		// diviates from a given reference direction (specified by a unit basis
+		// vector).  The effect is to clip the "source" vector to be outside a cone
+		// defined by the basis and an angle.
+		static inline reVector3Df limitMinDeviationAngle (const reVector3Df& source,
+											const float cosineOfConeAngle,
+											const reVector3Df& basis)
+		{    
+			return vecLimitDeviationAngleUtility (false,  source, cosineOfConeAngle, basis);
+		}
+		// return cross product a x b
+		static inline reVector3Df crossProduct(const reVector3Df& a, const reVector3Df& b)
+		{
+			reVector3Df result((a.y * b.z) - (a.z * b.y),
+						(a.z * b.x) - (a.x * b.z),
+						(a.x * b.y) - (a.y * b.x));
+			return result;
+		}
+		// ----------------------------------------------------------------------------
+		// given a vector, return a vector perpendicular to it (note that this
+		// arbitrarily selects one of the infinitude of perpendicular vectors)
+		static reVector3Df findPerpendicularIn3d (const reVector3Df& direction)
+		{
+			// to be filled in:
+			reVector3Df quasiPerp;  // a direction which is "almost perpendicular"
+			reVector3Df result;     // the computed perpendicular to be returned
+			// three mutually perpendicular basis vectors
+			const reVector3Df i (1, 0, 0);
+			const reVector3Df j (0, 1, 0);
+			const reVector3Df k (0, 0, 1);
+			// measure the projection of "direction" onto each of the axes
+			const float id = i.dotProduct (direction);
+			const float jd = j.dotProduct (direction);
+			const float kd = k.dotProduct (direction);
+			// set quasiPerp to the basis which is least parallel to "direction"
+			if ((id <= jd) && (id <= kd))
+			{
+				quasiPerp = i;               // projection onto i was the smallest
+			}
+			else
+			{
+				if ((jd <= id) && (jd <= kd))
+					quasiPerp = j;           // projection onto j was the smallest
+				else
+					quasiPerp = k;           // projection onto k was the smallest
+			}
+			// return the cross product (direction x quasiPerp)
+			// which is guaranteed to be perpendicular to both of them
+			result = crossProduct (direction, quasiPerp);
+			return result;
+		}
+		// ----------------------------------------------------------------------------
+		// Returns the distance between a point and a line.  The line is defined in
+		// terms of a point on the line ("lineOrigin") and a UNIT vector parallel to
+		// the line ("lineUnitTangent")
+		static inline float distanceFromLine (const reVector3Df& point,
+									   const reVector3Df& lineOrigin,
+									   const reVector3Df& lineUnitTangent)
+		{
+			const reVector3Df offset = point - lineOrigin;
+			const reVector3Df perp = offset.perpendicularComponent (lineUnitTangent);
+			return perp.length();
+		}
+		/**
+		 * Returns the nearest point on the segment @a segmentPoint0 to 
+		 * @a segmentPoint1 from @a point.
+		 */
+		static reVector3Df nearestPointOnSegment( const reVector3Df& point,
+										  const reVector3Df& segmentPoint0,
+										  const reVector3Df& segmentPoint1 )
+		{
+			// convert the test point to be "local" to ep0
+			reVector3Df const local( point - segmentPoint0 );
+		    
+			// find the projection of "local" onto "segmentNormal"
+			reVector3Df const segment( segmentPoint1 - segmentPoint0 );
+			float const segmentLength( segment.length() );
+		    
+			assert( 0 != segmentLength && "Segment mustn't be of length zero." );
+		    
+			reVector3Df const segmentNormalized( segment / segmentLength ); 
+			float segmentProjection = segmentNormalized.dotProduct (local);
+		    
+			segmentProjection = clamp( segmentProjection, 0.0f, segmentLength );
+		    
+			reVector3Df result( segmentNormalized * segmentProjection );
+			result +=  segmentPoint0;
+			return result;    
+		}
+		/**
+		 * Computes minimum distance from @a point to the line segment defined by
+		 * @a segmentPoint0 and @a segmentPoint1.
+		 */
+		static inline float pointToSegmentDistance ( const reVector3Df& point,
+										const reVector3Df& segmentPoint0,
+										const reVector3Df& segmentPoint1)
+		{
+			return distance( point, nearestPointOnSegment( point, segmentPoint0, segmentPoint1 ) );
+		}
+	};
+}
+}
+namespace Core
+{
+namespace AI
+{
+	class  Wall
+	{
+	public:
+		Wall(const reVector3Df& From, const reVector3Df& To, bool LeftNormal);
+		~Wall();
+		reVector3Df GetFrom() { return m_From; }
+		reVector3Df GetTo() { return m_To; }
+		reVector3Df GetNormal() { return m_Normal; }
+};
+}
+}

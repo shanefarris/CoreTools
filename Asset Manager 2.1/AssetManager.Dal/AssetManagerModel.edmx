@@ -1,0 +1,467 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AssetManager.Dal.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Asset">
+          <Key>
+            <PropertyRef Name="AssetId" />
+          </Key>
+          <Property Name="AssetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AssetTypeId" Type="int" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Data" Type="image" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="MeshTypeId" Type="int" />
+        </EntityType>
+        <EntityType Name="AssetDependency">
+          <Key>
+            <PropertyRef Name="AssetDependencyId" />
+          </Key>
+          <Property Name="AssetDependencyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentAssetId" Type="int" Nullable="false" />
+          <Property Name="ChildAssetId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AssetList">
+          <Key>
+            <PropertyRef Name="AssetListId" />
+          </Key>
+          <Property Name="AssetListId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AssetListSet" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AssetId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AssetType">
+          <Key>
+            <PropertyRef Name="AssetTypeId" />
+          </Key>
+          <Property Name="AssetTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Extension" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="IsText" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentCategoryId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MeshType">
+          <Key>
+            <PropertyRef Name="MeshTypeId" />
+          </Key>
+          <Property Name="MeshTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="ProfileId" />
+          </Key>
+          <Property Name="ProfileId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AssetListSet" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Asset_AssetType">
+          <End Role="AssetType" Type="Self.AssetType" Multiplicity="1" />
+          <End Role="Asset" Type="Self.Asset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetType">
+              <PropertyRef Name="AssetTypeId" />
+            </Principal>
+            <Dependent Role="Asset">
+              <PropertyRef Name="AssetTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Asset_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Asset" Type="Self.Asset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Asset">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Asset_MeshType">
+          <End Role="MeshType" Type="Self.MeshType" Multiplicity="0..1" />
+          <End Role="Asset" Type="Self.Asset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeshType">
+              <PropertyRef Name="MeshTypeId" />
+            </Principal>
+            <Dependent Role="Asset">
+              <PropertyRef Name="MeshTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssetDependency_Asset">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1" />
+          <End Role="AssetDependency" Type="Self.AssetDependency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="AssetId" />
+            </Principal>
+            <Dependent Role="AssetDependency">
+              <PropertyRef Name="ChildAssetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssetDependency_Asset1">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1" />
+          <End Role="AssetDependency" Type="Self.AssetDependency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="AssetId" />
+            </Principal>
+            <Dependent Role="AssetDependency">
+              <PropertyRef Name="ParentAssetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssetList_Asset">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="1" />
+          <End Role="AssetList" Type="Self.AssetList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="AssetId" />
+            </Principal>
+            <Dependent Role="AssetList">
+              <PropertyRef Name="AssetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="DeleteAssetFromProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AssetId" Type="int" Mode="In" />
+          <Parameter Name="ProfileId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProfileId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetRootAssets" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="AssetManagerDalStoreContainer">
+          <EntitySet Name="Asset" EntityType="Self.Asset" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssetDependency" EntityType="Self.AssetDependency" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssetList" EntityType="Self.AssetList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssetType" EntityType="Self.AssetType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MeshType" EntityType="Self.MeshType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Asset_AssetType" Association="Self.FK_Asset_AssetType">
+            <End Role="AssetType" EntitySet="AssetType" />
+            <End Role="Asset" EntitySet="Asset" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Asset_Category" Association="Self.FK_Asset_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Asset" EntitySet="Asset" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Asset_MeshType" Association="Self.FK_Asset_MeshType">
+            <End Role="MeshType" EntitySet="MeshType" />
+            <End Role="Asset" EntitySet="Asset" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssetDependency_Asset" Association="Self.FK_AssetDependency_Asset">
+            <End Role="Asset" EntitySet="Asset" />
+            <End Role="AssetDependency" EntitySet="AssetDependency" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssetDependency_Asset1" Association="Self.FK_AssetDependency_Asset1">
+            <End Role="Asset" EntitySet="Asset" />
+            <End Role="AssetDependency" EntitySet="AssetDependency" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssetList_Asset" Association="Self.FK_AssetList_Asset">
+            <End Role="Asset" EntitySet="Asset" />
+            <End Role="AssetList" EntitySet="AssetList" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AssetManager.Dal" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AssetManagerEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="DeleteAssetFromProfile">
+            <Parameter Name="AssetId" Mode="In" Type="Int32" />
+            <Parameter Name="ProfileId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteProfile">
+          <Parameter Name="ProfileId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetRootAssets" EntitySet="Assets" ReturnType="Collection(AssetManager.Dal.Asset)" />
+          <EntitySet Name="Assets" EntityType="AssetManager.Dal.Asset" />
+          <EntitySet Name="AssetDependencies" EntityType="AssetManager.Dal.AssetDependency" />
+          <EntitySet Name="AssetLists" EntityType="AssetManager.Dal.AssetList" />
+          <EntitySet Name="AssetTypes" EntityType="AssetManager.Dal.AssetType" />
+          <EntitySet Name="Categories" EntityType="AssetManager.Dal.Category" />
+          <EntitySet Name="MeshTypes" EntityType="AssetManager.Dal.MeshType" />
+          <EntitySet Name="Profiles" EntityType="AssetManager.Dal.Profile" />
+          <AssociationSet Name="FK_Asset_AssetType" Association="AssetManager.Dal.FK_Asset_AssetType">
+            <End Role="AssetType" EntitySet="AssetTypes" />
+            <End Role="Asset" EntitySet="Assets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Asset_Category" Association="AssetManager.Dal.FK_Asset_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Asset" EntitySet="Assets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Asset_MeshType" Association="AssetManager.Dal.FK_Asset_MeshType">
+            <End Role="MeshType" EntitySet="MeshTypes" />
+            <End Role="Asset" EntitySet="Assets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssetDependency_Asset" Association="AssetManager.Dal.FK_AssetDependency_Asset">
+            <End Role="Asset" EntitySet="Assets" />
+            <End Role="AssetDependency" EntitySet="AssetDependencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssetDependency_Asset1" Association="AssetManager.Dal.FK_AssetDependency_Asset1">
+            <End Role="Asset" EntitySet="Assets" />
+            <End Role="AssetDependency" EntitySet="AssetDependencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssetList_Asset" Association="AssetManager.Dal.FK_AssetList_Asset">
+            <End Role="Asset" EntitySet="Assets" />
+            <End Role="AssetList" EntitySet="AssetLists" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="GetRootAssets_Result">
+          <Property Type="Int32" Name="AssetId" Nullable="false" />
+          <Property Type="Int32" Name="AssetTypeId" Nullable="false" />
+          <Property Type="String" Name="FileName" Nullable="false" MaxLength="255" />
+          <Property Type="Binary" Name="Data" Nullable="false" MaxLength="Max" />
+          <Property Type="Int32" Name="CategoryId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="MeshTypeId" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="Asset">
+          <Key>
+            <PropertyRef Name="AssetId" />
+          </Key>
+          <Property Name="AssetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AssetTypeId" Type="Int32" Nullable="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Data" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MeshTypeId" Type="Int32" />
+          </EntityType>
+        <EntityType Name="AssetDependency">
+          <Key>
+            <PropertyRef Name="AssetDependencyId" />
+          </Key>
+          <Property Name="AssetDependencyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentAssetId" Type="Int32" Nullable="false" />
+          <Property Name="ChildAssetId" Type="Int32" Nullable="false" />
+          </EntityType>
+        <EntityType Name="AssetList">
+          <Key>
+            <PropertyRef Name="AssetListId" />
+          </Key>
+          <Property Name="AssetListId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AssetListSet" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AssetId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AssetType">
+          <Key>
+            <PropertyRef Name="AssetTypeId" />
+          </Key>
+          <Property Name="AssetTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Extension" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsText" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentCategoryId" Type="Int32" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MeshType">
+          <Key>
+            <PropertyRef Name="MeshTypeId" />
+          </Key>
+          <Property Name="MeshTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="ProfileId" />
+          </Key>
+          <Property Name="ProfileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AssetListSet" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Asset_AssetType">
+          <End Type="AssetManager.Dal.AssetType" Role="AssetType" Multiplicity="1" />
+          <End Type="AssetManager.Dal.Asset" Role="Asset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetType">
+              <PropertyRef Name="AssetTypeId" />
+            </Principal>
+            <Dependent Role="Asset">
+              <PropertyRef Name="AssetTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Asset_Category">
+          <End Type="AssetManager.Dal.Category" Role="Category" Multiplicity="1" />
+          <End Type="AssetManager.Dal.Asset" Role="Asset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Asset">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Asset_MeshType">
+          <End Type="AssetManager.Dal.MeshType" Role="MeshType" Multiplicity="0..1" />
+          <End Type="AssetManager.Dal.Asset" Role="Asset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeshType">
+              <PropertyRef Name="MeshTypeId" />
+            </Principal>
+            <Dependent Role="Asset">
+              <PropertyRef Name="MeshTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssetDependency_Asset">
+          <End Type="AssetManager.Dal.Asset" Role="Asset" Multiplicity="1" />
+          <End Type="AssetManager.Dal.AssetDependency" Role="AssetDependency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="AssetId" />
+            </Principal>
+            <Dependent Role="AssetDependency">
+              <PropertyRef Name="ChildAssetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssetDependency_Asset1">
+          <End Type="AssetManager.Dal.Asset" Role="Asset" Multiplicity="1" />
+          <End Type="AssetManager.Dal.AssetDependency" Role="AssetDependency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="AssetId" />
+            </Principal>
+            <Dependent Role="AssetDependency">
+              <PropertyRef Name="ParentAssetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssetList_Asset">
+          <End Type="AssetManager.Dal.Asset" Role="Asset" Multiplicity="1" />
+          <End Type="AssetManager.Dal.AssetList" Role="AssetList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="AssetId" />
+            </Principal>
+            <Dependent Role="AssetList">
+              <PropertyRef Name="AssetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AssetManagerDalStoreContainer" CdmEntityContainer="AssetManagerEntities">
+          <FunctionImportMapping FunctionImportName="DeleteAssetFromProfile" FunctionName="AssetManager.Dal.Store.DeleteAssetFromProfile" />
+          <FunctionImportMapping FunctionImportName="DeleteProfile" FunctionName="AssetManager.Dal.Store.DeleteProfile" />
+          <FunctionImportMapping FunctionImportName="GetRootAssets" FunctionName="AssetManager.Dal.Store.GetRootAssets">
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Assets">
+            <EntityTypeMapping TypeName="AssetManager.Dal.Asset">
+              <MappingFragment StoreEntitySet="Asset">
+                <ScalarProperty Name="MeshTypeId" ColumnName="MeshTypeId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="AssetTypeId" ColumnName="AssetTypeId" />
+                <ScalarProperty Name="AssetId" ColumnName="AssetId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssetDependencies">
+            <EntityTypeMapping TypeName="AssetManager.Dal.AssetDependency">
+              <MappingFragment StoreEntitySet="AssetDependency">
+                <ScalarProperty Name="ChildAssetId" ColumnName="ChildAssetId" />
+                <ScalarProperty Name="ParentAssetId" ColumnName="ParentAssetId" />
+                <ScalarProperty Name="AssetDependencyId" ColumnName="AssetDependencyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssetLists">
+            <EntityTypeMapping TypeName="AssetManager.Dal.AssetList">
+              <MappingFragment StoreEntitySet="AssetList">
+                <ScalarProperty Name="AssetId" ColumnName="AssetId" />
+                <ScalarProperty Name="AssetListSet" ColumnName="AssetListSet" />
+                <ScalarProperty Name="AssetListId" ColumnName="AssetListId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssetTypes">
+            <EntityTypeMapping TypeName="AssetManager.Dal.AssetType">
+              <MappingFragment StoreEntitySet="AssetType">
+                <ScalarProperty Name="IsText" ColumnName="IsText" />
+                <ScalarProperty Name="Extension" ColumnName="Extension" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AssetTypeId" ColumnName="AssetTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="AssetManager.Dal.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentCategoryId" ColumnName="ParentCategoryId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MeshTypes">
+            <EntityTypeMapping TypeName="AssetManager.Dal.MeshType">
+              <MappingFragment StoreEntitySet="MeshType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MeshTypeId" ColumnName="MeshTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profiles">
+            <EntityTypeMapping TypeName="AssetManager.Dal.Profile">
+              <MappingFragment StoreEntitySet="Profile">
+                <ScalarProperty Name="AssetListSet" ColumnName="AssetListSet" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

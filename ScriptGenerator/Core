@@ -1,0 +1,1532 @@
+// Create and manage only one camera for now (had problems with compositors with multiple cameras).  But can attach and detach to different nodes if needed
+namespace Core
+{
+	class ICamera;
+	class CPluginManager;
+	enum E_CAMERA_MODE;
+	namespace Plugin
+	{
+		class ICameraFactory;
+	}
+	class  CCameraManager
+	{
+public:
+		static CCameraManager* Instance();
+		~CCameraManager();
+		
+		inline E_CAMERA_MODE		GetMode();				// Gets the mode of the current camera
+		inline Camera*				GetCamera();			// Gets the Ogre camera
+		inline Viewport*			GetViewport();
+		inline const reVector3Df	GetCameraPos();			// Position of current camera
+		inline Vector<ICamera*>&	GetCameras();			// Returns a list of all the ICameras loaded
+		inline bool					GetIsPlayerFriendly();	// Is the camera effecting the movement of the human player
+		inline SceneNode*			GetCameraNode();
+		inline SceneNode*			GetTargetNode();
+		inline void SetMoveSpeed(const float& Speed);
+		inline void SetEnabled(bool Enabled);
+		inline void SetCameraPos(reVector3Df& Pos);
+		void		SetCurrCamera(unsigned int Index);
+		bool IsHaveMode(E_CAMERA_MODE Mode);				// Do we have a camera of this mode type loaded
+		void RemoveAllCameras();							// Delete the list of ICamera
+		void Shutdown();									// Used to shutdown the ogre camera and viewport, and create a new set
+		void Restart();										// Restarts an already initialized camera manager, creating the camera and viewport
+		// Creates a ICamera of this mode
+		int  CreateCamera(E_CAMERA_MODE Type, SceneNode* Parent = nullptr);	
+		int  CreatePluginCamera(E_CAMERA_MODE Type, SceneNode* Parent = nullptr);
+		void Update(const float& elapsedTime);
+		void Update(const float& elapsedTime, E_CAMERA_MODE Mode);
+	};
+}
+/*
+ * This will be the state of every character in a level.  The state can have 1 to many actions to react to 
+ * the state (I am hungry so I need to 1. stand up, 2 walk to food, 3 eat, new state is full).  The running
+ * state will dictate the actions and if they need to be interupted for any reason, and moved to a new state.
+ * A character can only have one state at a time.
+ * State = Goal, Action = steps to complete the goal
+ */
+namespace Core
+{
+	class CPlayer;
+	enum E_PLAYER_STATE;
+}
+namespace Core
+{
+namespace AI
+{
+	enum E_CHARACTER_STATE_OUTCOME
+	{
+		SUCCESS = 0,		// State is done and should be replaced with a new state
+		FAILED,				// State is still done and needs to be replaced
+		WORKING,			// Still working at completing our goal
+		IMPOSSIBLE,			// Failed, but we can look into seeing why it is impossible
+	};
+	class CCharacterState
+	{
+	public:
+		CCharacterState(CPlayer* Player) : m_Player(Player), m_Level(0), m_StateLabel(0) { }
+		 E_CHARACTER_STATE_OUTCOME	Update(float elapsedTime) = 0;
+		E_CHARACTER_STATE_OUTCOME			GetOutcomeState() { return m_State; }
+		E_PLAYER_STATE						GetStateType() { return m_StateType; }
+		const char*							GetStateName() { return m_StateLabel; }
+		unsigned int									GetLevel() { return m_Level; }
+};
+}
+}
+namespace Core
+{
+	class CPlayer;
+	class CPluginManager;
+	enum E_PLAYER_STATE;
+	namespace Plugin
+	{
+		class IAiStateFactory;
+	}
+	namespace AI
+	{
+		class CCharacterState;
+		class  CCharacterStateManager
+		{
+		public:
+			static CCharacterStateManager* Instance();
+			~CCharacterStateManager();
+			// Use this overloaded method to let the manager determine the correct exact state based on the player,
+			// the attributes of the player, and the "level" of complexity
+			CCharacterState* GetState(E_PLAYER_STATE Type, CPlayer* Player, unsigned int Level = 1);
+			// Use this overloaded method to set the exact state, and don't let the manager decide the state for you.
+			CCharacterState* GetState(const char* StateName, CPlayer* Player);
+			void GetAllStates(Vector<const char*>& States);
+			void GetLoadedStates(Vector<String>& Names);
+			// Path Methods
+			void AddPath(const char* Name, const Vector<reVector3Df>& Paths);
+			unsigned int  GetPathCount();
+			bool GetPathByName(const char* Name, Vector<reVector3Df>& Path);
+			void GetAllPaths(PathDefinition& Paths);
+			bool SetName(const char* OldName, const char* NewName);
+};
+	}
+}
+// Effects consist of particle effects, and post effects, this manages both of them.  The particles could have many instances of the same particle running, so they are
+// loaded on demand.  The post effects can only have one instances, they are registered with the compositor manager, and enabled on demand.
+namespace Core
+{
+	class CGameObject;
+	class CDummyGameObject;
+	class CCameraManager;
+	
+	namespace Plugin
+	{
+		class IParticleFactory;
+	}
+	namespace Effects
+	{
+		class CParticleEffect;
+		class CPostEffect;
+		class  CEffectsManager
+		{
+		public:
+			static CEffectsManager* Instance();
+			~CEffectsManager();
+			
+			// Post effects
+			void TogglePostEffects(const char* EffectName, bool flag);
+			inline CPostEffect*	GetPostEffect(const char* EffectName);
+			// Particle effects
+			CParticleEffect* CreateParticle(const char* EffectName);
+			CParticleEffect* GetParticle(const char* EffectName);
+			// General
+			void Update(const float& elapsedTime);
+			void ReInit();
+};
+	}
+}
+namespace Core
+{
+	class CGameObject;
+	class CDummyGameObject;
+	namespace Effects
+	{
+		class  CEntityEffect
+		{
+		public:
+			CEntityEffect()
+			{
+				m_GameObject = nullptr;
+			}
+			 void AddEffectToGameObject(CGameObject* GameObject) = 0;
+			 void RemoveEffectFromGameObject() = 0;
+			const char* GetName() { return Name.c_str(); }
+};
+	}
+}
+// Base class which manages the standard startup of an application.
+namespace Core
+{
+	class CGameManager;
+	class CInputManager;
+	class CGameState;
+	class  CGame
+	{
+	public:
+		CGame();
+		~CGame();
+		 void Run();
+		 void Update();
+		void AddGameState(CGameState* GameState);
+	  
+};
+}
+// Container for application level data.
+namespace Core
+{
+	class CConfiguration;
+	class CGameObjectManager;
+	class CCameraManager;
+	class CItemsManager;
+	class CBillboardManager;
+	class CFrameListenerFramework;
+	namespace Effects
+	{
+		class CEffectsManager;
+	}
+	namespace Nature
+	{
+		class CNatureManager;
+	}
+	namespace Physics
+	{
+		class IPhysicsStrategy;
+	}
+	class  CGameManager
+	{
+public:
+		bool isSupportShaders;
+		static CGameManager* Instance();
+		
+		~CGameManager();
+		inline EngineDevice* GetEngineDevice();
+		inline SceneManager* GetSceneManager();
+		inline RenderWindow* GetRenderWindow();
+		inline Timer*		 GetTimer();
+		inline E_DRIVER_TYPE GetVideoDeviceType();
+		inline void SetEngineDevice(EngineDevice* e);
+		inline void SetSceneManager(SceneManager* s);
+		inline void SetRenderWindow(RenderWindow* r);
+		inline void SetReadyToAdvance(bool advance);
+		inline void SetQuit(bool quit);
+		// Loop
+		inline bool GetQuit();
+		inline bool GetReadyToAdvance();
+		inline void UpdateGame(const float& elapsedTime);
+		void		Shutdown();
+		// Console status
+		inline bool GetConsoleVisible() { return isConsoleOpened; }
+		inline void SetConsoleVisible(bool Visible) { isConsoleOpened = Visible; }
+		// Resources
+		void AddResourceArchive(const char* FileName, const char* GroupName);
+		void RemoveResourceArchive(const char* FileName, const char* GroupName);
+		// Serialization
+		bool SaveGame(const char* FileName);
+		void SetStaticData(const String& StaticData) { m_StaticData = StaticData; }	// TODO: This is a temp solution for saving static data for a level.
+		String& GetStaticData() { return m_StaticData; }
+		// Base resource names
+		void SetBaseResourceName(const String& ResourceName);
+		void SetBaseAudioResourceName(const String& ResourceName);
+		String GetBaseResourceName();
+		String GetBaseAudioResourceName();
+		String& GetScriptPath();													// Data driven Settings
+		reSceneManager* CreateScene(const char* SceneType, const char* SceneName);	// Create a new scene manager
+	};
+}
+namespace Core
+{
+	namespace Physics
+	{
+		class CPhysicsProfile;
+	}
+	class  CGameObject
+	{
+	public:
+		CGameObject(const char* Name);
+		void SetIsUpdatable(bool Value);
+		void SetPosition(const reVector3Df& Position);
+		 void Update(const float& elapsedTime) = 0;
+		String			 Name;
+		String			 GameObjectType;
+		SceneNode*		 Node;
+		Entity*			 Entity;
+		Physics::CPhysicsProfile* PhysicsProfile;
+		ENVIRONMENT_ATTRIBUTE_TYPE	EnvironmentType;
+	};
+	class  CDummyGameObject : public CGameObject
+	{
+	public:
+		CDummyGameObject();
+		CDummyGameObject(const char* Name, SceneNode* n, Ogre::Entity* e);
+		void Update(const float& elapsedTime);
+	};
+}
+// Container for application level data.
+namespace OIS
+{
+	class Mouse;
+	class Keyboard;
+}
+namespace Core
+{
+	class CConfiguration;
+	class CPlayer;
+	namespace Physics
+	{
+		class IPhysicsStrategy;
+	}
+	namespace SceneLoader
+	{
+		class CSerializer;
+	}
+	namespace AI
+	{
+		class CFpsVehicle;
+		class Obstacle;
+		class SphereObstacle;
+		class BoxObstacle;
+		class Wall;
+	}
+	namespace Plugin
+	{
+		class IGameObjectFactory;
+	}
+	class CGameObject;
+	class CPluginManager;
+	class  CGameObjectManager
+	{
+	public:
+		static CGameObjectManager* Instance();
+		
+		~CGameObjectManager();
+		// Game Objects
+		CGameObject* CreateObject(const char* GameObjectType);		// Objects from plugins
+		CGameObject* CreateObject(const char* GameObjectType, const char* Name, reVector3Df& Pos);
+		CGameObject* CreateCustomObject(const char* MeshName);		// Objects without plugins
+		CGameObject* CreateCustomObject(const char* MeshName, const char* Name, reVector3Df& Pos);
+		CGameObject* GetGameObject(Entity* entity);					// Search by entity pointer
+		CGameObject* GetGameObject(const char* Name);				// Search by game object name
+		CGameObject* GetGameObjectByEntityName(const char* Name);	// Search by entity name, used when doing a scene query, and all you get back is a movable object
+		void		 SetGameObjectUpdatable(CGameObject* GameObject, bool Value);
+		void		 GetGameObjects(Vector<CGameObject*>& GameObjects);
+		void		 GetAllObjectTypes(Vector<const char*>& ObjectTypes);
+		void		 RemoveGameObject(CGameObject* GameObject);
+		// Player methods
+		CPlayer* CreatePlayer(const char* Type, E_PLAYER_TEAM Team, const char* LabelName = "", Physics::IPhysicsStrategy* PhysicsStrategy = nullptr, bool isPlayer = false);
+		bool	 CreateCustomPlayer(CPlayer* Player, E_PLAYER_TEAM Team, const char* LabelName = "", Physics::IPhysicsStrategy* PhysicsStrategy = nullptr, bool isPlayer = false);
+		bool	 AddCustomPlayer(CPlayer* Player, E_PLAYER_TEAM Team, bool isPlayer = false);
+		void	 RemovePlayer(CPlayer* Player);
+		void	 RemoveAllPlayers();
+		void	 GetTeam(E_PLAYER_TEAM Team, std::vector<CPlayer*>& List);
+		void	 GetAllPlayers(Vector<CPlayer*>& Players);
+		void	 GetPlayerTypes(Vector<const char*>& PlayerType);
+		CPlayer* GetHumanPlayer() { return m_HumanPlayer; }
+		CPlayer* GetPlayerByName(const char* Name);
+		CPlayer* GetPlayerByEntityName(const char* EntityName);
+		CPlayer* GetClosestVisibleEnemy(CPlayer* Player);
+		CPlayer* GetClosestEnemy(CPlayer* Player);
+		void	 SetHumanPlayer(CPlayer* Player);
+		// Events
+		void Update(const float& elapsedTime);
+		void Shutdown();												// Destroy all objects, players and obstacles
+		void Restart();													// Ensure the manager is ready to do its job again.
+		// Obstacles
+		void AddSphereObstacle(CGameObject* GameObject);
+		void AddBoxObstacle(CGameObject* GameObject);
+		void GetObstacles(Vector<AI::Obstacle*>& list);
+		void GetSphereObstacles(Vector<AI::Obstacle*>& list);			// Only sphere obstacles, temp fix for opensteer not working on all types of obstacles
+		void RemoveObstacle(CGameObject* GameObject);
+		// Walls
+		void AddWall(const reVector3Df& From, const reVector3Df& To, bool LeftNormal = false);
+		void GetWalls(Vector<AI::Wall*>& Walls);
+		void RemoveWalls();
+};
+}
+// Used for levels and menus.  Is ment to be placed in a list and executed in order until there
+// are not more states to execute.  Should be executed at the "game" level.  Each level has its own
+// frame listener, each menu state is going to typically be its own frame listener.
+//Use this define to signify OIS will be used as a DLL(so that dll import/export macros are in effect)
+namespace Sound
+{
+	class CSoundManager;
+}
+namespace Core
+{
+	class CGameManager;
+	namespace Physics
+	{
+		class IPhysicsStrategy;
+	}
+	class  CGameState
+	{
+	public:
+		CGameState();
+		 void Update(const float& elapsedTime) = 0;
+		 bool Load() = 0;
+		 void End() = 0;
+};
+}
+namespace MyGUI 
+{ 
+	class OgrePlatform; 
+}
+namespace Core
+{
+namespace GUI
+{
+	class  CGuiManager
+	{
+public:
+		static CGuiManager* Instance();
+		~CGuiManager();
+		
+		IGuiStrategy*	CreateStrategy(const char* Name, E_GUI_STRATEGY StrategyType = EGS_MYGUI);
+		IGuiStrategy*	GetStrategy(const char* Name);
+		void			DeleteStrategy(const char* Name);
+	};
+}
+}
+namespace MyGUI
+{
+	class Gui;
+	class OgrePlatform;
+}
+namespace Core
+{
+namespace GUI
+{
+	class CBaseLayout_MyGui;
+	class CGuiStrategy_MyGui : public IGuiStrategy
+	{
+public:
+		CGuiStrategy_MyGui();
+		~CGuiStrategy_MyGui();
+		void Initialize();
+		void Shutdown();
+		void Activate();
+		void Desactivate();
+		
+		void SetCursorPosition(float x, float y);
+		void LoadLayout(const char* Name);
+		// engine / input events
+		bool FrameStarted(float LastTime);
+		bool FrameEnded(float LastTime);
+		bool MouseMoved( const OIS::MouseEvent &arg );
+		bool MousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
+		bool MouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
+		bool KeyPressed( const OIS::KeyEvent &arg );
+		bool KeyReleased( const OIS::KeyEvent &arg );
+		E_GUI_STRATEGY GetStrategyType() { return EGS_MYGUI; }
+		// MyGui specific methods
+		MyGUI::Gui* GetGui() { return m_GUI; }
+		CBaseLayout_MyGui* GetBaseLayout() { return m_BaseLayout; }
+		
+	};
+}
+}
+// Contains any events you would like to register for input.  It is a listner it's self so you can add
+// the method you want executed and it will execute in order.
+// The manager needs to be called at the "game" level so it can be updated in the main loop.
+//Use this define to signify OIS will be used as a DLL(so that dll import/export macros are in effect)
+namespace Core
+{
+	class  CInputManager : public OIS::KeyListener, public OIS::MouseListener, public OIS::JoyStickListener 
+	{
+	public:
+		static CInputManager* Instance();
+		 ~CInputManager();
+		void Initialise();
+		void Capture();
+		void AddKeyListener(OIS::KeyListener *KeyListener, const char* instanceName);
+		void AddMouseListener(OIS::MouseListener *MouseListener, const char* instanceName);
+		void AddJoystickListener(OIS::JoyStickListener *joystickListener, const char* instanceName);
+		void RemoveKeyListener(const char* instanceName);
+		void RemoveMouseListener(const char* instanceName);
+		void RemoveJoystickListener(const char* instanceName);
+		void RemoveKeyListener(OIS::KeyListener *KeyListener);
+		void RemoveMouseListener(OIS::MouseListener *MouseListener);
+		void RemoveJoystickListener(OIS::JoyStickListener *joystickListener);
+		void RemoveAllListeners();
+		void RemoveAllKeyListeners();
+		void RemoveAllMouseListeners();
+		void RemoveAllJoystickListeners();
+		void Shutdown();
+		void ResizeWindow(RenderWindow* rw);
+		void SetWindowExtents(int Width, int Height);
+		OIS::Mouse*    GetMouse();
+		OIS::Keyboard* GetKeyboard();
+		OIS::JoyStick* GetJoystick(unsigned int Index);
+		unsigned int GetNumOfJoysticks();
+};
+}
+// Will load all weapons data that needs to be loaded, collect, and manage.  Same applies to mags, and projectiles
+namespace Core
+{
+	class IItemProfile;
+	class IInventoryItem;
+	
+	namespace Physics
+	{
+		class IPhysicsStrategy;
+	}
+	class  CItemsManager
+	{
+public:
+		static CItemsManager* Instance();
+		
+		~CItemsManager();
+		void Update(const float& elapsedTime);
+		IInventoryItem* Pickup(const char* ItemName);				// When we pick an item up, item name is unique
+		IInventoryItem* PickupUnplaced(const char* ProfileName);	// Picking up an item that hasn't been placed on the level (usually for level loading)
+		void AddProfile(IItemProfile* Item);						// Adds a profile to the profiles list (unique)
+		bool PlaceItem(const char* ProfileName,						// Put a copy of the profile on the level, ready for pickup
+						const reVector3Df& Position, 
+						Physics::IPhysicsStrategy* Physics = nullptr); 
+		void GetItemProfiles(Vector<IItemProfile*>& List);			// Returns all the loaded profiles
+		IItemProfile* GetItemProfile(const char* ProfileName);		// Gets a single profile by the profile name
+		void GetPlacedItems(Vector<IInventoryItem*>& List);
+		void Dispose();												// Remove all inventory
+	};
+}
+namespace Core
+{
+namespace OgreSpecific
+{
+	class  CLoadingScreen : public ResourceGroupListener
+	{
+	public:
+		CLoadingScreen() { }
+		 ~CLoadingScreen() { }
+		 void Start(reRenderWindow* window, unsigned int numGroupsInit = 1, unsigned int numGroupsLoad = 1, float initProportion = 0.70f);
+		 void Finish(void);
+		// ResourceGroupListener callbacks
+		void resourceGroupScriptingStarted(const String& groupName, size_t scriptCount);
+		void scriptParseStarted(const String& scriptName, bool& skipThisScript);
+		void scriptParseEnded(const String& scriptName, bool skipped);
+		void resourceGroupScriptingEnded(const String& groupName);
+		void resourceGroupLoadStarted(const String& groupName, size_t resourceCount);
+		void resourceLoadStarted(const ResourcePtr& resource);
+		void resourceLoadEnded();
+		void worldGeometryStageStarted(const String& description);
+		void worldGeometryStageEnded();
+		void resourceGroupLoadEnded(const String& groupName);
+		DataStreamPtr ResourceLoading(const String& name, const String& group, Resource *resource);
+		bool ResourceCollision(ResourcePtr& resource, ResourceManager* resourceManager);
+};
+}
+}
+ 
+namespace OIS
+{
+	class KeyEvent;
+}
+namespace Core
+{
+	class CLuaInterpreter;
+	class CEditString;
+	class  CLuaConsole: public Ogre::FrameListener
+	{
+	public:
+		static CLuaConsole* Instance();
+		 ~CLuaConsole();
+	 
+		void    Shutdown();
+		void    SetVisible(bool fVisible);
+		bool    IsVisible(){ return visible; }
+		void    Print(String text);
+		bool    OnKeyPressed( const OIS::KeyEvent &evt );
+	 
+		// Frame listener
+		bool    frameStarted(const Ogre::FrameEvent &evt);
+		bool    frameEnded(const Ogre::FrameEvent &evt);
+	 
+};
+}
+ 
+// Used to collect CProjectiles and keep track of how many are left in our container
+namespace Core
+{
+	class CPlayer;
+	class CWeapon;
+	class CProjectile;
+	class CMagazineProfile;
+	
+	class CMagazine
+	{		
+	public:
+		CMagazine(CMagazineProfile* Profile, CWeapon* Weapon);
+		~CMagazine();
+		
+		bool Fire(CPlayer* Player, const reVector3Df& Direction);
+		void RemoveProjectile(CProjectile* Projectile);	// Kills the projectile and erases it from the list
+		Vector<CProjectile*>& GetProjectiles();			// Get active projectiles (not ones not used yet)
+		
+};
+}
+// Magazine can also be thought of as a container.  This is designed to contain projectile, but this can easily be updated to be more flexible.
+namespace Core
+{
+	class CProjectileProfile;
+	
+	class CMagazineProfile : public IItemProfile
+	{
+	public:
+		CMagazineProfile() : IItemProfile(EIT_MAGAZINE), Capacity(0), ProjectileProfile(0), MeshName(0) { }
+		~CMagazineProfile() { }
+		
+		unsigned int			Capacity;			// Max Amount of projectiles
+		const char* Desc;				// Description name
+		const char*	MeshName;
+		
+		// Stored profile of the protiles it holds
+		CProjectileProfile* ProjectileProfile;	
+		
+	};
+}
+// All menus that are apart of the game state needs to inherit this class.
+// menuPage<--CMenuStat<--CGameState
+namespace Core
+{
+	class CMenuState : public CGameState, 
+		public FrameListener, 
+		public WindowEventListener, 
+		public OIS::MouseListener, 
+		public OIS::KeyListener
+	{
+	public:
+		 bool keyPressed(const OIS::KeyEvent &e)  = 0;
+		 bool keyReleased(const OIS::KeyEvent &e) = 0;
+		 bool mouseMoved(const OIS::MouseEvent &e) = 0;
+		 bool mousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id)  = 0;
+		 bool mouseReleased(const OIS::MouseEvent &e, OIS::MouseButtonID id) = 0;
+		 bool frameRenderingQueued(const FrameEvent& Event) = 0;
+		 bool frameEnded(const FrameEvent& Event) = 0;
+	};
+}
+namespace Core
+{
+	class CPlayer;
+	class CPluginManager;
+namespace Mission
+{
+	class IMission;
+	class CMissionEvent;
+	class  CMissionManager
+	{
+	public:
+		static CMissionManager* Instance();
+		~CMissionManager();
+		bool StartMission(const char* MissionLabel, CPlayer* Player);
+		void ListAllAvailableMissions(Vector<String>& List);			// Returns all misisons loaded into the manager
+		bool FindActivePlayerMissions(CPlayer* Player,  Vector<IMission*>& Missions); // Returns player's active missions
+		void Update();													// Check the state of all running missions
+		// Used to update the status of a mission
+		void RegisterEvent(const CMissionEvent& Event);
+};
+}
+}
+// Physics
+// Gui
+// Player
+// Items
+// Managers
+// Consoles
+// Terrain
+// Declaring the user data to attach to the entities
+namespace OgreOde
+{
+	class Geometry;
+	class Body;
+}
+namespace Core
+{
+	namespace Physics
+	{
+		class CPhysXBody;
+	}
+}
+namespace Core
+{
+	class CPlayer;
+	class IInventoryItem;
+	enum E_PLAYER_TEAM;
+	enum SPAWN_POINT_PRIORITY;
+	enum E_CAMERA_MODE
+	{
+		ECM_CHASE	 = 0,
+		ECM_FIXED	 = 1,		// Stays in one place and looks at the same thing
+		ECM_FPS		 = 2,
+		ECM_TOP_DOWN = 3,
+		ECM_SIDE	 = 4,
+		ECM_FREE	 = 5,		// Will collide with the environment
+		ECM_GOD		 = 6,		// Goes through anything
+		ECM_RTS		 = 7,		// Different then top down because of mouse control
+		ECM_SPRING	 = 8,
+		ECM_CSS		 = 9,		// Chase space ship
+		ECM_NONE	 = 10		// Used for returning errors
+	};
+	enum SCENE_QUERY_FLAGS
+	{
+		SQF_TERRAIN		= 1<<0,	// For heightmap
+		SQF_PLAYER		= 1<<1,
+		SQF_WEAPON		= 1<<2,
+		SQF_TOOL		= 1<<3,
+		SQF_OBSTACLE	= 1<<4,
+		SQF_BUILDING	= 1<<5,
+		SQF_VEHICLE		= 1<<6,
+		SQF_NONE		= 1<<7	// Will not be quiered 
+	};
+	// An enum for all types of drivers
+	enum E_DRIVER_TYPE
+	{
+		EDT_NULL		= 0,	// Null driver
+		EDT_DIRECT3D9	= 1,	// Direct3D 9 device
+		EDT_DIRECT3D10	= 2,	// Direct3D 10 device
+		EDT_OPENGL		= 3		// OpenGL device
+	};
+	// Standard light found in every engine
+	enum LIGHT_TYPE
+	{
+		LT_POINT = 0,
+		LT_DIRECTIONAL,
+		LT_SPOT
+	};
+	// Needs to be defined specifically for the physics strategy used
+	struct CoreEntityObject
+	{
+		CoreEntityObject()
+		{
+			Player = nullptr;
+			Item = nullptr;
+			PhysicsBody = nullptr;
+		}
+		SCENE_QUERY_FLAGS	 QueryType;
+		CPlayer*			 Player;
+		IInventoryItem*		 Item;
+		
+		OgreOde::Geometry*	 PhysicsBody;		// OgreOde specific
+		Physics::CPhysXBody* PhysicsBody;
+		void*				 PhysicsBody;
+	};
+	enum ENVIRONMENT_ATTRIBUTE_TYPE
+	{
+		EAT_NONE		= 0,			// There is no attribute assign (usually will have no AI interaction)
+		EAT_PICKUP		= 1,			// Something that will enhance the player (food, health, ammo)
+		EAT_DANGEROUS	= 2,			// Something that could be dealy to the player (trap, enemy)
+		EAT_NEUTRAL		= 3,			// Neither good or bad (stupid things like in King's Quest)
+		EAT_MISSION		= 4,			// Could be safe or dangerous, but it is needed for a mission
+		EAT_UNKNOWN		= 5,			// Unknown to the player
+		EAT_EDITOR		= 6,			// Used only in an editor and should not be saved
+	};
+	struct SPAWN_POINT
+	{
+		String				 Name;
+		E_PLAYER_TEAM		 Team;
+		reVector3Df			 Position;
+		SPAWN_POINT_PRIORITY Priority;
+	};
+}
+// Superclass for all effects in the game with a timer. 
+namespace Core
+{
+namespace Effects
+{
+	class  CParticleEffect
+	{
+	public:
+		CParticleEffect();
+		 void StartTimer() = 0;							// Every effect has its own way of starting. Particle Systems start emitting, Billboards->setVisible etc etc
+		 void Update(const float& timeSinceLastFrame);		// Updates the timer of the effect. If the timer is bigger or equal with the m_tTimerReset, then the reset function will be called.
+		static void UpdateAll(const float& timeSinceLastFrame);	// Static function that updates all dynamic effects
+		static void AddDynamicEffect(CParticleEffect* e);		// Adds an effect to the m_DynamicEffects vector. 
+		float  GetTimer() { return m_Timer; }
+		void SetTimer(const float& Timer) { m_Timer = Timer; }
+		void SetPosition(reVector3Df& Position) { m_SceneNode->setPosition(Position); }
+		void SetPosition(const float& X, const float& Y, const float& Z) { m_SceneNode->setPosition(X, Y, Z); }
+		String LabelName;		// Particle type name
+		String ParticleName;	// Unquie name of the particle
+};
+}
+}
+namespace Core
+{
+	namespace Plugin
+	{
+		class IPhysicsStrategyFactory;
+	}
+namespace Physics
+{
+	class CPhysicsProfile;
+	class IPhysicsStrategy;
+	class  CPhysicsManager
+	{
+public:
+		static CPhysicsManager* Instance();
+		// Strategy
+		IPhysicsStrategy* CreateStrategy(const char* Label);
+		IPhysicsStrategy* GetStrategy() const;
+		void			  DeleteStrategy();
+		// Profiles
+		void			 AddPhysicsProfile(const char* ProfileName, CPhysicsProfile* Profile);
+		inline void		 GetPhysicsProfileList(PhysicsProfileList& ProfileList) const;
+		CPhysicsProfile* GetPhysicsProfile(const char* ProfileName) const;
+		void Update(const float& elapsedTime) const;
+		// Built-in profiles
+		static const char* DEFAULT_LIGHT_CUBE;
+		static const char* DEFAULT_MEDIUM_CUBE;
+		static const char* DEFAULT_HEAVY_CUBE;
+		static const char* DEFAULT_LIGHT_SPHERE;
+		static const char* DEFAULT_MEDIUM_SPHERE;
+		static const char* DEFAULT_HEAVY_SPHERE;
+	};
+}
+}
+namespace Core
+{	
+namespace Physics
+{
+	enum E_BODY_TYPE;
+	
+	class CPhysicsProfile
+	{
+	public:
+		CPhysicsProfile() 
+			: BodyType (GEOMETRY_MASK), 
+			Restitution(0.0f), 
+			Friction(0.0f), 
+			Mass(0.0f), 
+			Density(0.0f), 
+			Radius(DEFAULT_PROFILE_RADIUS), 
+			Size(DEFAULT_PROFILE_SIZE),
+			Direction(reVector3Df::UNIT_Y)
+		{
+		}
+		
+		E_PHYSICS_SHAPE Shape;
+		E_BODY_TYPE		BodyType;
+		float				Restitution;	// Not used very often
+		float				Friction;
+		float				Mass;
+		float				Density;		// Not used in every strategy, in PhysX this will error, in ODE it is required
+		float				Radius;			// Used for spheres, capsules, etc
+		reVector3Df		Size;			// Y axis is used for a single float size, example capsule or cylinder
+		reVector3Df		Direction;		// Used to face shapes like cylinders and capsules
+		
+		// Physics engine specific
+	};
+}
+}
+// Generic player, could be human player, or AI controlled, the logic should be the same.  CPlayer should be blind to the physics
+// implementation, only the game driver should have strategy specific logic.
+namespace OIS
+{
+	class Keyboard;
+	class Mouse;
+}
+namespace Core
+{
+	class CWeapon;
+	class CProjectile;
+	class CGameManager;
+	class CItemsManager;
+	class CCameraManager;
+	class IInventoryItem;
+	class CoreEntityObject;
+	class CGameObjectManager;
+	class CEnvironmentObserver;
+	class CPlayerSoundComponent;
+	class IInventoryItem;
+	class CPlayerAttributesComponent;
+	class ILineOfSightStrategy;
+	struct SoundToAnimation;
+	namespace AI
+	{
+		class CCharacterStateManager;
+		class CCharacterState;
+		class CFpsVehicle;
+		class IAiReactionComponent;
+	}
+	namespace Physics
+	{
+		class IPhysicsStrategy;
+		class ICharacterController;
+		class IPhysicsRagdoll;
+	}
+	namespace OgreSpecific
+	{
+		class MovableTextOverlay;
+		class RectLayoutManager;
+	}
+  
+	class  CPlayer
+	{
+	public:
+		CPlayer(const char* LabelName, Physics::IPhysicsStrategy* PhysicsStrategy);
+		~CPlayer();
+		    
+		 void Update(const float& elapsedTime, OIS::Keyboard* Keyboard, OIS::Mouse* Mouse) = 0;
+		// Gets
+		inline SceneNode*			GetCameraNode();			// Returns the ogre specific camera node
+		inline SceneNode*			GetSightNode();				// Returns the node that the camera is pointed to
+		inline SceneNode*			GetPlayerNode();			// Returns the node for the player mesh
+		inline Entity*				GetPlayerEntity();			// Returns the entity for the player mesh (primary entity)
+		inline float					GetHealth();
+		inline float					GetViewRange();				// How far the player can see
+		inline E_PLAYER_STATE		GetPlayerState();
+		inline AI::CFpsVehicle*		GetAiVehicle();
+		inline AI::CCharacterState* GetCharacterState();
+		inline E_PLAYER_TEAM		GetPlayerTeam();
+		inline reVector3Df			GetPosition();				// Just the parent node's position
+		inline const char*			GetName() { return Name.c_str(); }
+		inline const char*			GetMeshName() { return m_MeshName.c_str(); } // Used in ragdoll physics
+		inline bool					GetIsVisible() { return isVisible; }
+		inline bool					GetIsHumanPlayer() { return isHumanPlayer; }
+		inline reVector3Df			GetDirection() { return m_Direction; }
+		inline Vector<IInventoryItem*> GetItems() { return m_Items; }
+		inline reVector3Df			GetHeadPosition();
+		inline Quaternion			GetHeadRotation();
+		inline reVector3Df			GetBodyPosition();
+		inline Quaternion			GetBodyRotation();
+		inline AI::CFpsVehicle*		GetAiTarget();				// Used for character states for seeking a target
+		inline void					GetAiPathPoints(Vector<reVector3Df>& Paths); // Used for characater states for path following
+		inline IInventoryItem*		GetCurrentWeapon();
+		inline reVector3Df			GetEyePosition();			// Where the player's eyes are (used for LoS)
+		inline reVector3Df			GetCharacterControllerSize() { return m_CCSize; }
+		inline E_LOS_TYPE			GetLoSType() { return m_LosType; }
+		// Gets Used for serialization and other things
+		inline const char*					  GetPlayerType()			{ return m_PlayerType; }
+		inline Physics::IPhysicsStrategy*	  GetPhysicsStrategy()		{ return m_PhysicsStrategy; }
+		inline Physics::ICharacterController* GetCharacterController()	{ return m_CharacterController; }
+		inline float							  GetRunSpeed()				{ return m_RunSpeed; }
+		inline float							  GetWalkSpeed()			{ return m_WalkSpeed; }
+		inline float							  GetSprintSpeed()			{ return m_SprintSpeed; }
+		inline float							  GetCrawlSpeed()			{ return m_CrawlSpeed; }
+		inline float							  GetDieTime()				{ return m_DieingTime; }
+		inline const char*					  GetMovableText();
+		void SetRunSpeed(const float& Speed) { m_RunSpeed = Speed; }
+		void SetWalkSpeed(const float& Speed) { m_WalkSpeed = Speed; }
+		void SetSprintSpeed(const float& Speed) { m_SprintSpeed = Speed; }
+		void SetCrawlSpeed(const float& Speed) { m_CrawlSpeed = Speed; }
+		void SetDieTime(const float& Time) { m_DieingTime = Time; }
+		// Sets
+		void SetHealth(unsigned int Health);
+		void SetVisible(bool Visible);
+		void SetPlayerState(E_PLAYER_STATE State);
+		void SetAiVehicle(AI::CFpsVehicle* Vehicle);
+		void SetCharacterState(E_PLAYER_STATE State);			// Set the state by type, so it is not exact.
+		void SetExcactCharacterState(const char* State);		// Set exact state (don't let the manager decide with state is appropriate 
+		void SetPlayerPosition(const reVector3Df& Position);	// Used this because the Ai needs updated too.
+		void SetPlayerPosition(const float& x, const float& y, const float& z);
+		void SetPlayerTeam(E_PLAYER_TEAM Team);
+		void SetHumanPlayer(bool isPlayer);
+		void SetViewRange(const float& Range);
+		void SetTextLabelCaption(const char* Text);				// Set the text of the movable text overlay (must be enabled for it to render)
+		void SetTextLabelEnabled(bool Enabled);					// If the movable text overlay is visible
+		void SetAiTarget(AI::CFpsVehicle* Target);				// Characater state's target
+		void SetAiPathPoints(const Vector<reVector3Df>& PathPoints); // Path to follow for characater states
+		void SetName(const char* LabelName);					// Changes the users name and resets the movable text overlay
+		void SetDirection(const reVector3Df& Direction);		// Points the player in a specific direction
+		void SetLoSType(E_LOS_TYPE Type);						// Sets the current LoS strategy
+		// Line of Sight
+		bool CanSee(const reVector3Df& Position);
+		bool CanSee(CPlayer* Player);
+		
+		// Items inventory
+		void AddItem(IInventoryItem* Item);						// Adding an item via code, and not using the OnPickupItem event
+		void UseItem(AI::CFpsVehicle* TargetVehicle);			// Shooting a gun, utilizing a tool, etc
+		void RemoveItem(IInventoryItem* Item);					// Removes the item from the users inventory
+		void RemoveAllItems();									// Removes all items from the inventory
+		// Debug
+		void DebugLoS(bool Show);
+		// Events	
+		 void OnHit(CProjectile* Projectile, const reVector3Df& Direction);	// Used when hit, and calcs the damage internally
+		 void OnShotFired() = 0;												// Player shot a weapon, or used a tool
+		 void OnMove(const float& elapsedTime, OIS::Keyboard* Keyboard) = 0;	// Player moves there physical location
+		void OnPickupItem();														// Pickup an object
+		 void OnKill(CPlayer* Player, CProjectile* Projectile);				// When this player has a new kill
+};
+	struct SoundToAnimation
+	{
+		SoundToAnimation(const char* Anim, const char* Sound)
+		{
+			Animation = Anim;
+			AnimSound = Sound;
+		}
+		const char* Animation;		// Animation name in the skeleton
+		const char* AnimSound;		// Sound file in the sound engine
+	};
+}
+namespace Sound
+{
+	class CSound;
+	class CSoundManager;
+}
+namespace Core
+{
+	class  CPlayerSoundComponent
+	{
+	public:
+		CPlayerSoundComponent();
+		~CPlayerSoundComponent();
+		// Set the current sounds
+		bool SetMove(const char* FileName);
+		bool SetShot(const char* FileName);
+		bool SetHolsterIn(const char* FileName);
+		bool SetHolsterOut(const char* FileName);
+		bool SetReload(const char* FileName);
+		// Play sounds
+		void PlayMove();
+		void PlayShot();
+		void PlayHolsterIn();
+		void PlayHolsterOut();
+		void PlayReload();
+};
+}
+namespace Core
+{
+	namespace Plugin
+	{
+		class IConsoleParser;
+		class IGameObjectFactory;
+		class IMissionFactory;
+		class IAiStateFactory;
+		class IPlayerFactory;
+		class IParticleFactory;
+		class ICameraFactory;
+		class IPostEffectFactory;
+		class IPhysicsStrategyFactory;
+	}
+	class  CPluginManager
+	{
+public:
+		static CPluginManager* Instance();
+		~CPluginManager();
+		bool LoadPlugin(const char* FileName);
+		inline Vector<Plugin::IGameObjectFactory*>&		GetGameObjectFactories();
+		inline Vector<Plugin::IConsoleParser*>&			GetConsoleParsers();
+		inline Vector<Plugin::IMissionFactory*>&		GetMissionFactories();
+		inline Vector<Plugin::IAiStateFactory*>&		GetAiStateFactories();
+		inline Vector<Plugin::IPlayerFactory*>&			GetPlayerFactories();
+		inline Vector<Plugin::IParticleFactory*>&		GetParticleFactories();
+		inline Vector<Plugin::ICameraFactory*>&			GetCameraFactories();
+		inline Vector<Plugin::IPostEffectFactory*>&		GetPostEffectFactories();
+		inline Vector<Plugin::IPhysicsStrategyFactory*>& GetPhysicsStrategyFactoryies();
+	};
+}
+namespace Core
+{
+	namespace Effects
+	{
+		class  CPostEffect
+		{
+		public:
+			CPostEffect(const String& compName);
+			 void RegisterPostEffect() = 0;
+			void SetEnabled(bool flag);
+			const char* GetName() { return mCompName.c_str(); }
+};
+	}
+}
+// Used as bullets, rocks, missles, anything that can go through the air
+namespace Core
+{
+	class CPlayer;
+	class CWeapon;
+	class CProjectileProfile;
+	
+	namespace Physics
+	{
+		class CPhysicsProfile;
+		class IPhysicsStrategy;
+	}
+	class CProjectile
+	{
+	public:
+		CProjectile(CProjectileProfile* Profile, CWeapon* Weapon);
+		~CProjectile();
+		bool Shoot(CPlayer* Player, const reVector3Df& Direction);	// Returns true is all parameters are valid
+		void Update(const float& elapsedTime);
+		
+		float		 GetDamage();
+		CPlayer* GetOwner() { return Owner; }
+		CWeapon* GetWeapon() { return m_Weapon; }
+		bool		isAlive;		// Do we need to kill this projectile.
+		
+};
+}
+// Used as bullets, rocks, missles, anything that can go through the air
+namespace Core
+{	
+	class CProjectileProfile : public IItemProfile
+	{
+	public:
+		CProjectileProfile() : IItemProfile(EIT_PROJECTILE), Damage(0), Speed(64.0f), BillboardBullet(0), BillboardFlash(0) { }
+		~CProjectileProfile() { }
+		
+		float			Damage;				// Amount of damage
+		float			Speed;
+		const char*	Disc;				// Discription name
+		const char*	MeshName;			// Will need a mesh for bigger pieces like missles, gernades, etc
+		const char* BillboardBullet;	// If we use a billboard, this is the bullet
+		const char* BillboardFlash;		// If we use a billboard, this is the flash from the muzzle
+		bool		isPenetrate;		// Not used yet
+	};
+}
+ 
+ 
+namespace Core
+{
+	class CGameManager;
+namespace OgreSpecific
+{
+	class  CScrollingMessage
+	{
+public:
+		CScrollingMessage();
+		void Init();
+		void AddText(const String& text);
+		void Update(const float& elapsedTime);
+	};
+}
+}
+// This will handle the spawn points, timing, and any other specific logic used in spawning players.
+namespace Core
+{
+	class CPlayer;
+	struct SPAWN_POINT;
+	enum E_PLAYER_TEAM;
+	enum SPAWN_POINT_PRIORITY;
+	class  CSpawnManager
+	{
+public:
+		static CSpawnManager* Instance();
+		~CSpawnManager();
+		bool AddSpawnPoint(const char* SpawnName, reVector3Df& Position, E_PLAYER_TEAM Team, SPAWN_POINT_PRIORITY Priority);
+		bool RemoveSpawnPoint(const char* SpawnName);
+		bool GetCurrentSpawnPoint(E_PLAYER_TEAM Team, SPAWN_POINT& SpawnPoint);
+		bool GetSpawnPoint(const char* SpawnName, SPAWN_POINT& SpawnPoint);
+		bool SpawnPlayer(const char* SpawnName, CPlayer* Player);
+		
+};
+}
+namespace Core
+{
+	class CPlayer;
+	class CPlayerAttributesComponent;
+	enum E_PLAYER_TEAM;
+namespace Training
+{
+	enum ET_CAPABILITIES
+	{
+		ETC_BASIC_INFANTRY		= 0,
+		ETC_BASIC_ENGINEER		= 1,
+		ETC_BASIC_HTH_COMBAT	= 2,		// Hand to hand
+	};
+	class  CTrainingManager
+	{
+	public:
+		static CTrainingManager* Instance();
+		~CTrainingManager();
+		// General methods
+		bool AddFacility(E_PLAYER_TEAM Team, unsigned int BuildingType);
+		bool RemoveFacility(E_PLAYER_TEAM Team, unsigned int BuildingType);
+		bool IsCapable(E_PLAYER_TEAM Team, ET_CAPABILITIES Cap);
+		// Player methods
+		bool StartPlayerTraining(CPlayer* Player, CPlayerAttributesComponent* GoalAttributes);
+		bool StopPlayerTraining(CPlayer* Player);
+		bool IsPlayerTraining(CPlayer* Player);
+		void GetPlayerTrainingList(E_PLAYER_TEAM Team, Vector<unsigned int>& List);
+		// Events
+		void OnPlayerAttributeUpdate();
+		void Update(const float& elapsedTime);
+};
+}
+}
+// Interface for any object in a scene that needs a specific event triggered when its collision shape is penetrated.
+namespace Core
+{
+namespace Physics
+{
+	class CPhysicsProfile;
+	
+	class CVolumeObject
+	{
+	public:
+		CVolumeObject(VolumePackage* Package)
+		{
+			OnEnter = nullptr;
+			OnExit = nullptr;
+			m_Package = Package;
+		}
+		
+		void SetEnterFunc(OnEnterFunc* Func) { OnEnter = Func; }
+		void SetExitFunc(OnExitFunc* Func) { OnExit = Func; }
+		
+		 void SetPosition(const reVector3Df& Position) = 0;
+		
+		 void RemoveVolume() = 0;
+};
+}
+}
+// Interface for any object in a scene that needs a specific event triggered when its collision shape is penetrated.
+namespace Core
+{
+namespace Physics
+{
+	class  CVolumeObject_Cube : public IVolumeObject
+	{
+	public:
+		CVolumeObject_Cube() {}
+		~CVolumeObject_Cube() {}
+		void OnCollision() { }
+	};
+}
+}
+// A weapon can also be used as a tool like a hammer, or any object the character is using at the time
+namespace Core
+{
+	class CPlayer;
+	class IItemProfile;
+	class CMagazine;
+	class CWeaponProfile;
+	class CMagazineProfile;
+	class  CWeapon : public IInventoryItem
+	{
+	public:
+		CWeapon(CWeaponProfile* Profile, Physics::IPhysicsStrategy* Physics = nullptr);
+		~CWeapon();
+		void		Update(const float& elapsedTime);
+		void		PickedUp(CPlayer* Player = nullptr);
+		void		ShowSight(bool Show);
+		void		SetUsed(bool Used) { isUsed = Used; }
+		unsigned int			GetUsageCount();
+		bool		Use(const reVector3Df& Target);		// Fire the weapon
+		float			GetRange();
+		CMagazine*	GetMagazine() { return m_Mag; }
+		void		SetMagazine(CMagazine* m) { m_Mag = m; }
+};
+}
+namespace Core
+{
+	class CPlayer;
+	class IInventoryItem;
+	class CWeaponProfile;
+	
+	namespace Physics
+	{
+		class IPhysicsStrategy;
+	}
+	
+	class  CWeaponFactory : public IItemFactory
+	{
+	public:
+		static CWeaponFactory* Instance();
+		~CWeaponFactory();
+		IInventoryItem* Create(const char* ProfileName, Physics::IPhysicsStrategy* Physics = nullptr);
+		void AddProfile(IItemProfile* Profile);
+		void GetProfiles(Vector<IItemProfile*>& Profiles);
+		
+};
+}
+namespace Core
+{
+	class CMagazineProfile;
+	
+	class CWeaponProfile : public IItemProfile
+	{
+	public:
+		CWeaponProfile() : IItemProfile(EIT_WEAPON), Capacity(0), MagazineProfile(0), MeshName(0), Accuracy(0), ROF(0), ShotTime(1.0f), Range(0.0f), Scale(reVector3Df::UNIT_SCALE) { }
+		~CWeaponProfile() { }
+		
+		bool		isSemi;			// Semi-auto
+		bool		isBurst;		// Burst rounds
+		bool		isAuto;			// Automatic
+		unsigned int			Capacity;		// Max projetiles in the magazine
+		unsigned int			ROF;			// Rate of Fire
+		float			Accuracy;
+		float			Range;			// Range of the weapon
+		float			ShotTime;		// Reset time for the player to shot again
+		float			Power;
+		const char*	MeshName;		// File name of the mesh to use
+		const char*	OverlayName;	// Name to locate the overlay
+		const char*	Desc;
+		reVector3Df Scale;			// Scale of the mesh
+		
+		// Stored profile of the protiles it holds
+		CMagazineProfile* MagazineProfile;	
+		
+	};
+}
+namespace Core
+{
+	class CPlayer;
+	class CWeapon;
+	class CProjectile;
+namespace Mission
+{
+	enum MISSION_TYPE;
+	// Standard mission/achievement event
+	class CMissionEvent
+	{
+	public:
+		CMissionEvent() : Owner(0), Killed(0), Weapon(0), Projectile(0), UserData(0) { }
+		CPlayer*		Owner;
+		CPlayer*		Killed;
+		CWeapon*		Weapon;
+		CProjectile*	Projectile;
+		void*			UserData;
+		MISSION_TYPE	MissionType;
+	};
+}
+}
+ 
+ 
+namespace Core
+{
+namespace OgreSpecific
+{
+	class MovableTextOverlayAttributes
+	{
+	public:
+		MovableTextOverlayAttributes(const String& name, const Camera *cam, const String& fontName = "BlueHighway", int charHeight = 16, 
+			const ColourValue& color = ColourValue::White, const String& materialName = "");
+		~MovableTextOverlayAttributes();
+	 
+		void SetFontName(const String& fontName);
+		void SetMaterialName(const String& materialName);
+		void SetColor(const ColourValue& color);
+		void SetCharacterHeight(unsigned int height);
+	 
+		const String&	GetName() const {return mName;}
+		const Camera*	GetCamera() const {return mpCam;}
+		const Font*		GetFont() const {return mpFont;}
+		const String&	GetFontName() const {return mFontName;}
+		const String&	GetMaterialName() const {return mMaterialName;}
+		const ColourValue& GetColor() const {return mColor;}
+		const float		GetCharacterHeight() const {return mCharHeight;}
+	 
+		const String	mName;
+		const Camera*	mpCam;
+		Font*			mpFont;
+		String			mFontName;
+		String			mMaterialName;
+		ColourValue		mColor;
+		float				mCharHeight;
+	};
+	 
+	class MovableTextOverlay 
+	{
+	public:
+		MovableTextOverlay(const char* name, const char* caption, const MovableObject *mov, MovableTextOverlayAttributes *attrs);
+		 ~MovableTextOverlay();
+	 
+		void SetCaption(const char* caption);
+		void SetUpdateFrequency(float updateFrequency) {mUpdateFrequency = updateFrequency;}
+		void SetAttributes(MovableTextOverlayAttributes *attrs)
+		{
+			mAttrs = attrs;
+			_updateOverlayAttrs();
+		}
+	 
+		inline const String&	GetName() const {return mName;}
+		inline const String&	GetCaption() const {return mCaption;}
+		inline const float		GetUpdateFrequency() const {return mUpdateFrequency;}
+		inline const bool		IsOnScreen() const {return mOnScreen;}
+		inline const bool		IsEnabled() const {return mEnabled;}
+		inline const			MovableTextOverlayAttributes* getAttributes() const {return mAttrs;}
+	 
+		void Enable(bool Enable);
+		void Update(const float& elapsedTime);
+	 
+		// Needed for RectLayoutManager.
+		inline int GetPixelsTop() {return OverlayManager::getSingleton().getViewportHeight() * (mpOvContainer->getTop());}
+		inline int GetPixelsBottom() {return OverlayManager::getSingleton().getViewportHeight() * (mpOvContainer->getTop() + mpOvContainer->getHeight());}
+		inline int GetPixelsLeft() {return OverlayManager::getSingleton().getViewportWidth() * mpOvContainer->getLeft();}
+		inline int GetPixelsRight() {return OverlayManager::getSingleton().getViewportWidth() * (mpOvContainer->getLeft() + mpOvContainer->getWidth());}
+		inline void SetPixelsTop(int px) {mpOvContainer->setTop((float)px / OverlayManager::getSingleton().getViewportHeight());}
+	 
+};
+}
+}
+namespace Core
+{
+namespace Physics
+{
+	class IPhysicsStrategy;
+	class CPhysicsProfile;
+	enum E_PHYSICS_SHAPE
+	{
+		SHAPE_CUBE				= 0,
+		SHAPE_SPHERE			= 1,
+		SHAPE_CAPSULE			= 2,
+		SHAPE_CYLINDER			= 3,
+		SHAPE_CONE				= 4,
+		SHAPE_STATIC_TRIMESH	= 5,
+		SHAPE_TRIMESH			= 6,
+		SHAPE_PLANE				= 7,
+	};
+	enum E_BODY_TYPE
+	{
+		NONE_MASK					= 0,
+		ALL_MASK					= 1<<0,
+		RAGDOLL_MASK				= 1<<1,
+		GEOMETRY_MASK				= 1<<2,
+		VEHICLE_MASK				= 1<<3,
+		STATIC_GEOMETRY_MASK		= 1<<4,
+		CHARACTER_CONTROLLER_MASK	= 1<<5,
+		VOLUME_MASK					= 1<<6,
+		TERRAIN_MASK				= 1<<7,
+	};
+	enum E_VOLUME_TYPE
+	{
+		EVT_CUBE	= 0,
+		EVT_SPHERE	= 1,
+		EVT_CAPSULE = 2,
+	};
+	struct VolumePackage
+	{
+		VolumePackage() : Profile(0), Strategy(0), Scale(1.0f), isRemoveCallback(true), EnableRaycast(false) { }
+		CPhysicsProfile*	Profile;				// Standard phyiscs information
+		IPhysicsStrategy*	Strategy;				// Used to created the volume
+		float					Scale;					// Scale the size of the volume
+		bool				isRemoveCallback;		// If the callback should be called again (usually not)
+		bool				EnableRaycast;			// Can ray casts be used on this volume
+	};
+}
+}
+namespace Core
+{
+	// Generic list of teams that can be assigned to a player
+	// Note: When E_PLAYER_TEAM is passed as a parameter, there shouldn't be a check to see if the value is more then the number of teams, this
+	// enum should be considered correct in a production environment
+	enum E_PLAYER_TEAM
+	{
+		EPT_TEAM_1 = 0,		// Civilians
+		EPT_TEAM_2 = 1,		// Default Human player
+		EPT_TEAM_3 = 2,		// Default Computer
+		EPT_TEAM_4 = 3,		// Other
+		EPT_TEAM_5 = 4,		// Other
+		EPT_TEAM_6 = 5,		// Other
+		EPT_TEAM_7 = 6,		// Other
+		EPT_TEAM_8 = 7,		// Other
+		EPT_TEAM_9 = 8,		// Other
+		EPT_TEAM_10= 9,		// Other
+		EPT_TEAM_COUNT = 10,
+	};
+	// Standard animations
+	enum E_ANIM_STATE
+	{
+		EAS_IDLE		= 0,	// Just killing time
+		EAS_WALK		= 1,
+		EAS_RUN			= 2,
+		EAS_SPRINT		= 3,	// Fastest run
+		EAS_DIEING		= 4,	// When they are dieing
+		EAS_DEAD		= 5,	// They are dead, no motion
+		EAS_CRAWL		= 6,
+		EAS_SHOOT		= 7,
+		EAS_RELOAD		= 8,
+		EAS_KNEEL		= 9,
+		EAS_PRONE		= 10,
+		EAS_RUNSHOOT	= 11,
+		EAS_HIT			= 12,
+		EAS_MELEE		= 13,
+		EAS_JUMP		= 14,
+		EAS_AIM_STAND	= 15,
+		EAS_NONE		= 16
+	};
+	// What the player is doing, different then the animations.  Might be combined with the character AI states
+	enum E_PLAYER_STATE
+	{	
+		EPS_IDLE			 = 0,
+		EPS_DIEING			 = 1,	// Health will still have to be more then 0.0f
+		EPS_DEAD			 = 2,	// When health is <= 0.0f
+		EPS_RUNNING			 = 3,
+		EPS_ATTACKING		 = 4,
+		EPS_WAITING			 = 5,
+		EPS_WALKING			 = 6,
+		EPS_WANDERING		 = 7,
+		EPS_EVADING			 = 8,
+		EPS_SEEK_ENEMY		 = 9,	// Seek an enemy
+		EPS_SEEK_OBS		 = 10,	// Seek an obstacle
+		EPS_SEEK_ITEM		 = 11,	// Seek an item
+		EPS_FIND_ENEMY		 = 12,	// Find an enemy
+		EPS_NONE			 = 13,
+		EPS_COUNT			 = 14
+	};
+	// If a team has multiple spawn points, then this will select the priority
+	enum SPAWN_POINT_PRIORITY
+	{
+		SPP_LOW		= 0,
+		SPP_MED		= 1,
+		SPP_HIGH	= 2,
+		SPP_CURRENT	= 3
+	};
+	// Type of LoS strategy
+	enum E_LOS_TYPE
+	{
+		ELT_BASIC		= 0,
+		ELT_TRIANGLE	= 1,
+		ELT_RANGE_BASIC	= 2
+	};
+}
+namespace Sound
+{
+	class CSoundManager;
+}
+namespace Core
+{
+	class CGameManager;
+	class CItemsManager;
+	class CGameObjectManager;
+	class CCameraManager;
+	namespace Physics
+	{
+		class IPhysicsStrategy;
+	}
+	namespace Nature
+	{
+		class CNatureManager;
+	}
+	// Used to package of the current state of the application and send it over to another library
+	struct SceneImporterPackage
+	{
+		SceneImporterPackage() : GameManager(0), PhysicsStrategy(0), SoundManager(0), ItemsManager(0), 
+			GameObjectManager(0), NatureManager(0), CameraManager(0) { }
+		Core::CGameManager*				GameManager;
+		Physics::IPhysicsStrategy*		PhysicsStrategy; 
+		Sound::CSoundManager*			SoundManager;
+		Core::CItemsManager*			ItemsManager;
+		Core::CGameObjectManager*		GameObjectManager;
+		Core::Nature::CNatureManager*	NatureManager;
+		Core::CCameraManager*			CameraManager;
+		String							ResourceGroupName;
+	};
+}
+namespace Core
+{
+	class CGameObject;
+	class CPlayer;
+namespace Physics
+{
+	enum E_BODY_TYPE;
+	struct SPhysicsRayCastReport
+	{
+		SPhysicsRayCastReport() 
+		{
+			GameObject = nullptr; 
+			Player = nullptr; 
+			Custom = nullptr;
+			Position = INVALID_POS;
+		}
+		CGameObject*	GameObject;
+		CPlayer*		Player;
+		void*			Custom;
+		E_BODY_TYPE		BodyType;
+		reVector3Df		Position;		// Point of contact
+	};
+}
+}

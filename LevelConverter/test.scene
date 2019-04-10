@@ -1,0 +1,29 @@
+<scene formatVersion="1.0" upAxis="y" unitsPerMeter="1" unitType="meters" minOgreVersion="1.6" author="OgreMax Scene Exporter (www.ogremax.com)">
+    <environment>
+        <colourAmbient r="0.333333" g="0.333333" b="0.333333" />
+        <colourBackground r="0" g="0" b="0" />
+        <clipping near="0" far="2540" />
+    </environment>
+    <nodes>
+        <node name="MainBody">
+            <position x="0" y="-0.341412" z="1.49236e-008" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="MainBody" castShadows="true" receiveShadows="true" meshFile="MainBody.mesh">
+                <subentities>
+                    <subentity index="0" materialName="Standard_1" />
+                </subentities>
+            </entity>
+        </node>
+        <node name="Turret">
+            <position x="0.000412802" y="0" z="0" />
+            <scale x="1" y="1" z="1" />
+            <rotation qx="0" qy="0" qz="0" qw="1" />
+            <entity name="Turret" castShadows="true" receiveShadows="true" meshFile="Turret.mesh">
+                <subentities>
+                    <subentity index="0" materialName="Standard_1" />
+                </subentities>
+            </entity>
+        </node>
+    </nodes>
+</scene>

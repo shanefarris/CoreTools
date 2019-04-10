@@ -1,0 +1,69 @@
+CREATE TABLE AStarNodes (NodeId INTEGER NOT NULL, 
+						Position VARCHAR(50) NOT NULL, 
+						Cost REAL, 
+						Neighbors VARCHAR(50));
+CREATE TABLE AiPaths (PathId INTEGER PRIMARY KEY AUTOINCREMENT, 
+					  Name VARCHAR(50) NOT NULL, 
+					  Vectors TEXT NOT NULL);
+CREATE TABLE Buildings (BuildingID INTEGER PRIMARY KEY AUTOINCREMENT, 
+						BuildingCategory INTEGER NOT NULL, 
+						Team INTEGER NOT NULL,
+						Health REAL NOT NULL,
+						BuildingState INTEGER NOT NULL,
+						Position TEXT NOT NULL, 
+						Name VARCHAR(50) NOT NULL,
+						BuildingType VARCHAR(50) NOT NULL,
+						DataValue VARCHAR(50));
+CREATE TABLE GameObjects (GameObjectsID INTEGER PRIMARY KEY AUTOINCREMENT, 
+						  Name VARCHAR(50) NOT NULL, 
+						  Type VARCHAR(50), 
+						  MeshFile VARCHAR(50), 
+						  PhysicsProfile VARCHAR(50), 
+						  Scale TEXT NOT NULL,
+						  Shadows BOOL NOT NULL,
+						  Orientation TEXT NOT NULL, 
+						  Position TEXT NOT NULL);
+CREATE TABLE JobTypes (JobTypeID INTEGER PRIMARY KEY AUTOINCREMENT, 
+						Name VARCHAR(50) NOT NULL, 
+						Description TEXT NOT NULL);
+CREATE TABLE LevelInventory (LevelInventoryID INTEGER PRIMARY KEY AUTOINCREMENT, 
+							 ItemName VARCHAR(50) NOT NULL, 
+							 ProfileName VARCHAR(50) NOT NULL, 
+							 Orientation TEXT NOT NULL, 
+							 Position TEXT NOT NULL);
+CREATE TABLE PhysicsStrategies (PhysicsID INTEGER PRIMARY KEY, 
+								Name VARCHAR(50) NOT NULL, 
+								Type INTEGER NOT NULL);
+CREATE TABLE PlayerInventory (PlayerInventoryID INTEGER PRIMARY KEY AUTOINCREMENT, 
+							  PlayerID INTEGER NOT NULL,
+							  IsCurrentItem BOOL DEFAULT 0,
+							  ProfileName TEXT NOT NULL, 
+							  FOREIGN KEY(PlayerId) REFERENCES Players(PlayerId));
+CREATE TABLE PlayerJobs (JobTypeID INTEGER PRIMARY KEY, 
+						 PlayerId INTEGER,
+						 FOREIGN KEY(JobTypeID) REFERENCES JobTypes(JobTypeID),
+						 FOREIGN KEY(PlayerId) REFERENCES Players(PlayerId));
+CREATE TABLE PlayerPaths (PathId INTEGER NOT NULL, 
+						PlayerId INTEGER NOT NULL, 
+						FOREIGN KEY(PathId) REFERENCES AiPaths(PathId), 
+						FOREIGN KEY(PlayerId) REFERENCES Players(PlayerId));
+CREATE TABLE Players (PlayerID INTEGER PRIMARY KEY AUTOINCREMENT, 
+					Name VARCHAR(50) NOT NULL,
+					Position TEXT NOT NULL, 
+					CrawlSpeed REAL NOT NULL, 
+					SprintSpeed REAL NOT NULL, 
+					IsHumanPlayer BOOL NOT NULL DEFAULT 0, 
+					ViewRange REAL NOT NULL, 
+					DieingTime REAL NOT NULL, 
+					MovableText TEXT, 
+					CharacterState VARCHAR(50) NOT NULL, 
+					Direction TEXT NOT NULL, 
+					PlayerType TEXT NOT NULL, 
+					Health REAL NOT NULL, 
+					Team INTEGER NOT NULL,
+					RunSpeed REAL NOT NULL DEFAULT 0, 
+					ReloadSpeed REAL NOT NULL DEFAULT 0, 
+					RifleMarksman REAL NOT NULL DEFAULT 0, 
+					PhysicalStrength REAL NOT NULL DEFAULT 0);
+CREATE TABLE SpawnPoints (Id INTEGER NOT NULL, Position TEXT NOT NULL, Team INTEGER, CoolDown REAL NOT NULL);
+CREATE TABLE StaticData (XmlData TEXT);

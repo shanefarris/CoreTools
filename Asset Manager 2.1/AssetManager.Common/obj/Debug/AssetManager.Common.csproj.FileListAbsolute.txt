@@ -1,0 +1,6 @@
+C:\Code2\Core Tools\Asset Manager 2.1\AssetManager.Common\bin\Debug\AssetManager.Common.dll.config
+C:\Code2\Core Tools\Asset Manager 2.1\AssetManager.Common\bin\Debug\AssetManager.Common.dll
+C:\Code2\Core Tools\Asset Manager 2.1\AssetManager.Common\bin\Debug\AssetManager.Common.pdb
+C:\Code2\Core Tools\Asset Manager 2.1\AssetManager.Common\obj\Debug\AssetManager.Common.dll
+C:\Code2\Core Tools\Asset Manager 2.1\AssetManager.Common\obj\Debug\AssetManager.Common.pdb
+C:\Code2\Core Tools\Asset Manager 2.1\AssetManager.Common\obj\Debug\AssetManager.Common.csprojResolveAssemblyReference.cache

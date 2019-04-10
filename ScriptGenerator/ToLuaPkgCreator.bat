@@ -1,0 +1,3 @@
+cscript ./ToLuaPkgCreator.vbs
+
+Pause

@@ -1,0 +1,1743 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OGITORSCENE version="2">
+  <PROJECT>
+    <SCENEMANAGER value="OctreeSceneManager"></SCENEMANAGER>
+    <TERRAINDIR value="Terrain"></TERRAINDIR>
+    <HYDRAXDIR value="Hydrax"></HYDRAXDIR>
+    <CAELUMDIR value="Caelum"></CAELUMDIR>
+    <PAGEDGEOMETRYDIR value="PagedGeometry"></PAGEDGEOMETRYDIR>
+    <RESOURCEDIRECTORIES>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Shooting Range1/.svn/tmp/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Shooting range"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/m4a1/.svn/tmp/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/.svn/tmp/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Oil Rig1/.svn/tmp/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Ground/stone3"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Shooting Range1/.svn/tmp/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/9mm/.svn/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Characters/Solider1/.svn/tmp"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Ground/veg4"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Ground/stone6"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Shooting Range1/.svn/tmp/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/m4a1/.svn/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Obstacle Course1/.svn/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/.svn/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Trees/tree3"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Obstacle Course1/.svn/tmp"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/HQMilitiaTent"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/.svn/tmp/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/9mm/.svn/tmp/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Characters/.svn/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Characters/Solider1/.svn/tmp/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/m4a1/.svn/tmp/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Ground/veg1"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Trees"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Characters/Solider1/.svn/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Obstacle Course1"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Shooting Range1/.svn/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/m4a1/.svn/tmp/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Ground/stone1"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Shooting Range1"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Ground/stone4"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/.svn/tmp/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Obstacle Course1/.svn/tmp/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/9mm/.svn/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/.svn/tmp/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/m4a1/.svn/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Ground"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Ground/veg9"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/HQMilitiaTent/.svn/tmp"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/HQMilitiaTent/.svn/tmp/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Oil Rig1/.svn/tmp/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Characters/.svn/tmp/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/m4a1/.svn/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/.svn/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/.svn/tmp/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/.svn/tmp/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Characters/.svn/tmp"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/.svn/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/.svn/tmp"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Obstacle Course1/.svn/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/.svn/tmp/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/HQMilitiaTent/.svn/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Obstacle Course1/.svn/tmp/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Oil Rig1/.svn/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Characters/Solider1/.svn/tmp/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Oil Rig1/.svn/tmp/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Characters/.svn/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Characters/.svn/tmp/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/.svn/tmp"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/HQMilitiaTent/.svn/tmp/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Shooting Range1/.svn/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Oil Rig1/.svn/tmp"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/m4a1/.svn/tmp"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Characters/Solider1/.svn/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Trees/tree2"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Characters/.svn/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/HQMilitiaTent/.svn/tmp/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Ground/stone2"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Oil Rig1/.svn/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Shooting Range1/.svn/tmp"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Characters/Solider1/.svn/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/.svn/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/9mm/.svn/tmp/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/test"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Ground/stone5"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Trees/Tree2"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Characters/Solider1"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/.svn/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Oil Rig1/.svn/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/.svn/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/HQMilitiaTent/.svn/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Oil Rig1"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Ground/veg8"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Characters/Solider1/.svn/tmp/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Obstacle Course1/.svn/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/.svn/tmp/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Obstacle Course1/.svn/tmp/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/.svn/tmp/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Characters"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/.svn/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/9mm/.svn/tmp/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/.svn/tmp"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/9mm/.svn/props"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/m4a1"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Ground/veg2"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/Shooting Range1/.svn/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Ground/flower1"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/.svn/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/HQMilitiaTent/.svn/text-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Ground/veg10"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Environment/.svn/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Assets/Vegetation/Trees/tree1"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/9mm/.svn/tmp"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Characters/.svn/tmp/prop-base"></DIRECTORY>
+      <DIRECTORY type="FileSystem" value="D:/Projects/Core1Assets/Models/Weapons/9mm"></DIRECTORY>
+    </RESOURCEDIRECTORIES>
+  <CAMERASPEED value="29"></CAMERASPEED>
+  <CAMERAPOSITIONS count="0">
+    <OPTION id="0" position="658.879 156.969 1922.83" orientation="0.361129 -0.0145208 0.931136 0.048593"></OPTION>
+  </CAMERAPOSITIONS>
+    <LAYERS>
+      <LAYER id="0" name="Layer 0" visible="true"></LAYER>
+      <LAYER id="1" name="Layer 1" visible="true"></LAYER>
+      <LAYER id="2" name="Layer 2" visible="true"></LAYER>
+      <LAYER id="3" name="Layer 3" visible="true"></LAYER>
+      <LAYER id="4" name="Layer 4" visible="true"></LAYER>
+      <LAYER id="5" name="Layer 5" visible="true"></LAYER>
+      <LAYER id="6" name="Layer 6" visible="true"></LAYER>
+      <LAYER id="7" name="Layer 7" visible="true"></LAYER>
+      <LAYER id="8" name="Layer 8" visible="true"></LAYER>
+      <LAYER id="9" name="Layer 9" visible="true"></LAYER>
+      <LAYER id="10" name="Layer 10" visible="true"></LAYER>
+      <LAYER id="11" name="Layer 11" visible="true"></LAYER>
+      <LAYER id="12" name="Layer 12" visible="true"></LAYER>
+      <LAYER id="13" name="Layer 13" visible="true"></LAYER>
+      <LAYER id="14" name="Layer 14" visible="true"></LAYER>
+      <LAYER id="15" name="Layer 15" visible="true"></LAYER>
+      <LAYER id="16" name="Layer 16" visible="true"></LAYER>
+      <LAYER id="17" name="Layer 17" visible="true"></LAYER>
+      <LAYER id="18" name="Layer 18" visible="true"></LAYER>
+      <LAYER id="19" name="Layer 19" visible="true"></LAYER>
+      <LAYER id="20" name="Layer 20" visible="true"></LAYER>
+      <LAYER id="21" name="Layer 21" visible="true"></LAYER>
+      <LAYER id="22" name="Layer 22" visible="true"></LAYER>
+      <LAYER id="23" name="Layer 23" visible="true"></LAYER>
+      <LAYER id="24" name="Layer 24" visible="true"></LAYER>
+      <LAYER id="25" name="Layer 25" visible="true"></LAYER>
+      <LAYER id="26" name="Layer 26" visible="true"></LAYER>
+      <LAYER id="27" name="Layer 27" visible="true"></LAYER>
+      <LAYER id="28" name="Layer 28" visible="true"></LAYER>
+      <LAYER id="29" name="Layer 29" visible="true"></LAYER>
+      <LAYER id="30" name="Layer 30" visible="true"></LAYER>
+    </LAYERS>
+  <LAYERCOUNT value="1"></LAYERCOUNT>
+  <SELECTIONRECTCOLOUR value="0.494118 0 1 1"></SELECTIONRECTCOLOUR>
+  <SELECTIONCOLOUR value="1 1 1 1"></SELECTIONCOLOUR>
+  <HIGHLIGHTCOLOUR value="0.909804 0.184314 0.184314 1"></HIGHLIGHTCOLOUR>
+  <SELECTHIGHLIGHTCOLOUR value="0.184314 0.909804 0.184314 1"></SELECTHIGHLIGHTCOLOUR>
+  <GRIDCOLOUR value="1 1 1 1"></GRIDCOLOUR>
+  <GRIDSPACING value="1"></GRIDSPACING>
+  <SNAPANGLE value="0"></SNAPANGLE>
+  <WALKAROUNDHEIGHT value="0"></WALKAROUNDHEIGHT>
+  <VOLUMESELECTIONDEPTH value="0"></VOLUMESELECTIONDEPTH>
+  <OBJECTCOUNT value="0"></OBJECTCOUNT>
+  </PROJECT>
+  <OBJECT object_id="314065984" name="SceneManager" typename="OctreeSceneManager">
+    <PROPERTY id="ambient" type="11" value="0.671137 0.671137 0.671137 3"></PROPERTY>
+    <PROPERTY id="configfile" type="7" value=""></PROPERTY>
+    <PROPERTY id="fog::colour" type="11" value="0.5 0.5 0.5 1"></PROPERTY>
+    <PROPERTY id="fog::density" type="6" value="0"></PROPERTY>
+    <PROPERTY id="fog::end" type="6" value="1000"></PROPERTY>
+    <PROPERTY id="fog::mode" type="2" value="0"></PROPERTY>
+    <PROPERTY id="fog::start" type="6" value="0"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="0 0 0"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="1 1 1"></PROPERTY>
+    <PROPERTY id="scenemanagertype" type="7" value="OctreeSceneManager"></PROPERTY>
+    <PROPERTY id="shadows::enabled" type="12" value="false"></PROPERTY>
+    <PROPERTY id="shadows::renderingdistance" type="2" value="1000"></PROPERTY>
+    <PROPERTY id="shadows::resolutionfar" type="2" value="512"></PROPERTY>
+    <PROPERTY id="shadows::resolutionmiddle" type="2" value="512"></PROPERTY>
+    <PROPERTY id="shadows::resolutionnear" type="2" value="1024"></PROPERTY>
+    <PROPERTY id="shadows::technique" type="2" value="37"></PROPERTY>
+    <PROPERTY id="skybox::active" type="12" value="false"></PROPERTY>
+    <PROPERTY id="skybox::distance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="skybox::material" type="7" value=""></PROPERTY>
+    <PROPERTY id="skydome::active" type="12" value="false"></PROPERTY>
+    <PROPERTY id="skydome::material" type="7" value=""></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="2000000002" name="Viewport1" typename="Viewport Object">
+    <PROPERTY id="camera::clipdistance" type="8" value="1 7000"></PROPERTY>
+    <PROPERTY id="camera::fov" type="6" value="1"></PROPERTY>
+    <PROPERTY id="camera::orientation" type="13" value="0.361158 -0.014522 0.931212 0.0485969"></PROPERTY>
+    <PROPERTY id="camera::polymode" type="2" value="3"></PROPERTY>
+    <PROPERTY id="camera::position" type="9" value="658.879 156.969 1922.83"></PROPERTY>
+    <PROPERTY id="camera::viewmode" type="2" value="0"></PROPERTY>
+    <PROPERTY id="colour" type="11" value="0 0 0 1"></PROPERTY>
+    <PROPERTY id="compositorcount" type="2" value="0"></PROPERTY>
+    <PROPERTY id="index" type="2" value="1"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="overlays" type="12" value="true"></PROPERTY>
+    <PROPERTY id="placement" type="10" value="0 0 1 1"></PROPERTY>
+    <PROPERTY id="shadows" type="12" value="true"></PROPERTY>
+    <PROPERTY id="skies" type="12" value="true"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="188940096" name="CaelumSky" typename="Caelum Object" parentnode="SceneManager">
+    <PROPERTY id="clock::day" type="2" value="1"></PROPERTY>
+    <PROPERTY id="clock::hour" type="2" value="12"></PROPERTY>
+    <PROPERTY id="clock::minute" type="2" value="0"></PROPERTY>
+    <PROPERTY id="clock::month" type="2" value="1"></PROPERTY>
+    <PROPERTY id="clock::second" type="2" value="0"></PROPERTY>
+    <PROPERTY id="clock::speed" type="6" value="0"></PROPERTY>
+    <PROPERTY id="clock::year" type="2" value="2000"></PROPERTY>
+    <PROPERTY id="clouds::layer0::coverage" type="6" value="0.1"></PROPERTY>
+    <PROPERTY id="clouds::layer0::enable" type="12" value="true"></PROPERTY>
+    <PROPERTY id="clouds::layer0::height" type="6" value="1000"></PROPERTY>
+    <PROPERTY id="clouds::layer0::speed" type="8" value="0.01 0.01"></PROPERTY>
+    <PROPERTY id="clouds::layer1::coverage" type="6" value="0.1"></PROPERTY>
+    <PROPERTY id="clouds::layer1::enable" type="12" value="false"></PROPERTY>
+    <PROPERTY id="clouds::layer1::height" type="6" value="2000"></PROPERTY>
+    <PROPERTY id="clouds::layer1::speed" type="8" value="0.01 0.01"></PROPERTY>
+    <PROPERTY id="clouds::layer2::coverage" type="6" value="0.1"></PROPERTY>
+    <PROPERTY id="clouds::layer2::enable" type="12" value="false"></PROPERTY>
+    <PROPERTY id="clouds::layer2::height" type="6" value="3000"></PROPERTY>
+    <PROPERTY id="clouds::layer2::speed" type="8" value="0.01 0.01"></PROPERTY>
+    <PROPERTY id="fog::density_multiplier" type="6" value="1000"></PROPERTY>
+    <PROPERTY id="fog::manage" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="lighting::ensure_single_lightsource" type="12" value="false"></PROPERTY>
+    <PROPERTY id="lighting::ensure_single_shadowsource" type="12" value="false"></PROPERTY>
+    <PROPERTY id="lighting::manage_ambient_light" type="12" value="true"></PROPERTY>
+    <PROPERTY id="lighting::minimum_ambient_light" type="11" value="0.1 0.1 0.3 1"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="moon::ambient_multiplier" type="11" value="0.2 0.2 0.2 1"></PROPERTY>
+    <PROPERTY id="moon::attenuation::constant_multiplier" type="6" value="1"></PROPERTY>
+    <PROPERTY id="moon::attenuation::distance" type="6" value="100000"></PROPERTY>
+    <PROPERTY id="moon::attenuation::linear_multiplier" type="6" value="0"></PROPERTY>
+    <PROPERTY id="moon::attenuation::quadric_multiplier" type="6" value="0"></PROPERTY>
+    <PROPERTY id="moon::auto_disable" type="12" value="true"></PROPERTY>
+    <PROPERTY id="moon::cast_shadow" type="12" value="true"></PROPERTY>
+    <PROPERTY id="moon::diffuse_multiplier" type="11" value="1 1 0.9 1"></PROPERTY>
+    <PROPERTY id="moon::enable" type="12" value="true"></PROPERTY>
+    <PROPERTY id="moon::specular_multiplier" type="11" value="1 1 1 1"></PROPERTY>
+    <PROPERTY id="observer::latitude" type="6" value="45"></PROPERTY>
+    <PROPERTY id="observer::longitude" type="6" value="0"></PROPERTY>
+    <PROPERTY id="stars::enable" type="12" value="true"></PROPERTY>
+    <PROPERTY id="stars::mag0_pixel_size" type="6" value="16"></PROPERTY>
+    <PROPERTY id="stars::magnitude_scale" type="6" value="2.51189"></PROPERTY>
+    <PROPERTY id="stars::max_pixel_size" type="6" value="6"></PROPERTY>
+    <PROPERTY id="stars::min_pixel_size" type="6" value="4"></PROPERTY>
+    <PROPERTY id="sun::ambient_multiplier" type="11" value="1 1 1 1"></PROPERTY>
+    <PROPERTY id="sun::attenuation::constant_multiplier" type="6" value="1"></PROPERTY>
+    <PROPERTY id="sun::attenuation::distance" type="6" value="100000"></PROPERTY>
+    <PROPERTY id="sun::attenuation::linear_multiplier" type="6" value="0"></PROPERTY>
+    <PROPERTY id="sun::attenuation::quadric_multiplier" type="6" value="0"></PROPERTY>
+    <PROPERTY id="sun::auto_disable" type="12" value="true"></PROPERTY>
+    <PROPERTY id="sun::cast_shadow" type="12" value="true"></PROPERTY>
+    <PROPERTY id="sun::colour" type="11" value="1 1 1 1"></PROPERTY>
+    <PROPERTY id="sun::diffuse_multiplier" type="11" value="0 0 0 1"></PROPERTY>
+    <PROPERTY id="sun::enable" type="12" value="true"></PROPERTY>
+    <PROPERTY id="sun::lightcolour" type="11" value="0.319608 0.419608 0.619608 1"></PROPERTY>
+    <PROPERTY id="sun::position" type="9" value="-43.3914 1222.92 -3032.23"></PROPERTY>
+    <PROPERTY id="sun::specular_multiplier" type="11" value="0 0 0 1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="113773000" name="Terrain Group" typename="Terrain Group Object" parentnode="SceneManager">
+    <PROPERTY id="blendmap::texturesize" type="2" value="1024"></PROPERTY>
+    <PROPERTY id="colourmap::enabled" type="12" value="false"></PROPERTY>
+    <PROPERTY id="colourmap::texturesize" type="2" value="128"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="lightmap::texturesize" type="2" value="1024"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pagemapsize" type="2" value="129"></PROPERTY>
+    <PROPERTY id="pagenameprefix" type="7" value="Page"></PROPERTY>
+    <PROPERTY id="pageworldsize" type="6" value="4000"></PROPERTY>
+    <PROPERTY id="pg::densitymapsize" type="2" value="1024"></PROPERTY>
+    <PROPERTY id="pg::detaildistance" type="2" value="240"></PROPERTY>
+    <PROPERTY id="pg::pagesize" type="2" value="40"></PROPERTY>
+    <PROPERTY id="tuning::compositemapdistance" type="2" value="2000"></PROPERTY>
+    <PROPERTY id="tuning::compositemaptexturesize" type="2" value="1024"></PROPERTY>
+    <PROPERTY id="tuning::maxbatchsize" type="2" value="65"></PROPERTY>
+    <PROPERTY id="tuning::maxpixelerror" type="2" value="3"></PROPERTY>
+    <PROPERTY id="tuning::minbatchsize" type="2" value="33"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="542954816" name="HydraxWater" typename="Hydrax Object" parentnode="SceneManager">
+    <PROPERTY id="caelumintegration" type="12" value="false"></PROPERTY>
+    <PROPERTY id="caustics::end" type="6" value="0.95"></PROPERTY>
+    <PROPERTY id="caustics::power" type="6" value="9"></PROPERTY>
+    <PROPERTY id="caustics::scale" type="6" value="16"></PROPERTY>
+    <PROPERTY id="components::caustics" type="12" value="true"></PROPERTY>
+    <PROPERTY id="components::depth" type="12" value="true"></PROPERTY>
+    <PROPERTY id="components::foam" type="12" value="true"></PROPERTY>
+    <PROPERTY id="components::smooth" type="12" value="true"></PROPERTY>
+    <PROPERTY id="components::sun" type="12" value="true"></PROPERTY>
+    <PROPERTY id="components::underwater" type="12" value="true"></PROPERTY>
+    <PROPERTY id="components::underwater_godrays" type="12" value="true"></PROPERTY>
+    <PROPERTY id="components::underwater_reflections" type="12" value="true"></PROPERTY>
+    <PROPERTY id="configfile" type="7" value="Hydrax.hdx"></PROPERTY>
+    <PROPERTY id="depth::limit" type="6" value="0"></PROPERTY>
+    <PROPERTY id="foam::max_distance" type="6" value="7.5e+007"></PROPERTY>
+    <PROPERTY id="foam::scale" type="6" value="0.0075"></PROPERTY>
+    <PROPERTY id="foam::start" type="6" value="0"></PROPERTY>
+    <PROPERTY id="foam::transparency" type="6" value="1"></PROPERTY>
+    <PROPERTY id="full_reflection_distance" type="6" value="1e+011"></PROPERTY>
+    <PROPERTY id="global_transparency" type="6" value="0"></PROPERTY>
+    <PROPERTY id="godrays::exposure" type="9" value="0.76 2.46 2.29"></PROPERTY>
+    <PROPERTY id="godrays::intensity" type="6" value="0.015"></PROPERTY>
+    <PROPERTY id="godrays::intersections" type="12" value="false"></PROPERTY>
+    <PROPERTY id="godrays::number_of_rays" type="2" value="100"></PROPERTY>
+    <PROPERTY id="godrays::rays_size" type="6" value="0.03"></PROPERTY>
+    <PROPERTY id="godrays::speed" type="6" value="5"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="module_name" type="7" value="ProjectedGridVertex"></PROPERTY>
+    <PROPERTY id="noise_module_name" type="7" value="Perlin"></PROPERTY>
+    <PROPERTY id="normal_distortion" type="6" value="0.075"></PROPERTY>
+    <PROPERTY id="perlin::anim_speed" type="6" value="1.2"></PROPERTY>
+    <PROPERTY id="perlin::falloff" type="6" value="0.49"></PROPERTY>
+    <PROPERTY id="perlin::gpu_lod" type="9" value="0.5 50 150000"></PROPERTY>
+    <PROPERTY id="perlin::gpu_strength" type="6" value="2"></PROPERTY>
+    <PROPERTY id="perlin::octaves" type="2" value="8"></PROPERTY>
+    <PROPERTY id="perlin::scale" type="6" value="0.185"></PROPERTY>
+    <PROPERTY id="perlin::time_multi" type="6" value="1.27"></PROPERTY>
+    <PROPERTY id="pgmodule::choppy_strength" type="6" value="1"></PROPERTY>
+    <PROPERTY id="pgmodule::choppy_waves" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pgmodule::complexity" type="2" value="100"></PROPERTY>
+    <PROPERTY id="pgmodule::elevation" type="6" value="5"></PROPERTY>
+    <PROPERTY id="pgmodule::force_recalculate_geometry" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pgmodule::smooth" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pgmodule::strength" type="6" value="3"></PROPERTY>
+    <PROPERTY id="planes_error" type="6" value="0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-500 1 -500"></PROPERTY>
+    <PROPERTY id="rtt_quality::depth" type="2" value="0"></PROPERTY>
+    <PROPERTY id="rtt_quality::depth_aip" type="2" value="0"></PROPERTY>
+    <PROPERTY id="rtt_quality::depth_reflection" type="2" value="0"></PROPERTY>
+    <PROPERTY id="rtt_quality::gpu_normal_map" type="2" value="0"></PROPERTY>
+    <PROPERTY id="rtt_quality::reflection" type="2" value="0"></PROPERTY>
+    <PROPERTY id="rtt_quality::refraction" type="2" value="0"></PROPERTY>
+    <PROPERTY id="shader_mode" type="2" value="1"></PROPERTY>
+    <PROPERTY id="smooth::power" type="6" value="9.98"></PROPERTY>
+    <PROPERTY id="sun::area" type="6" value="746.089"></PROPERTY>
+    <PROPERTY id="sun::colour" type="11" value="1 1 1 1"></PROPERTY>
+    <PROPERTY id="sun::position" type="9" value="2997.92 7460.89 -16863.8"></PROPERTY>
+    <PROPERTY id="sun::strength" type="6" value="1.75"></PROPERTY>
+    <PROPERTY id="technique_add" type="7" value=""></PROPERTY>
+    <PROPERTY id="technique_remove" type="7" value=""></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <PROPERTY id="watercolour" type="11" value="0.139765 0.359464 0.425373 1"></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="398052919" name="veg2#1Copy#2" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="veg2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-9.09716 126.029 1546.63"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="10 10 10"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_veg2Leaf33"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="494766076" name="veg2_lod2#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="veg2_lod2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-881.088 130.371 1406.86"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_veg2_lod2Leaf33"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="936033216" name="Target2#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="Target2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.707107 0.707107 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="461.278 136.859 1101.16"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="10 10 10"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="Material#41"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="310708928" name="Wall#0Copy#1" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="Wall.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.69779 -0.716302 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="444.825 136.801 971.856"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="10 10 10"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="Material#52"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="799920652" name="tree2#0Copy#1" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="tree2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.700909 0 -0.713251 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-600.754 130.025 1269.92"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="5 5 5"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_tree2bigtreeDF1"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_tree2bigtreeDF2"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity2::material" type="7" value="_tree2Leaf_DF"></PROPERTY>
+    <PROPERTY id="subentity2::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="3"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="238959929" name="veg4_lod1#0Copy#1" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="veg4_lod1.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-812.15 127.752 1386.02"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_veg4_lod1Leaf2_df"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="231513413" name="tree3#0Copy#1" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="tree3.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.953717 0 -0.300706 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-561.862 129.101 1153.59"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="5 5 5"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_tree3bigtreeDF1"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_tree3bigtreeDF2"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity2::material" type="7" value="_tree3Leaf_DF"></PROPERTY>
+    <PROPERTY id="subentity2::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="3"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="894314432" name="Target2#0Copy#1" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="Target2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.707107 0.707107 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="450.382 136.859 1101.16"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="10 10 10"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="Material#41"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="851619007" name="stone1#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="stone1.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-905.552 129.034 1317.8"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_stone1stones_df2"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="11383405" name="tree3#0Copy#4" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="tree3.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.952396 0 -0.304864 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-76.9374 129.101 1225.64"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="5 5 5"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_tree3bigtreeDF1"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_tree3bigtreeDF2"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity2::material" type="7" value="_tree3Leaf_DF"></PROPERTY>
+    <PROPERTY id="subentity2::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="3"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="501632740" name="stone2#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="stone2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-949.625 128.275 1408.91"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_stone2stones_df2"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="806878872" name="veg10#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="veg10.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-4444.55 22.6043 -1555.31"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_veg10Palm2_trunk_DF"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_veg10palmleaf1_df"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="2"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="373485519" name="veg2#1Copy#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="veg2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-28.0732 126.029 1613.88"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="10 10 10"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_veg2Leaf33"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="779442752" name="house_01_rich_a#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="house_01_rich_a.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.707107 0.707107 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-682.59 127.965 3243.22"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="0.3 0.3 0.3"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="martin_copper_roof_001_mt"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity10::material" type="7" value="martin_stone_006_mt"></PROPERTY>
+    <PROPERTY id="subentity10::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity11::material" type="7" value="martin_stone_001_mt"></PROPERTY>
+    <PROPERTY id="subentity11::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity12::material" type="7" value="martin_wood_001_mt"></PROPERTY>
+    <PROPERTY id="subentity12::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity13::material" type="7" value="martin_tiles_001_mt"></PROPERTY>
+    <PROPERTY id="subentity13::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity14::material" type="7" value="martin_dirt_decal_001_mt"></PROPERTY>
+    <PROPERTY id="subentity14::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity15::material" type="7" value="martin_wood_002_mt"></PROPERTY>
+    <PROPERTY id="subentity15::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity16::material" type="7" value="martin_door_001_mt"></PROPERTY>
+    <PROPERTY id="subentity16::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity17::material" type="7" value="martin_trapdoor_001_mt"></PROPERTY>
+    <PROPERTY id="subentity17::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity18::material" type="7" value="martin_windows_001_mt"></PROPERTY>
+    <PROPERTY id="subentity18::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity19::material" type="7" value="martin_cloth_001_mt"></PROPERTY>
+    <PROPERTY id="subentity19::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="martin_house_001_mt"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity20::material" type="7" value="martin_rope_001_mt"></PROPERTY>
+    <PROPERTY id="subentity20::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity21::material" type="7" value="martin_stone_003_mt"></PROPERTY>
+    <PROPERTY id="subentity21::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity22::material" type="7" value="martin_door_001_mt"></PROPERTY>
+    <PROPERTY id="subentity22::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity23::material" type="7" value="martin_stone_005_mt"></PROPERTY>
+    <PROPERTY id="subentity23::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity24::material" type="7" value="martin_door_002_mt"></PROPERTY>
+    <PROPERTY id="subentity24::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity25::material" type="7" value="martin_wood_001_mt"></PROPERTY>
+    <PROPERTY id="subentity25::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity26::material" type="7" value="martin_tiles_001_mt"></PROPERTY>
+    <PROPERTY id="subentity26::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity27::material" type="7" value="martin_rope_001_mt"></PROPERTY>
+    <PROPERTY id="subentity27::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity28::material" type="7" value="martin_stone_006_mt"></PROPERTY>
+    <PROPERTY id="subentity28::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity29::material" type="7" value="martin_house_001_mt"></PROPERTY>
+    <PROPERTY id="subentity29::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity2::material" type="7" value="martin_windows_001_mt"></PROPERTY>
+    <PROPERTY id="subentity2::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity30::material" type="7" value="martin_dirt_decal_001_mt"></PROPERTY>
+    <PROPERTY id="subentity30::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity31::material" type="7" value="martin_cloth_001_mt"></PROPERTY>
+    <PROPERTY id="subentity31::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity32::material" type="7" value="martin_stone_004_mt"></PROPERTY>
+    <PROPERTY id="subentity32::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity33::material" type="7" value="martin_stone_005_mt"></PROPERTY>
+    <PROPERTY id="subentity33::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity34::material" type="7" value="martin_stone_006_mt"></PROPERTY>
+    <PROPERTY id="subentity34::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity35::material" type="7" value="martin_wood_002_mt"></PROPERTY>
+    <PROPERTY id="subentity35::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity36::material" type="7" value="martin_dirt_decal_001_mt"></PROPERTY>
+    <PROPERTY id="subentity36::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity37::material" type="7" value="martin_wood_002_mt"></PROPERTY>
+    <PROPERTY id="subentity37::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity38::material" type="7" value="martin_stone_005_mt"></PROPERTY>
+    <PROPERTY id="subentity38::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity3::material" type="7" value="martin_wood_001_mt"></PROPERTY>
+    <PROPERTY id="subentity3::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity4::material" type="7" value="martin_tiles_001_mt"></PROPERTY>
+    <PROPERTY id="subentity4::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity5::material" type="7" value="martin_loam_rattan_001_mt"></PROPERTY>
+    <PROPERTY id="subentity5::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity6::material" type="7" value="martin_brick_dirt_001_mt"></PROPERTY>
+    <PROPERTY id="subentity6::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity7::material" type="7" value="martin_stone_005_mt"></PROPERTY>
+    <PROPERTY id="subentity7::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity8::material" type="7" value="martin_stone_004_mt"></PROPERTY>
+    <PROPERTY id="subentity8::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity9::material" type="7" value="martin_stone_003_mt"></PROPERTY>
+    <PROPERTY id="subentity9::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="39"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="133548998" name="tree2#0Copy#2" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="tree2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.951056 0 0.309017 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-258.544 130.025 1129.24"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="5 5 5"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_tree2bigtreeDF1"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_tree2bigtreeDF2"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity2::material" type="7" value="_tree2Leaf_DF"></PROPERTY>
+    <PROPERTY id="subentity2::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="3"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="512009034" name="veg8_lod2#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="veg8_lod2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-4417.18 22.0261 -1470.91"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_veg8_lod2palm3_trunk_DF"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_veg8_lod2palmleaf2_df"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="2"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="447187719" name="veg8_lod2#0Copy#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="veg8_lod2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-4447.73 22.0261 -1517.26"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_veg8_lod2palm3_trunk_DF"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_veg8_lod2palmleaf2_df"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="2"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="837214272" name="HQMilitiaTentShape#0Copy#1" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="HQMilitiaTentShape.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="705.529 124.894 2293.05"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="0.3 0.3 0.3"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="blinn1"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="699453696" name="HQMilitiaTentShape#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="HQMilitiaTentShape.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="631.205 124.931 2293.07"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="0.3 0.3 0.3"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="blinn1"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="713827936" name="stone6#0Copy#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="stone6.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-192.399 129.907 1470.23"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="10 10 10"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_stone6stones_df2"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="420514542" name="veg2#1" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="veg2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-18.981 126.029 1606.29"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="10 10 10"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_veg2Leaf33"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="380932032" name="OilPump#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="OilPump.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="606.801 116.746 3084.4"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="7 7 7"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="Material#29"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="424726112" name="Wall#0Copy#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="Wall.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.69779 -0.716302 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="547.196 135.76 973.921"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="10 10 10"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="Material#52"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="514572588" name="flower1#0Copy#1" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="flower1.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.707107 0 0.707107 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-104.866 124.895 1423.66"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_flower1blossom1"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_flower1Leaf33"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="2"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="60640279" name="veg4_lod1#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="veg4_lod1.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-831.59 127.752 1377.03"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_veg4_lod1Leaf2_df"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="296823023" name="stone6#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="stone6.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-88.86 129.907 1611.87"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="10 10 10"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_stone6stones_df2"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="417584765" name="tree2#0Copy#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="tree2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-855.508 130.025 1057.98"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="5 5 5"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_tree2bigtreeDF1"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_tree2bigtreeDF2"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity2::material" type="7" value="_tree2Leaf_DF"></PROPERTY>
+    <PROPERTY id="subentity2::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="3"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="778313547" name="veg8_lod2#0Copy#2" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="veg8_lod2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-4460.21 22.0261 -1531.84"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_veg8_lod2palm3_trunk_DF"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_veg8_lod2palmleaf2_df"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="2"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="916165654" name="stone6_lod1#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="stone6_lod1.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.915311 0 -0.402747 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-218.486 127.315 1583.12"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="5 5 5"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_stone6_lod1stones_df2"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="167973876" name="tree3#0Copy#2" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="tree3.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.938191 0 0.346117 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-372.242 129.101 1225.64"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="5 5 5"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_tree3bigtreeDF1"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_tree3bigtreeDF2"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity2::material" type="7" value="_tree3Leaf_DF"></PROPERTY>
+    <PROPERTY id="subentity2::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="3"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="201879936" name="Target2#0Copy#2" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="Target2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.707107 0.707107 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="440.831 136.859 1101.16"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="10 10 10"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="Material#41"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="76784570" name="veg2#1Copy#1" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="veg2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-23.973 126.029 1592.41"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="10 10 10"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_veg2Leaf33"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="379375591" name="flower1#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="flower1.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-76.8136 125.166 1423.66"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_flower1blossom1"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_flower1Leaf33"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="2"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="788781376" name="HQMilitiaTentShape#0Copy#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="HQMilitiaTentShape.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="567.105 124.933 2293.07"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="0.3 0.3 0.3"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="blinn1"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="304849391" name="veg4_lod1#0Copy#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="veg4_lod1.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-804.343 127.752 1358.9"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_veg4_lod1Leaf2_df"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="912076174" name="stone6#0Copy#1" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="stone6.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-509.654 129.907 1472.66"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="10 10 10"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_stone6stones_df2"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="536454360" name="tree2#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="tree2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-855.508 130.025 1269.92"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="5 5 5"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_tree2bigtreeDF1"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_tree2bigtreeDF2"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity2::material" type="7" value="_tree2Leaf_DF"></PROPERTY>
+    <PROPERTY id="subentity2::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="3"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="81453902" name="tree3#0Copy#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="tree3.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-697.559 129.101 1167.83"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="5 5 5"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_tree3bigtreeDF1"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_tree3bigtreeDF2"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity2::material" type="7" value="_tree3Leaf_DF"></PROPERTY>
+    <PROPERTY id="subentity2::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="3"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="74556712" name="OilPump#0Copy#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="OilPump.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="606.801 116.746 3135.19"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="7 7 7"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="Material#29"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="622302976" name="Target2#0Copy#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="Target2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.707107 0.707107 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="470.39 136.859 1101.16"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="10 10 10"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="Material#41"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="578325755" name="veg2#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="veg2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-900.685 130.332 1357.67"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_veg2Leaf33"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="960112320" name="ShootingPlace#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="ShootingPlace.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.707107 -0.707107 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="452.003 135.28 1456.39"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="10 10 10"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="Material#52"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="808374279" name="flower1#0Copy#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="flower1.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-76.8136 124.895 1473.36"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_flower1blossom1"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_flower1Leaf33"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="2"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="561632130" name="tree2#0Copy#3" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="tree2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.608761 0 0.793353 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-107.616 130.025 1347.8"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="5 5 5"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_tree2bigtreeDF1"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_tree2bigtreeDF2"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity2::material" type="7" value="_tree2Leaf_DF"></PROPERTY>
+    <PROPERTY id="subentity2::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="3"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="458540605" name="tree3#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="tree3.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.988362 0 0.152123 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-773.147 129.101 1225.64"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="5 5 5"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_tree3bigtreeDF1"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_tree3bigtreeDF2"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity2::material" type="7" value="_tree3Leaf_DF"></PROPERTY>
+    <PROPERTY id="subentity2::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="3"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="853358562" name="veg8_lod2#0Copy#1" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="veg8_lod2.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-4487.8 18.4867 -1495.04"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_veg8_lod2palm3_trunk_DF"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_veg8_lod2palmleaf2_df"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="2"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="771385856" name="Wall#0" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="Wall.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="0.69779 -0.716302 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="345.609 137.407 971.84"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="10 10 10"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="Material#52"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="1"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="538773766" name="tree3#0Copy#3" typename="Entity Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="castshadows" type="12" value="false"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="meshfile" type="7" value="tree3.mesh"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-324.464 129.101 987.706"></PROPERTY>
+    <PROPERTY id="renderingdistance" type="6" value="5000"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="5 5 5"></PROPERTY>
+    <PROPERTY id="subentity0::material" type="7" value="_tree3bigtreeDF1"></PROPERTY>
+    <PROPERTY id="subentity0::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity1::material" type="7" value="_tree3bigtreeDF2"></PROPERTY>
+    <PROPERTY id="subentity1::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentity2::material" type="7" value="_tree3Leaf_DF"></PROPERTY>
+    <PROPERTY id="subentity2::visible" type="12" value="true"></PROPERTY>
+    <PROPERTY id="subentitycount" type="2" value="3"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="749412544" name="Marker#0Copy#0" typename="Marker Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="colour" type="11" value="0.2 0.2 1 1"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="416.04 132.238 2295.91"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+      <PROPERTY id="PLAYER1" type="7" value=""></PROPERTY>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="454512160" name="Page0x0" typename="Terrain Page Object" parentnode="Terrain Group">
+    <PROPERTY id="colourmap::enabled" type="12" value="false"></PROPERTY>
+    <PROPERTY id="colourmap::texturesize" type="2" value="128"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="layer0::diffusespecular" type="7" value="jungle_0_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer0::normalheight" type="7" value="jungle_0_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer0::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layer1::diffusespecular" type="7" value="volcano_5_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer1::normalheight" type="7" value="volcano_5_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer1::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layer2::diffusespecular" type="7" value="volcano_7_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer2::normalheight" type="7" value="volcano_7_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer2::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layer3::diffusespecular" type="7" value="desert_5_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer3::normalheight" type="7" value="desert_5_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer3::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layer4::diffusespecular" type="7" value="jungle_2_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer4::normalheight" type="7" value="jungle_2_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer4::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layer5::diffusespecular" type="7" value="ice_3_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer5::normalheight" type="7" value="ice_3_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer5::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layercount" type="2" value="6"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pagex" type="2" value="0"></PROPERTY>
+    <PROPERTY id="pagey" type="2" value="0"></PROPERTY>
+    <PROPERTY id="pg::layer0::active" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer0::animate" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer0::density" type="6" value="3"></PROPERTY>
+    <PROPERTY id="pg::layer0::fadetech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer0::grasstech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer0::material" type="7" value="grass"></PROPERTY>
+    <PROPERTY id="pg::layer0::maxsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer0::minsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer0::swaydistribution" type="6" value="10"></PROPERTY>
+    <PROPERTY id="pg::layer0::swaylength" type="6" value="0.2"></PROPERTY>
+    <PROPERTY id="pg::layer0::swayspeed" type="6" value="0.5"></PROPERTY>
+    <PROPERTY id="pg::layer1::active" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pg::layer1::animate" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer1::density" type="6" value="3"></PROPERTY>
+    <PROPERTY id="pg::layer1::fadetech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer1::grasstech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer1::material" type="7" value=""></PROPERTY>
+    <PROPERTY id="pg::layer1::maxsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer1::minsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer1::swaydistribution" type="6" value="10"></PROPERTY>
+    <PROPERTY id="pg::layer1::swaylength" type="6" value="0.2"></PROPERTY>
+    <PROPERTY id="pg::layer1::swayspeed" type="6" value="0.5"></PROPERTY>
+    <PROPERTY id="pg::layer2::active" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pg::layer2::animate" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer2::density" type="6" value="3"></PROPERTY>
+    <PROPERTY id="pg::layer2::fadetech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer2::grasstech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer2::material" type="7" value=""></PROPERTY>
+    <PROPERTY id="pg::layer2::maxsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer2::minsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer2::swaydistribution" type="6" value="10"></PROPERTY>
+    <PROPERTY id="pg::layer2::swaylength" type="6" value="0.2"></PROPERTY>
+    <PROPERTY id="pg::layer2::swayspeed" type="6" value="0.5"></PROPERTY>
+    <PROPERTY id="pg::layer3::active" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pg::layer3::animate" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer3::density" type="6" value="3"></PROPERTY>
+    <PROPERTY id="pg::layer3::fadetech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer3::grasstech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer3::material" type="7" value=""></PROPERTY>
+    <PROPERTY id="pg::layer3::maxsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer3::minsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer3::swaydistribution" type="6" value="10"></PROPERTY>
+    <PROPERTY id="pg::layer3::swaylength" type="6" value="0.2"></PROPERTY>
+    <PROPERTY id="pg::layer3::swayspeed" type="6" value="0.5"></PROPERTY>
+    <PROPERTY id="position" type="9" value="0 0 0"></PROPERTY>
+    <PROPERTY id="tempdensitymodified" type="12" value="false"></PROPERTY>
+    <PROPERTY id="tempmodified" type="12" value="false"></PROPERTY>
+    <PROPERTY id="tuning::maxbatchsize" type="2" value="65"></PROPERTY>
+    <PROPERTY id="tuning::minbatchsize" type="2" value="33"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="924802368" name="Page0x-1" typename="Terrain Page Object" parentnode="Terrain Group">
+    <PROPERTY id="colourmap::enabled" type="12" value="false"></PROPERTY>
+    <PROPERTY id="colourmap::texturesize" type="2" value="128"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="layer0::diffusespecular" type="7" value="jungle_0_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer0::normalheight" type="7" value="jungle_0_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer0::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layer1::diffusespecular" type="7" value="desert_5_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer1::normalheight" type="7" value="desert_5_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer1::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layer2::diffusespecular" type="7" value="jungle_2_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer2::normalheight" type="7" value="jungle_2_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer2::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layer3::diffusespecular" type="7" value="ice_3_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer3::normalheight" type="7" value="ice_3_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer3::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layer4::diffusespecular" type="7" value="desert_6_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer4::normalheight" type="7" value="desert_6_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer4::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layer5::diffusespecular" type="7" value="desert_2_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer5::normalheight" type="7" value="desert_2_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer5::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layercount" type="2" value="6"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pagex" type="2" value="0"></PROPERTY>
+    <PROPERTY id="pagey" type="2" value="-1"></PROPERTY>
+    <PROPERTY id="pg::layer0::active" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pg::layer0::animate" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer0::density" type="6" value="3"></PROPERTY>
+    <PROPERTY id="pg::layer0::fadetech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer0::grasstech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer0::material" type="7" value=""></PROPERTY>
+    <PROPERTY id="pg::layer0::maxsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer0::minsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer0::swaydistribution" type="6" value="10"></PROPERTY>
+    <PROPERTY id="pg::layer0::swaylength" type="6" value="0.2"></PROPERTY>
+    <PROPERTY id="pg::layer0::swayspeed" type="6" value="0.5"></PROPERTY>
+    <PROPERTY id="pg::layer1::active" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pg::layer1::animate" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer1::density" type="6" value="3"></PROPERTY>
+    <PROPERTY id="pg::layer1::fadetech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer1::grasstech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer1::material" type="7" value=""></PROPERTY>
+    <PROPERTY id="pg::layer1::maxsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer1::minsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer1::swaydistribution" type="6" value="10"></PROPERTY>
+    <PROPERTY id="pg::layer1::swaylength" type="6" value="0.2"></PROPERTY>
+    <PROPERTY id="pg::layer1::swayspeed" type="6" value="0.5"></PROPERTY>
+    <PROPERTY id="pg::layer2::active" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pg::layer2::animate" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer2::density" type="6" value="3"></PROPERTY>
+    <PROPERTY id="pg::layer2::fadetech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer2::grasstech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer2::material" type="7" value=""></PROPERTY>
+    <PROPERTY id="pg::layer2::maxsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer2::minsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer2::swaydistribution" type="6" value="10"></PROPERTY>
+    <PROPERTY id="pg::layer2::swaylength" type="6" value="0.2"></PROPERTY>
+    <PROPERTY id="pg::layer2::swayspeed" type="6" value="0.5"></PROPERTY>
+    <PROPERTY id="pg::layer3::active" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pg::layer3::animate" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer3::density" type="6" value="3"></PROPERTY>
+    <PROPERTY id="pg::layer3::fadetech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer3::grasstech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer3::material" type="7" value=""></PROPERTY>
+    <PROPERTY id="pg::layer3::maxsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer3::minsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer3::swaydistribution" type="6" value="10"></PROPERTY>
+    <PROPERTY id="pg::layer3::swaylength" type="6" value="0.2"></PROPERTY>
+    <PROPERTY id="pg::layer3::swayspeed" type="6" value="0.5"></PROPERTY>
+    <PROPERTY id="position" type="9" value="0 0 4000"></PROPERTY>
+    <PROPERTY id="tempdensitymodified" type="12" value="false"></PROPERTY>
+    <PROPERTY id="tempmodified" type="12" value="false"></PROPERTY>
+    <PROPERTY id="tuning::maxbatchsize" type="2" value="65"></PROPERTY>
+    <PROPERTY id="tuning::minbatchsize" type="2" value="33"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="276253536" name="Marker#1Copy#0" typename="Marker Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="colour" type="11" value="0.2 0.2 1 1"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="579.891 127.088 2009.97"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+      <PROPERTY id="NPC" type="7" value="" options="Solider;0;"></PROPERTY>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="291238144" name="Marker#1" typename="Marker Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="colour" type="11" value="0.2 0.2 1 1"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="579.891 127.088 1971.63"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+      <PROPERTY id="NPC" type="7" value="" options="Solider;0;"></PROPERTY>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="357982144" name="Marker#0" typename="Marker Object" parentnode="SceneManager">
+    <PROPERTY id="autotracktarget" type="7" value="None"></PROPERTY>
+    <PROPERTY id="colour" type="11" value="0.2 0.2 1 1"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="orientation" type="13" value="1 0 0 0"></PROPERTY>
+    <PROPERTY id="position" type="9" value="601.736 129.299 1572.92"></PROPERTY>
+    <PROPERTY id="scale" type="9" value="20 20 20"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+      <PROPERTY id="SPAWN" type="7" value=""></PROPERTY>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="97506632" name="Page-1x0" typename="Terrain Page Object" parentnode="Terrain Group">
+    <PROPERTY id="colourmap::enabled" type="12" value="false"></PROPERTY>
+    <PROPERTY id="colourmap::texturesize" type="2" value="128"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="layer0::diffusespecular" type="7" value="jungle_0_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer0::normalheight" type="7" value="jungle_0_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer0::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layer1::diffusespecular" type="7" value="sand_1_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer1::normalheight" type="7" value="sand_1_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer1::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layer2::diffusespecular" type="7" value="volcano_5_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer2::normalheight" type="7" value="volcano_5_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer2::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layer3::diffusespecular" type="7" value="volcano_7_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer3::normalheight" type="7" value="volcano_7_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer3::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layer4::diffusespecular" type="7" value="ice_3_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer4::normalheight" type="7" value="ice_3_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer4::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layercount" type="2" value="5"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pagex" type="2" value="-1"></PROPERTY>
+    <PROPERTY id="pagey" type="2" value="0"></PROPERTY>
+    <PROPERTY id="pg::layer0::active" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer0::animate" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer0::density" type="6" value="3"></PROPERTY>
+    <PROPERTY id="pg::layer0::fadetech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer0::grasstech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer0::material" type="7" value="grass"></PROPERTY>
+    <PROPERTY id="pg::layer0::maxsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer0::minsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer0::swaydistribution" type="6" value="10"></PROPERTY>
+    <PROPERTY id="pg::layer0::swaylength" type="6" value="0.2"></PROPERTY>
+    <PROPERTY id="pg::layer0::swayspeed" type="6" value="0.5"></PROPERTY>
+    <PROPERTY id="pg::layer1::active" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pg::layer1::animate" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer1::density" type="6" value="3"></PROPERTY>
+    <PROPERTY id="pg::layer1::fadetech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer1::grasstech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer1::material" type="7" value=""></PROPERTY>
+    <PROPERTY id="pg::layer1::maxsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer1::minsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer1::swaydistribution" type="6" value="10"></PROPERTY>
+    <PROPERTY id="pg::layer1::swaylength" type="6" value="0.2"></PROPERTY>
+    <PROPERTY id="pg::layer1::swayspeed" type="6" value="0.5"></PROPERTY>
+    <PROPERTY id="pg::layer2::active" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pg::layer2::animate" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer2::density" type="6" value="3"></PROPERTY>
+    <PROPERTY id="pg::layer2::fadetech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer2::grasstech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer2::material" type="7" value=""></PROPERTY>
+    <PROPERTY id="pg::layer2::maxsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer2::minsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer2::swaydistribution" type="6" value="10"></PROPERTY>
+    <PROPERTY id="pg::layer2::swaylength" type="6" value="0.2"></PROPERTY>
+    <PROPERTY id="pg::layer2::swayspeed" type="6" value="0.5"></PROPERTY>
+    <PROPERTY id="pg::layer3::active" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pg::layer3::animate" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer3::density" type="6" value="3"></PROPERTY>
+    <PROPERTY id="pg::layer3::fadetech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer3::grasstech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer3::material" type="7" value=""></PROPERTY>
+    <PROPERTY id="pg::layer3::maxsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer3::minsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer3::swaydistribution" type="6" value="10"></PROPERTY>
+    <PROPERTY id="pg::layer3::swaylength" type="6" value="0.2"></PROPERTY>
+    <PROPERTY id="pg::layer3::swayspeed" type="6" value="0.5"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-4000 0 0"></PROPERTY>
+    <PROPERTY id="tempdensitymodified" type="12" value="false"></PROPERTY>
+    <PROPERTY id="tempmodified" type="12" value="false"></PROPERTY>
+    <PROPERTY id="tuning::maxbatchsize" type="2" value="65"></PROPERTY>
+    <PROPERTY id="tuning::minbatchsize" type="2" value="33"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+  <OBJECT object_id="457441920" name="Page-1x-1" typename="Terrain Page Object" parentnode="Terrain Group">
+    <PROPERTY id="colourmap::enabled" type="12" value="false"></PROPERTY>
+    <PROPERTY id="colourmap::texturesize" type="2" value="128"></PROPERTY>
+    <PROPERTY id="layer" type="2" value="0"></PROPERTY>
+    <PROPERTY id="layer0::diffusespecular" type="7" value="jungle_0_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer0::normalheight" type="7" value="jungle_0_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer0::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layer1::diffusespecular" type="7" value="sand_1_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer1::normalheight" type="7" value="sand_1_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer1::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layer2::diffusespecular" type="7" value="ice_3_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer2::normalheight" type="7" value="ice_3_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer2::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layer3::diffusespecular" type="7" value="desert_2_diffusespecular.dds"></PROPERTY>
+    <PROPERTY id="layer3::normalheight" type="7" value="desert_2_normalheight.dds"></PROPERTY>
+    <PROPERTY id="layer3::worldsize" type="6" value="50"></PROPERTY>
+    <PROPERTY id="layercount" type="2" value="4"></PROPERTY>
+    <PROPERTY id="locked" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pagex" type="2" value="-1"></PROPERTY>
+    <PROPERTY id="pagey" type="2" value="-1"></PROPERTY>
+    <PROPERTY id="pg::layer0::active" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pg::layer0::animate" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer0::density" type="6" value="3"></PROPERTY>
+    <PROPERTY id="pg::layer0::fadetech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer0::grasstech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer0::material" type="7" value=""></PROPERTY>
+    <PROPERTY id="pg::layer0::maxsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer0::minsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer0::swaydistribution" type="6" value="10"></PROPERTY>
+    <PROPERTY id="pg::layer0::swaylength" type="6" value="0.2"></PROPERTY>
+    <PROPERTY id="pg::layer0::swayspeed" type="6" value="0.5"></PROPERTY>
+    <PROPERTY id="pg::layer1::active" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pg::layer1::animate" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer1::density" type="6" value="3"></PROPERTY>
+    <PROPERTY id="pg::layer1::fadetech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer1::grasstech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer1::material" type="7" value=""></PROPERTY>
+    <PROPERTY id="pg::layer1::maxsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer1::minsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer1::swaydistribution" type="6" value="10"></PROPERTY>
+    <PROPERTY id="pg::layer1::swaylength" type="6" value="0.2"></PROPERTY>
+    <PROPERTY id="pg::layer1::swayspeed" type="6" value="0.5"></PROPERTY>
+    <PROPERTY id="pg::layer2::active" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pg::layer2::animate" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer2::density" type="6" value="3"></PROPERTY>
+    <PROPERTY id="pg::layer2::fadetech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer2::grasstech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer2::material" type="7" value=""></PROPERTY>
+    <PROPERTY id="pg::layer2::maxsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer2::minsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer2::swaydistribution" type="6" value="10"></PROPERTY>
+    <PROPERTY id="pg::layer2::swaylength" type="6" value="0.2"></PROPERTY>
+    <PROPERTY id="pg::layer2::swayspeed" type="6" value="0.5"></PROPERTY>
+    <PROPERTY id="pg::layer3::active" type="12" value="false"></PROPERTY>
+    <PROPERTY id="pg::layer3::animate" type="12" value="true"></PROPERTY>
+    <PROPERTY id="pg::layer3::density" type="6" value="3"></PROPERTY>
+    <PROPERTY id="pg::layer3::fadetech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer3::grasstech" type="2" value="1"></PROPERTY>
+    <PROPERTY id="pg::layer3::material" type="7" value=""></PROPERTY>
+    <PROPERTY id="pg::layer3::maxsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer3::minsize" type="8" value="1 1"></PROPERTY>
+    <PROPERTY id="pg::layer3::swaydistribution" type="6" value="10"></PROPERTY>
+    <PROPERTY id="pg::layer3::swaylength" type="6" value="0.2"></PROPERTY>
+    <PROPERTY id="pg::layer3::swayspeed" type="6" value="0.5"></PROPERTY>
+    <PROPERTY id="position" type="9" value="-4000 0 4000"></PROPERTY>
+    <PROPERTY id="tempdensitymodified" type="12" value="false"></PROPERTY>
+    <PROPERTY id="tempmodified" type="12" value="false"></PROPERTY>
+    <PROPERTY id="tuning::maxbatchsize" type="2" value="65"></PROPERTY>
+    <PROPERTY id="tuning::minbatchsize" type="2" value="33"></PROPERTY>
+    <PROPERTY id="updatescript" type="7" value=""></PROPERTY>
+    <CUSTOMPROPERTIES>
+    </CUSTOMPROPERTIES>
+  </OBJECT>
+
+</OGITORSCENE>

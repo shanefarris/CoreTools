@@ -1,0 +1,528 @@
+// Takes the structures that have been populated by the parser and loads a level based on the data in the
+// structures.
+namespace Sound
+{
+	class CSoundManager;
+}
+namespace Core
+{
+	class CGameObject;
+	class CGameManager;
+	class CItemsManager;
+	class CMagazine;
+	class CProjectile;
+	class CGameObjectManager;
+	class CCameraManager;
+	class CProjectileProfile;
+	class CMagazineProfile;
+	namespace Physics
+	{
+		class CPhysicsProfile;
+		class IPhysicsStrategy;
+	}
+	namespace Nature
+	{
+		class CNatureManager;
+	}
+namespace SceneLoader
+{
+	struct DATA_CONTAINER;
+	class  CSceneImporter
+	{
+public:
+		CSceneImporter();
+		~CSceneImporter();
+		bool ImportScene(const String& file, SceneImporterPackage& Package);
+		bool SerializeStructures(const String& file, const String& outFile);
+	};
+}
+}
+namespace Core
+{
+namespace SceneLoader
+{
+	//***************************************** Static data ************************************************
+	struct SCENEMANAGER
+	{
+		String		Name;
+		String		Type;
+		ColourValue Ambient;
+		ColourValue FogColor;
+		float			FogDensity;
+		float			FogEnd;
+		float			FogStart;
+		Ogre::FogMode FogMode;
+		bool		SkyBoxActive;
+		float			SkyBoxDistance;
+		String		SkyBoxMaterial;
+	};
+	struct CAMERA
+	{
+		String			Parent;
+		String			Name;
+		reVector2Df		ClipDistance;
+		reVector3Df		LookAt;
+		float				Fov;
+		Quaternion		Orientation;
+		reVector3Df		Position;
+		bool			Default;
+		E_CAMERA_MODE	Type;
+	};
+	struct VIEWPORT
+	{
+		String		Parent;
+		String		Name;
+		ColourValue Color;
+		bool		Compositor0Enabled;
+		String		Compositor0Name;
+	};
+	struct ARCHIVE
+	{
+		String		Name;
+		String		FileName;
+	};
+	struct LIGHT
+	{
+		String		Parent;
+		String		Name;
+		reVector3Df Position;
+		reVector4Df	Attenuation;
+		reVector3Df	Diffuse;
+		reVector3Df	Direction;
+		LIGHT_TYPE	LightType;
+		float			Power;
+		reVector3Df	Range;
+		bool		Shadows;
+		reVector3Df	Specular;
+	};
+	struct GAMEOBJECT
+	{
+		String		Parent;
+		String		Name;
+		String		MeshFile;
+		Quaternion	Orientation;
+		reVector3Df Position;
+		reVector3Df	Scale;
+		bool		Shadows;
+		String		ObstacleType;
+		String		PhysicsProfileName;
+	};
+	struct PHYSICS_PROFILE
+	{
+		String	Name;
+		float		Restitution;
+		float		Friction;
+		float		Mass;
+		float		Density;
+		Physics::E_PHYSICS_SHAPE Shape;
+		Physics::E_BODY_TYPE	 BodyType;
+	};
+	struct CAELUM
+	{
+		String		Name;
+		unsigned int			TimeDay;
+		unsigned int			TimeHour;
+		unsigned int			TimeMinute;
+		unsigned int			TimeMonth;
+		unsigned int			TimeSec;
+		unsigned int			TimeSpeed;
+		unsigned int			TimeYear;
+		bool		isClouds;
+		unsigned int			LayerOfClouds;
+		unsigned int			FogDenMultiplier;
+		bool		isManageFog;
+		unsigned int			Layer;
+		bool		isSingleLightSource;
+		bool		isSingleShadowSource;
+		bool		isManageAmbientLight;
+		ColourValue	MinAmbientLight;
+		ColourValue	MoonAmbientMultipler;
+		unsigned int			MoonAttMultipler;
+		unsigned int			MoonAttDistance;
+		unsigned int			MoonAttLinearMultipler;
+		unsigned int			MoonQuadMultipler;
+		bool		isMoonAutoDisable;
+		bool		isMoonCastShadow;
+		ColourValue	MoonDiffuseMultipler;
+		bool		isMoonEnabled;
+		ColourValue	MoonSpecularMultipler;
+		unsigned int			ObserverLatitude;
+		unsigned int			ObserverLongitude;
+		bool		isStarsEnabled;
+		unsigned int			StarsMag0PixelSize;
+		float			StarsMagScale;
+		unsigned int			StarsMaxPixelSize;
+		unsigned int			StarsMinPixelSize;
+		ColourValue	SunAmbientMultipler;
+		unsigned int			SunAttMultipler;
+		unsigned int			SunDistance;
+		unsigned int			SunAttLinearMultipler;
+		unsigned int			SunQuadMultipler;
+		bool		isSunAutoDisable;
+		bool		isSunCastShadow;
+		reVector3Df	SunColor;
+		ColourValue	SunDiffuseMultipler;
+		bool		isSunEnabled;
+		reVector3Df	SunLightColor;
+		reVector3Df	SunPosition;
+		ColourValue	SunSpecularMultipler;
+	};
+	struct HYDRAX
+	{
+		String		Name;
+		String		ConfigFile;
+		bool		isCaelumItegrated;
+		float			CausticsEnd;
+		unsigned int			CausticsPower;
+		unsigned int			CausticsScale;
+		bool		isComponentsCaustics;
+		bool		isComponentsDepth;
+		bool		isComponentsFoam;
+		bool		isComponentsSmooth;
+		bool		isComponentsSun;
+		bool		isComponentsUnderwater;
+		bool		isComponentsGodrays;
+		bool		isComponentsReflections;
+		float			DepthLimit;
+		float			FoamMaxDistance;
+		float			FoamScale;
+		float			FoamStart;
+		float			FoamTransparency;
+		float			FullReflectionDistance;
+		float			GlobalTransparency;
+		reVector3Df	GodraysExposure;
+		float			GodraysIntensity;
+		bool		GodraysIntersections;
+		unsigned int			GodraysNumRays;
+		float			GodraysSize;
+		float			GodraysSpeed;
+		unsigned int			Layers;
+		String		ModuleName;
+		String		NoiseModuleName;
+		float			NormalDistortion;
+		float			PerlinAnimSpeed;
+		float			PerlinFalloff;
+		reVector3Df PerlinGpuLod;
+		float			PerlinGpuStrength;
+		unsigned int			PerlinOctaves;
+		float			PerlinScale;
+		float			PerlinTimeMulti;
+		float			PgmoduleChoppyStrength;
+		bool		isPgmoduleChoppyWaves;
+		unsigned int			PgmoduleComplexity;
+		unsigned int			PgmoduleElevation;
+		bool		isPgmoduleForceRecalculateGeometry;
+		bool		isPgmoduleSmooth;
+		unsigned int			PgmoduleStrength;
+		unsigned int			PlanesError;
+		reVector3Df Position;
+		unsigned int			RttQualityDepth;
+		unsigned int			RttQualityDepthAip;
+		unsigned int			RttQualityDepthReflection;
+		unsigned int			RttQualityGpuNormalMap;
+		unsigned int			RttQualityReflection;
+		unsigned int			RttQualityRefraction;
+		unsigned int			ShaderMode;
+		float			SmoothPower;
+		float			SunArea;
+		reVector3Df	SunColour;
+		reVector3Df	SunPosition;
+		float			SunStrength;
+		String		TechniqueAdd;
+		String		TechniqueRemove;
+		String		UpdateScript;
+		reVector3Df	WaterColour;
+	};
+	struct BGSOUND
+	{
+		String		FileName;
+		String		Name;
+		bool		Loop;
+		bool		Stream;
+		float			Gain;
+	};
+	struct SOUND
+	{
+		String		FileName;
+		String		Name;
+		bool		Loop;
+		bool		Stream;
+		bool		RelativeToListener;
+		unsigned int			Priority;
+		float			Gain;
+		float			MaxGain;
+		float			MinGain;
+		float			FadeIn;
+		float			FadeOut;
+		float			Pitch;
+		float			MaxDistance;
+		float			RollOffFactor;
+		float			RefDistance;
+		float			OuterConeGain;
+		float			InnerConeAngle;
+		float			OuterConeAngle;
+		float			SecondOffset;
+		reVector3Df Velocity;
+		reVector3Df Position;
+		reVector3Df Direction;
+	};
+	struct TERRAIN_TYPE
+	{
+		enum E_TERRAIN_TYPE
+		{
+			ETT_HEIGHT	 = 0,
+			ETT_PAGED	 = 1,
+			ETT_PLANE	 = 2
+		};
+		E_TERRAIN_TYPE TerrainType;
+	};
+	struct HEIGHT_TERRAIN : TERRAIN_TYPE
+	{
+		String		Name; 
+		String		HeightmapImage;
+		String		WorldTexture;
+		String		DetailTexture;
+		int			DetailTile;
+		unsigned int			HeightmapRawSize;
+		String		HeightmapRawBpp;
+		int			PageSize;
+		unsigned int			TileSize;
+		unsigned int			MaxPixelError;
+		float			PageWorldX;
+		float			PageWorldZ;
+		float			MaxHeight;
+		int			MaxMipMapLevel;
+		bool		VertexNormals;
+		bool		VertexColors;
+		bool		UseTriStrips;
+		bool		VertexProgramMorph;
+		float			LODMorphStart;
+		String		MorphLODFactorParamName;
+		unsigned int			MorphLODFactorParamIndex;
+		String		CustomMaterialName;
+		Vector<String> Splatting;
+		HEIGHT_TERRAIN() { TerrainType = TERRAIN_TYPE::ETT_HEIGHT; }
+	};
+	struct TERRAIN_LAYER
+	{
+		String	Diffuse;
+		String	Normal;
+		unsigned int		WorldSize;
+	};
+	struct PAGED_TERRAIN : TERRAIN_TYPE
+	{
+		String		Name;
+		String		TerrainFile;			// Defaults to "Page"
+		bool		isColorMap;
+		unsigned int			TextureSize; 
+		unsigned int			ColorMapTextureSize;
+		unsigned int			LightMapTextureSize;
+		unsigned int			MapSize;
+		int			MinX;
+		int			MaxX;
+		int			MinY;
+		int			MaxY;
+		unsigned int			WorldSize;
+		unsigned int			PageDesityMapSize;
+		unsigned int			DetailDistance;
+		unsigned int			PageSize;
+		unsigned int			MaxBatchSize;
+		unsigned int			MaxPixelError;
+		unsigned int			MinBatchSize;
+		String		ResourceGroup;
+		reVector3Df	Position;				// Defaults to 0,0,0
+		Vector<TERRAIN_LAYER> Layers;
+		PAGED_TERRAIN() { TerrainType = TERRAIN_TYPE::ETT_PAGED; }
+	};
+	struct PLANE_TERRAIN : TERRAIN_TYPE
+	{
+		bool		isUsed;		// Are we using a plane terrain
+		reVector3Df Normal;		// Default is 0, 1, 0
+		PLANE_TERRAIN() : isUsed(false) { TerrainType = TERRAIN_TYPE::ETT_PLANE; }
+	};
+	struct WATER
+	{
+		bool WaterVisible;
+		float WaterWidthX;
+		float WaterWidthZ;
+		float WaterXPos;
+		float WaterYPos;
+		float WaterZPos;
+		String WaterMaterial;
+	};
+	struct PROJECTILES
+	{
+		String		Name;
+		String		Desc;
+		float			Damage;
+		bool		Penetrate;
+		float			Speed;
+		String		MeshFileName;
+		String		BillboardBullet;
+		String		BillboardFlash;
+	};
+	struct MAGAZINE
+	{
+		String		Name;
+		String		Desc;
+		String		Projectile;
+		int			Capacity;
+		String		MeshFileName;
+	};
+	struct WEAPON
+	{
+		String		Name;			// Internal name
+		String		Desc;			// Descriptional name
+		bool		isSemi;			// Semi-auto
+		bool		isBurst;		// Burst rounds
+		bool		isAuto;			// Automatic
+		unsigned int			ROF;			// Rate of Fire
+		String		MeshName;		// File name of the mesh to use
+		String		OverlayName;	// Name to locate the overlay
+		float			Power;			// Power of the tool
+		float			Accuracy;
+		String		MagType;		// Type of mag it will support (only one type for now)
+		reVector3Df Scale;			// Mesh scale (because its not a game object it has to be set manually)
+		float			Range;			// Range of the weapon
+	};
+	struct SPAWN_POINT
+	{
+		String				 Name;
+		SPAWN_POINT_PRIORITY Priority;
+		E_PLAYER_TEAM		 Team;
+		reVector3Df			 Position;
+	};
+	struct GEO_SET_SUBSET
+	{
+		reVector3Df	Position;
+		Radian		Yaw;
+		float			Scale;
+		void*		Data;
+		GEO_SET_SUBSET() : Yaw(Degree(0)), Scale(1.0f), Data(0) { }
+		GEO_SET_SUBSET(const reVector3Df& pos, const Radian& yaw, const float& scale, void* data = nullptr)
+			: Position(pos), Yaw(yaw), Scale(scale), Data(data) { }
+	};
+	// Passed to the veg system for every type of set of trees loaded
+	struct GEO_SET
+	{
+		float		BatchMax;
+		float		BatchStart;
+		float		ImposterMax;
+		float		ImposterStart;
+		float		PageSize;
+		float		HeightMin;
+		float		WidthMin;
+		float		HeightMax;
+		float		WidthMax;
+		bool	isInfinte;
+		Entity* Entity;					// Entity of the mesh name
+		String	MeshName;				// Used for serializing.  If it has a .mesh then a custom mesh will be loaded
+		String  MaterialName;
+		String  DensityMap;
+		String	PhysicsProfile;			// Only 3DP uses this
+		enum GEO_LOAD_TYPE
+		{
+			GLT_TREE_3D		= 0,
+			GLT_TREE_2D		= 1,
+			GLT_GRASS		= 2,
+			GLT_BUSH		= 3,
+			GLT_TREE_3DP	= 4,
+		} GeoType;
+		Vector<GEO_SET_SUBSET> Objects;
+		GEO_SET()
+		{
+			BatchMax = 200;
+			BatchStart = 30;
+			ImposterMax = 1000;
+			ImposterStart = 50;
+			PageSize = 50;
+			HeightMin = -10000;
+			WidthMin = -10000;
+			HeightMax = 10000;
+			WidthMax = 10000;
+			isInfinte = true;
+			Entity = nullptr;
+			GeoType = GLT_TREE_3D;
+		}
+	};
+	
+	struct BILLBOARD
+	{
+		String	Name;
+		unsigned int		Type;
+		unsigned int		PoolSize;
+		String	MaterialName;
+		float		Width;
+		float		Height;
+	};
+	struct AI_PATH
+	{
+		unsigned int					PathId;			// Used to look up the path Id and the player Id relationship
+		String				Name;			// Unique label name of the path points
+		Vector<reVector3Df> Points;			// Container of path points
+	};
+	struct PLACED_ITEM
+	{
+		String				ProfileName;
+		reVector3Df			Position;
+	};
+	struct PLAYER_INVENTORY
+	{
+		String				ProfileName;
+		bool				IsActive;		// Is it being used in the players hand
+	};
+	struct PLAYER
+	{
+		String				Name;
+		reVector3Df			Position;
+		float					CrawlSpeed;
+		float					SprintSpeed;
+		bool				IsHumanplayer;
+		float					ViewRange;
+		float					DieingTime;
+		String				MovableText;
+		String				PhysicsName;
+		String				CharacterState;
+		reVector3Df			Direction;
+		String				PlayerType;
+		float					Health;
+		E_PLAYER_TEAM		Team;
+		float					RunSpeed;
+		float					ReloadSpeed;
+		float					RifleMarksman;
+		float					PhysicalStrength;
+		Vector<AI_PATH>		PlayerPaths;
+		Vector<PLAYER_INVENTORY> PlayerInventory;
+	};
+	struct DATA_CONTAINER
+	{
+		// Static data
+		SCENEMANAGER			SceneManager;
+		VIEWPORT				Viewport;
+		CAELUM					Caelum;
+		HYDRAX					Hydrax;
+		HEIGHT_TERRAIN			HeightTerrain;
+		PAGED_TERRAIN			PagedTerrain;
+		PLANE_TERRAIN			PlaneTerrain;
+		Vector<LIGHT>			Lights;
+		Vector<CAMERA>			Cameras;
+		Vector<GAMEOBJECT>		GameObjects;
+		Vector<WEAPON>			Weapons;
+		Vector<MAGAZINE>		Magazines;
+		Vector<PROJECTILES>		Projectiles;
+		Vector<PHYSICS_PROFILE>	PhysicsProfiles;
+		Vector<SPAWN_POINT>		SpawnPoints;
+		Vector<ARCHIVE>			Archives;
+		Vector<WATER>			Waters;
+		Vector<BGSOUND>			BgSounds;
+		Vector<SOUND>			Sounds;
+		Vector<BILLBOARD>		Billboards;
+		Vector<GEO_SET>			GeoSets;
+		String					StaticData;
+		// Dynamic data
+		Vector<AI_PATH>			AiPaths;
+		Vector<PLACED_ITEM>		PlacedItems;
+		Vector<PLAYER>			Players;		
+	};
+}
+}
