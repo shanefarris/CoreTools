@@ -1,10 +1,10 @@
 
-== Asset Manager: ==
+## Asset Manager:
 
-=== Purpose: ===
+### Purpose:
 This is an overview and manual on what the Asset Manager tools can do, and how to use them.
 
-=== Asset Manager 2.0: ===
+### Asset Manager 2.0:
 This is a DB driven tool where all the assets and the dependencies are stored in a Sql Server and tracked throughout the cycle of the application.
 
 **Asset Overview:**
@@ -70,7 +70,7 @@ The AM makes extensive use of other tools (executable) and are copied to the bui
 * OgreUpgrader
 * Assimp, with the Ogre extension
 
-=== Asset Manager 1.0: ===
+### Asset Manager 1.0:
 The first version of the AM is all file based, meaning all the assets are in the HDD all in a root directory.  There is some dependency checks, but it is very limited because files could be moved, or changed somehow.
 
 **Copy Assets:**
@@ -92,13 +92,13 @@ Game Object Plugin, given an asset directory, will generate boilerplate plugin c
 **Scripting:**
 Used to generate script bindings.  Get a directory listing fo the include directories you want to use for binding.  Then generate the packaging files.
 
-=== Notes: ===
-==== TODO List: ====
+### Notes:
+#### TODO List:
 # Finish writing the image conversion feature.  This allows the user to select what format all images should be exported as.  Most of this is done except materials, and particles need to be modified to use that new extension.
 * Material editor
 * Asset edit history
 
-==== Excluded Files for Scripting: ====
+#### Excluded Files for Scripting:
 ```
 lstToLuaScriptingIgnore.Items.Add("CBaseLayout_MyGui.h");			// Source in header
             lstToLuaScriptingIgnore.Items.Add("CBillboardManager.h");			// Sub classes
